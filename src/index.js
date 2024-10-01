@@ -3,7 +3,9 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "./i18n"; // Import file i18n.js để khởi tạo i18n
+import "./i18n";
+import "primeicons/primeicons.css"; 
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
