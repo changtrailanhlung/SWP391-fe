@@ -44,7 +44,6 @@ function Navbar() {
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-4 items-center w-full justify-center">
-          {/* Logo centered */}
           <li className="mx-4">
             <Link to="/">
               <img src={logo} alt="Logo" className="h-20" />
@@ -95,6 +94,12 @@ function Navbar() {
               {t("contact")}
             </Link>
           </li>
+          <li>
+            <Link to="/admin/login" className="flex items-center">
+              <i className="pi pi-user text-lg mr-1"></i>
+              {t("login")}
+            </Link>
+          </li>
           {/* Language buttons */}
           <div className="hidden md:flex gap-2">
             <button
@@ -128,7 +133,6 @@ function Navbar() {
                 {t("home")}
               </Link>
             </li>
-
             <li>
               <Link
                 className="text-black no-underline hover:underline"
@@ -167,6 +171,12 @@ function Navbar() {
                 to="/contact"
               >
                 {t("contact")}
+              </Link>
+            </li>
+            <li>
+              <Link to="/admin/login" className="flex items-center">
+                <i className="pi pi-user text-lg mr-1"></i>
+                {t("login")}
               </Link>
             </li>
             {/* Language buttons for mobile */}
