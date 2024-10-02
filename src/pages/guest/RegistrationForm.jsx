@@ -59,7 +59,7 @@ function RegistrationForm() {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg mt-28">
       <h1 className="text-2xl font-bold mb-6">Adoption Registration Form</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
