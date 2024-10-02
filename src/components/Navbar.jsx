@@ -44,6 +44,12 @@ function Navbar() {
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-4 items-center w-full justify-center">
+          {/* Logo centered */}
+          <li className="mx-4">
+            <Link to="/">
+              <img src={logo} alt="Logo" className="h-20" />
+            </Link>
+          </li>
           <li>
             <Link className="text-black no-underline hover:underline" to="/">
               {t("home")}
@@ -63,12 +69,6 @@ function Navbar() {
               to="/pets"
             >
               {t("pets")}
-            </Link>
-          </li>
-          {/* Logo centered */}
-          <li className="mx-4">
-            <Link to="/">
-              <img src={logo} alt="Logo" className="h-10 md:h-12" />
             </Link>
           </li>
           <li>
@@ -120,7 +120,7 @@ function Navbar() {
           className="flex flex-col items-center p-4 md:hidden"
         >
           <Link to="/" className="mb-4">
-            <img src={logo} alt="Logo" className="h-10" />
+            <img src={logo} alt="Logo" className="h-24" />
           </Link>
           <ul className="flex flex-col items-center gap-4">
             <li>
@@ -128,6 +128,7 @@ function Navbar() {
                 {t("home")}
               </Link>
             </li>
+
             <li>
               <Link
                 className="text-black no-underline hover:underline"
@@ -139,9 +140,25 @@ function Navbar() {
             <li>
               <Link
                 className="text-black no-underline hover:underline"
-                to="/about"
+                to="/pets"
               >
-                {t("about")}
+                {t("pets")}
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="text-black no-underline hover:underline"
+                to="/registration-form"
+              >
+                {t("registrationform")}
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="text-black no-underline hover:underline"
+                to="/donate"
+              >
+                {t("donate")}
               </Link>
             </li>
             <li>
