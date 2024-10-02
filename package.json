@@ -6,11 +6,13 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.7.7",
     "i18next": "^23.15.1",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-http-backend": "^2.6.1",
-    "i18next-localstorage-backend": "^4.2.0",
-    "my-app": "file:",
+    "i18next-localstorage-backend": "^4.2.0",    
+    "jwt-decode": "^4.0.0",
+    "my-app": "file:",    
     "primeicons": "^7.0.0",
     "primereact": "^10.8.2",
     "react": "^18.3.1",
@@ -47,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },  
+  "devDependencies": {
+    "tailwindcss": "^3.4.10"
   }
 }
