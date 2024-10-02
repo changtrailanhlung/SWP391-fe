@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../pages/admin/Dashboard";
 import Login from "../pages/admin/Login";
+import Signup from "../pages/admin/Signup";
 import Sidebar from "../components/Sidebar";
 import PrivateRoute from "./PrivateRoute"; 
 
@@ -9,6 +10,7 @@ const AdminRoutes = () => {
   return (
     <Routes>
       <Route path="login" element={<Login />} />
+      <Route path="signup" element={<Signup />} />
       <Route
         path="/*"
         element={
