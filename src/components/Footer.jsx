@@ -8,7 +8,7 @@ import {
   FaEnvelope,
   FaPhone,
 } from "react-icons/fa";
-// import logo from "../img/logo.png";
+import logo from "../img/logo.png";
 import { useTranslation } from "react-i18next";
 
 const Footer = () => {
@@ -19,7 +19,7 @@ const Footer = () => {
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-6">
         {/* Logo and Contact Information */}
         <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 md:ml-0">
-          {/* <img src={logo} alt="Logo" className="w-24 h-auto md:w-32" /> */}
+          <img src={logo} alt="Logo" className="w-24 h-auto md:w-32" />
 
           {/* Vertical line (only on larger screens) */}
           <div className="hidden md:block border-l-2 h-32 border-black mx-4"></div>
@@ -27,7 +27,7 @@ const Footer = () => {
           {/* Contact Information */}
           <div className="text-center md:text-left space-y-1">
             <p className="flex items-center justify-center md:justify-start text-sm font-bold">
-              <FaMapMarkerAlt className="mr-2" />
+              <FaMapMarkerAlt className="mr-2" /> 
             </p>
             <p className="flex items-center justify-center md:justify-start text-sm">
               <FaGlobe className="mr-2" /> 
@@ -36,7 +36,7 @@ const Footer = () => {
               <FaEnvelope className="mr-2" /> 
             </p>
             <p className="flex items-center justify-center md:justify-start text-sm">
-              <FaPhone className="mr-2" /> 
+              <FaPhone className="mr-2" /> xxxx.xxxx.xx
             </p>
           </div>
         </div>
@@ -69,7 +69,6 @@ const Footer = () => {
           </a>
         </div>
       </div>
-      {/* Designed by BP Branding */}
       <div className="mt-4 text-center text-xs text-gray-500">
         copyright
       </div>

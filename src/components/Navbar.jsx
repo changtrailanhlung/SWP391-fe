@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-// import logo from "../img/logo.png";
+import logo from "../img/logo.png";
 import flagEnglish from "../assets/images/flagEnglish.png";
 import flagVietnamese from "../assets/images/flagVietnamese.png";
 
 function Navbar() {
-  const [showDropdown, setShowDropdown] = useState(false);
+  const { t, i18n } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [showMobileDropdown, setShowMobileDropdown] = useState(false);
   const mobileMenuRef = useRef(null);
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -19,7 +22,6 @@ function Navbar() {
         !mobileMenuRef.current.contains(event.target)
       ) {
         setIsMobileMenuOpen(false);
-        setShowMobileDropdown(false); // Close mobile dropdown as well
       }
     };
 
@@ -42,40 +44,72 @@ function Navbar() {
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-4 items-center w-full justify-center">
+          {/* Logo centered */}
+          <li className="mx-4">
+            <Link to="/">
+              <img src={logo} alt="Logo" className="h-20" />
+            </Link>
+          </li>
           <li>
             <Link className="text-black no-underline hover:underline" to="/">
-              Home
+              {t("home")}
             </Link>
           </li>
           <li>
             <Link
               className="text-black no-underline hover:underline"
-              to="/about"
+              to="/event"
             >
-              About
+              {t("event")}
             </Link>
           </li>
-
-          {/* Logo centered between About and Products */}
-          {/* <li className="mx-4">
-            <Link to="/">
-              <img src={logo} alt="Logo" className="h-10 md:h-12" />
+          <li>
+            <Link
+              className="text-black no-underline hover:underline"
+              to="/pets"
+            >
+              {t("pets")}
             </Link>
-          </li> */}
-
-          <li
-            className="relative"
-            onMouseEnter={() => setShowDropdown(true)}
-            onMouseLeave={() => setShowDropdown(false)}
-          ></li>
+          </li>
+          <li>
+            <Link
+              className="text-black no-underline hover:underline"
+              to="/registration-form"
+            >
+              {t("registrationform")}
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="text-black no-underline hover:underline"
+              to="/donate"
+            >
+              {t("donate")}
+            </Link>
+          </li>
           <li>
             <Link
               className="text-black no-underline hover:underline"
               to="/contact"
             >
-              contact
+              {t("contact")}
             </Link>
           </li>
+          {/* Language buttons */}
+          <div className="hidden md:flex gap-2">
+            <button
+              onClick={() => changeLanguage("en")}
+              className="flex items-center"
+            >
+              <img src={flagEnglish} alt="English" className="h-6 mr-1" />
+            </button>
+            <button
+              onClick={() => changeLanguage("vi")}
+              className="flex items-center"
+            >
+              <img src={flagVietnamese} alt="Vietnamese" className="h-6 mr-1" />
+            </button>
+          </div>
         </ul>
       </div>
 
@@ -85,32 +119,75 @@ function Navbar() {
           ref={mobileMenuRef}
           className="flex flex-col items-center p-4 md:hidden"
         >
-          {/* <Link to="/" className="mb-4">
-            <img src={logo} alt="Logo" className="h-10" />
-          </Link> */}
+          <Link to="/" className="mb-4">
+            <img src={logo} alt="Logo" className="h-24" />
+          </Link>
           <ul className="flex flex-col items-center gap-4">
             <li>
               <Link className="text-black no-underline hover:underline" to="/">
-                home
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-black no-underline hover:underline"
-                to="/about"
-              >
-                about
+                {t("home")}
               </Link>
             </li>
 
             <li>
               <Link
                 className="text-black no-underline hover:underline"
-                to="/contact"
+                to="/event"
               >
-                contact
+                {t("event")}
               </Link>
             </li>
+            <li>
+              <Link
+                className="text-black no-underline hover:underline"
+                to="/pets"
+              >
+                {t("pets")}
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="text-black no-underline hover:underline"
+                to="/registration-form"
+              >
+                {t("registrationform")}
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="text-black no-underline hover:underline"
+                to="/donate"
+              >
+                {t("donate")}
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="text-black no-underline hover:underline"
+                to="/contact"
+              >
+                {t("contact")}
+              </Link>
+            </li>
+            {/* Language buttons for mobile */}
+            <div className="flex gap-2 mt-4">
+              <button
+                onClick={() => changeLanguage("en")}
+                className="flex items-center"
+              >
+                <img src={flagEnglish} alt="English" className="h-6 mr-1" />
+              </button>
+              <button
+                onClick={() => changeLanguage("vi")}
+                className="flex items-center"
+              >
+                <img
+                  src={flagVietnamese}
+                  alt="Vietnamese"
+                  className="h-6 mr-1"
+                />
+              </button>
+            </div>
           </ul>
         </div>
       )}
