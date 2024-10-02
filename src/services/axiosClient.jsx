@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "",
+  baseURL: "https://localhost:7130/api",
 });
 
 // Request Interceptor to include Authorization token
