@@ -1,4 +1,9 @@
 {
-    "home":"Trang chủ",
-    "event": "Sự kiện"
+    "home": "Trang chủ",
+    "event": "Sự kiện",
+    "about": "Về chúng tôi",
+    "contact": "Liên hệ",
+    "pets": "Vật nuôi",
+    "registrationform": "Đăng ký nhận nuôi",
+    "donate": "Quyên góp"
 }

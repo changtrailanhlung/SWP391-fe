@@ -1,3 +1,9 @@
 {
-    "home":"Home"
+    "home": "Home",
+    "event": "Event",
+    "about": "About Us",
+    "contact": "Contact",
+    "pets": "Pets",
+    "registrationform": "Registration Form",
+    "donate": "Donate"
 }

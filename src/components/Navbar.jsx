@@ -52,19 +52,41 @@ function Navbar() {
           <li>
             <Link
               className="text-black no-underline hover:underline"
-              to="/about"
+              to="/event"
             >
-              {t("about")}
+              {t("event")}
             </Link>
           </li>
-
+          <li>
+            <Link
+              className="text-black no-underline hover:underline"
+              to="/pets"
+            >
+              {t("pets")}
+            </Link>
+          </li>
           {/* Logo centered */}
           <li className="mx-4">
             <Link to="/">
               <img src={logo} alt="Logo" className="h-10 md:h-12" />
             </Link>
           </li>
-
+          <li>
+            <Link
+              className="text-black no-underline hover:underline"
+              to="/registration-form"
+            >
+              {t("registrationform")}
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="text-black no-underline hover:underline"
+              to="/donate"
+            >
+              {t("donate")}
+            </Link>
+          </li>
           <li>
             <Link
               className="text-black no-underline hover:underline"
@@ -73,7 +95,6 @@ function Navbar() {
               {t("contact")}
             </Link>
           </li>
-
           {/* Language buttons */}
           <div className="hidden md:flex gap-2">
             <button
@@ -105,6 +126,14 @@ function Navbar() {
             <li>
               <Link className="text-black no-underline hover:underline" to="/">
                 {t("home")}
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="text-black no-underline hover:underline"
+                to="/event"
+              >
+                {t("event")}
               </Link>
             </li>
             <li>
