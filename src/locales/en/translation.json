@@ -6,5 +6,15 @@
     "pets": "Pets",
     "registrationform": "Registration Form",
     "donate": "Donate",
-    "login": "Login"
+    "login": "Login",
+    "type": "Type",
+    "breed": "Breed",
+    "age": "Age",
+    "gender": "Gender",
+    "size": "Size",
+    "color": "Color",
+    "status": "Status",
+    "adoption-status": "Adoption Status",
+    "description": "Description",
+    "years": "years"
 }

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import axios from "../../services/axiosClient";
 
 const Pets = () => {
   const [pets, setPets] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const petsPerPage = 6;
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchPets = async () => {
@@ -44,20 +47,38 @@ const Pets = () => {
         {currentPets.map((pet) => (
           <div key={pet.id} className="border p-4 rounded-lg shadow">
             <img
-              src={pet.image}
+              src={`data:image/jpeg;base64,${pet.image}`} // Assuming the image is JPEG
               alt={pet.name}
               className="w-full h-48 object-cover mb-4"
             />
             <h2 className="text-xl font-semibold">{pet.name}</h2>
-            <p>Type: {pet.type}</p>
-            <p>Breed: {pet.breed}</p>
-            <p>Age: {pet.age} years</p>
-            <p>Gender: {pet.gender}</p>
-            <p>Size: {pet.size}</p>
-            <p>Color: {pet.color}</p>
-            <p>Status: {pet.status ? "Available" : "Not Available"}</p>
-            <p>Adoption Status: {pet.adoptionStatus}</p>
-            <p>Description: {pet.description}</p>
+            <p>
+              {t("type")}: {pet.type}
+            </p>
+            <p>
+              {t("breed")}: {pet.breed}
+            </p>
+            <p>
+              {t("age")}: {pet.age} {t("years")}
+            </p>
+            <p>
+              {t("gender")}: {pet.gender}
+            </p>
+            <p>
+              {t("size")}: {pet.size}
+            </p>
+            <p>
+              {t("color")}: {pet.color}
+            </p>
+            <p>
+              {t("status")}: {pet.status ? "Available" : "Not Available"}
+            </p>
+            <p>
+              {t("adoption-status")}: {pet.adoptionStatus}
+            </p>
+            <p>
+              {t("description")}: {pet.description}
+            </p>
           </div>
         ))}
       </div>

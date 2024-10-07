@@ -6,5 +6,15 @@
     "pets": "Vật nuôi",
     "registrationform": "Đăng ký nhận nuôi",
     "donate": "Quyên góp",
-    "login": "Đăng nhập"
+    "login": "Đăng nhập",
+    "type": "Loại",
+    "breed": "Giống",
+    "age": "Tuổi",
+    "gender": "Giới tính",
+    "size": "Kích thước",
+    "color": "Màu sắc",
+    "status": "Trạng thái",
+    "adoption-status": "Tình trạng nhận nuôi",
+    "description": "Mô tả",
+    "years": "tuổi"
 }
