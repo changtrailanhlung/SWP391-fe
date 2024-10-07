@@ -16,5 +16,10 @@
     "status": "Status",
     "adoption-status": "Adoption Status",
     "description": "Description",
-    "years": "years"
+    "years": "years",
+    "adopt": "Adopt",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of"
 }

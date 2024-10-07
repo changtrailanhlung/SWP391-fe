@@ -16,5 +16,10 @@
     "status": "Trạng thái",
     "adoption-status": "Tình trạng nhận nuôi",
     "description": "Mô tả",
-    "years": "tuổi"
+    "years": "tuổi",
+    "adopt": "Nhận nuôi",
+    "previous": "Trước",
+    "next": "Sau",
+    "page": "Trang",
+    "of": "của"
 }

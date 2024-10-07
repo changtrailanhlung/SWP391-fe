@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom"; // For redirection
+import { toast } from "react-toastify";
 import axios from "../../services/axiosClient";
 
 const Pets = () => {
@@ -8,6 +10,7 @@ const Pets = () => {
   const petsPerPage = 6;
 
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPets = async () => {
@@ -21,6 +24,22 @@ const Pets = () => {
 
     fetchPets();
   }, []);
+
+  // Check if the user is logged in
+  const isLoggedIn = () => {
+    return !!localStorage.getItem("token"); // Replace "token" with your actual token key
+  };
+
+  const handleAdopt = () => {
+    if (!isLoggedIn()) {
+      // Redirect to login if not logged in
+      navigate("/admin/login");
+      toast.error("Bạn phải login để sử dụng tính năng này");
+    } else {
+      // Proceed with adoption process if logged in
+      alert("Proceed with adoption");
+    }
+  };
 
   // Calculate total pages
   const totalPages = Math.ceil(pets.length / petsPerPage);
@@ -79,6 +98,14 @@ const Pets = () => {
             <p>
               {t("description")}: {pet.description}
             </p>
+
+            {/* Adopt button */}
+            <button
+              onClick={handleAdopt}
+              className="px-4 py-2 mt-4 bg-blue-500 text-white rounded"
+            >
+              {t("adopt")}
+            </button>
           </div>
         ))}
       </div>
@@ -92,10 +119,10 @@ const Pets = () => {
             currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
-          Previous
+          {t("previous")}
         </button>
         <p>
-          Page {currentPage} of {totalPages}
+          {t("page")} {currentPage} {t("of")} {totalPages}
         </p>
         <button
           onClick={handleNext}
@@ -104,7 +131,7 @@ const Pets = () => {
             currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
-          Next
+          {t("next")}
         </button>
       </div>
     </div>
