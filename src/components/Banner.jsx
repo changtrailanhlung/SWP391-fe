@@ -29,13 +29,14 @@ const Banner = () => {
   }, [images]);
 
   return (
-    <div className="relative w-full h-64 overflow-hidden">
+    <div className="relative w-full h-[60rem] overflow-hidden">
+      {" "}
+      {/* Increased height to h-[64rem] */}
       {images.length > 0 ? (
         <div
-          className="absolute inset-0 transition-transform duration-500 ease-in-out"
+          className="absolute inset-0 transition-transform duration-500 ease-in-out flex"
           style={{
             transform: `translateX(-${currentImageIndex * 100}%)`,
-            display: "flex",
           }}
         >
           {images.map((image, index) => (
@@ -50,7 +51,6 @@ const Banner = () => {
       ) : (
         <p>No images found</p> // Message if no images are loaded
       )}
-
       {/* Navigation buttons */}
       <div className="absolute inset-0 flex justify-between items-center">
         <button
@@ -61,7 +61,7 @@ const Banner = () => {
                 : currentImageIndex - 1
             )
           }
-          className="bg-black bg-opacity-50 text-white px-3 py-2"
+          className="bg-black bg-opacity-50 text-white px-3 py-2 rounded"
         >
           Prev
         </button>
@@ -73,7 +73,7 @@ const Banner = () => {
                 : currentImageIndex + 1
             )
           }
-          className="bg-black bg-opacity-50 text-white px-3 py-2"
+          className="bg-black bg-opacity-50 text-white px-3 py-2 rounded"
         >
           Next
         </button>
