@@ -41,13 +41,18 @@ const Pets = () => {
     }
   };
 
+  // Filter pets to only include those with an adoption status of "Available"
+  const availablePets = pets.filter(
+    (pet) => pet.adoptionStatus === "Available"
+  );
+
   // Calculate total pages
-  const totalPages = Math.ceil(pets.length / petsPerPage);
+  const totalPages = Math.ceil(availablePets.length / petsPerPage);
 
   // Get current pets to display
   const indexOfLastPet = currentPage * petsPerPage;
   const indexOfFirstPet = indexOfLastPet - petsPerPage;
-  const currentPets = pets.slice(indexOfFirstPet, indexOfLastPet);
+  const currentPets = availablePets.slice(indexOfFirstPet, indexOfLastPet);
 
   // Handle pagination
   const handlePrevious = () => {
@@ -60,79 +65,82 @@ const Pets = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Available Pets</h1>
+      <h1 className="text-2xl font-bold mb-4">{t("availablePets")}</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {currentPets.map((pet) => (
-          <div key={pet.id} className="border p-4 rounded-lg shadow">
-            {/* Use the URL for the pet image instead of base64 */}
-            <img
-              src={pet.image} // Assuming 'pet.image' now contains the image URL
-              alt={pet.name}
-              className="w-full h-48 object-cover mb-4"
-            />
-            <h2 className="text-xl font-semibold">{pet.name}</h2>
-            <p>
-              {t("type")}: {pet.type}
-            </p>
-            <p>
-              {t("breed")}: {pet.breed}
-            </p>
-            <p>
-              {t("age")}: {pet.age} {t("years")}
-            </p>
-            <p>
-              {t("gender")}: {pet.gender}
-            </p>
-            <p>
-              {t("size")}: {pet.size}
-            </p>
-            <p>
-              {t("color")}: {pet.color}
-            </p>
+      {availablePets.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {currentPets.map((pet) => (
+            <div key={pet.id} className="border p-4 rounded-lg shadow">
+              <img
+                src={pet.image} // Assuming 'pet.image' now contains the image URL
+                alt={pet.name}
+                className="w-full h-48 object-cover mb-4"
+              />
+              <h2 className="text-xl font-semibold">{pet.name}</h2>
+              <p>
+                {t("type")}: {pet.type}
+              </p>
+              <p>
+                {t("breed")}: {pet.breed}
+              </p>
+              <p>
+                {t("age")}: {pet.age} {t("years")}
+              </p>
+              <p>
+                {t("gender")}: {pet.gender}
+              </p>
+              <p>
+                {t("size")}: {pet.size}
+              </p>
+              <p>
+                {t("color")}: {pet.color}
+              </p>
+              <p>
+                {t("adoption-status")}: {pet.adoptionStatus}
+              </p>
+              <p>
+                {t("description")}: {pet.description}
+              </p>
 
-            <p>
-              {t("adoption-status")}: {pet.adoptionStatus}
-            </p>
-            <p>
-              {t("description")}: {pet.description}
-            </p>
-
-            {/* Adopt button */}
-            <button
-              onClick={handleAdopt}
-              className="px-4 py-2 mt-4 bg-blue-500 text-white rounded"
-            >
-              {t("adopt")}
-            </button>
-          </div>
-        ))}
-      </div>
+              <button
+                onClick={handleAdopt}
+                className="px-4 py-2 mt-4 bg-blue-500 text-white rounded"
+              >
+                {t("adopt")}
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-center">{t("noAvailablePets")}</p>
+      )}
 
       {/* Pagination controls */}
-      <div className="flex justify-between mt-4">
-        <button
-          onClick={handlePrevious}
-          disabled={currentPage === 1}
-          className={`px-4 py-2 bg-gray-300 rounded ${
-            currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          {t("previous")}
-        </button>
-        <p>
-          {t("page")} {currentPage} {t("of")} {totalPages}
-        </p>
-        <button
-          onClick={handleNext}
-          disabled={currentPage === totalPages}
-          className={`px-4 py-2 bg-gray-300 rounded ${
-            currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          {t("next")}
-        </button>
-      </div>
+      {totalPages > 1 && (
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={handlePrevious}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 bg-gray-300 rounded ${
+              currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            {t("previous")}
+          </button>
+          <p>
+            {t("page")} {currentPage} {t("of")} {totalPages}
+          </p>
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 bg-gray-300 rounded ${
+              currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            {t("next")}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
