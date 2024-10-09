@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "../../context/AuthContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
@@ -20,16 +20,21 @@ import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function Login() {
+  const { setUser } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(false); // Add loading state
+
   const handleRegisterClick = () => {
     navigate("/admin/signup");
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when logging in
+
     try {
       const loginResponse = await axios.post("/auth/login", {
         email,
@@ -37,21 +42,24 @@ function Login() {
       });
 
       if (loginResponse.status === 200 && loginResponse.data.data) {
-        const userId = loginResponse.data.data.user.id;
+        const { id: userId, username } = loginResponse.data.data.user;
         const token = loginResponse.data.data.token;
-        const username = loginResponse.data.data.user.username; // Extract unique name
 
-        // Lưu token vào localStorage hoặc cookie
+        // Store token and user information in localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("nameid", userId);
-        localStorage.setItem("username", username); // Save unique name
+        localStorage.setItem("username", username);
 
-        // Lấy vai trò của người dùng
+        // Fetch user roles
         const roleResponse = await axios.get(`/userrole/role/${userId}/roles`);
         const userRoles = roleResponse.data[0].roles;
 
         localStorage.setItem("userRoles", JSON.stringify(userRoles));
 
+        // Set user in context
+        setUser({ id: userId, username, roles: userRoles });
+
+        // Redirect based on role
         if (userRoles.includes("Admin")) {
           navigate("/admin/dashboard");
         } else if (userRoles.includes("ShelterStaff")) {
@@ -69,6 +77,8 @@ function Login() {
     } catch (error) {
       console.error("Lỗi đăng nhập:", error);
       toast.error("Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại.");
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
@@ -79,7 +89,7 @@ function Login() {
     >
       <ToastContainer />
       <MDBRow>
-        {/* Phần nội dung bên trái */}
+        {/* Left content */}
         <MDBCol
           md="6"
           className="text-center text-md-start d-flex flex-column justify-content-center"
@@ -91,13 +101,12 @@ function Login() {
             {t("lg1")} <br />
             <span style={{ color: "hsl(218, 81%, 75%)" }}>{t("lg2")}</span>
           </h1>
-
           <p className="px-3" style={{ color: "hsl(218, 81%, 85%)" }}>
             {t("lg3")}
           </p>
         </MDBCol>
 
-        {/* Phần form đăng nhập */}
+        {/* Login form */}
         <MDBCol md="6" className="position-relative">
           <div
             id="radius-shape-1"
@@ -138,8 +147,13 @@ function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                <MDBBtn type="submit" className="w-100 mb-4" size="md">
-                  Login
+                <MDBBtn
+                  type="submit"
+                  className="w-100 mb-4"
+                  size="md"
+                  disabled={loading}
+                >
+                  {loading ? "Đang đăng nhập..." : "Login"}
                 </MDBBtn>
               </form>
               <div className="text-center">

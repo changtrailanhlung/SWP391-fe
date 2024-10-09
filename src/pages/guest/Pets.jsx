@@ -37,7 +37,7 @@ const Pets = () => {
       toast.error("Bạn phải login để sử dụng tính năng này");
     } else {
       // Proceed with adoption process if logged in
-      alert("Proceed with adoption");
+      navigate("/registration-form");
     }
   };
 

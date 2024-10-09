@@ -1,13 +1,13 @@
-// src/routes/PrivateRoute.jsx
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // Adjust the path as necessary
 
 const PrivateRoute = ({ element, allowedRoles }) => {
-  const userRoles = JSON.parse(localStorage.getItem('userRoles')) || [];
+  const { user } = useAuth(); // Assuming `user` contains user info including roles
 
-  const isAuthorized = userRoles.some(role => allowedRoles.includes(role));
+  const isAllowed = user && allowedRoles.includes(user.role); // Replace `user.role` with your logic
 
-  return isAuthorized ? element : <Navigate to="/admin/login" replace />;
+  return isAllowed ? element : <Navigate to="/admin/login" replace />;
 };
 
 export default PrivateRoute;
