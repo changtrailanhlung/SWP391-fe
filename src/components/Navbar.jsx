@@ -21,7 +21,7 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("username");
-    localStorage.setItem("token", token);
+    localStorage.removeItem("token"); // Remove token
     // Redirect to login or home page after logout if needed
     window.location.href = "/admin/login"; // Change this if you have a different route
   };
@@ -113,6 +113,12 @@ function Navbar() {
                   onMouseLeave={() => setIsDropdownOpen(false)} // Close dropdown when mouse leaves
                   className="absolute right-0 mt-2 bg-white border border-gray-300 rounded shadow-lg"
                 >
+                  <Link
+                    to="/user-info" // Adjust the route as necessary
+                    className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
+                  >
+                    User Information
+                  </Link>
                   <button
                     onClick={handleLogout}
                     className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
@@ -196,36 +202,87 @@ function Navbar() {
               </Link>
             </li>
             {/* Display username with logout option */}
-            {username ? (
-              <li className="relative flex items-center">
-                <span
-                  className="text-black cursor-pointer"
-                  onClick={() => setIsDropdownOpen((prev) => !prev)} // Toggle dropdown on click
-                >
-                  Welcome, {username}
-                </span>
-                {isDropdownOpen && (
-                  <div
-                    onMouseEnter={() => setIsDropdownOpen(true)} // Keep dropdown open when hovered
-                    onMouseLeave={() => setIsDropdownOpen(false)} // Close dropdown when mouse leaves
-                    className="absolute right-0 mt-2 bg-white border border-gray-300 rounded shadow-lg"
-                  >
-                    <button
-                      onClick={handleLogout}
-                      className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
+            {isMobileMenuOpen && (
+              <div
+                ref={mobileMenuRef}
+                className="flex flex-col items-center p-4 md:hidden"
+              >
+                <Link to="/" className="mb-4">
+                  <img src={logo} alt="Logo" className="h-24" />
+                </Link>
+                <ul className="flex flex-col items-center gap-4">
+                  <li>
+                    <Link
+                      className="text-black no-underline hover:underline"
+                      to="/"
                     >
-                      Logout
+                      {t("home")}
+                    </Link>
+                  </li>
+                  {/* Other links... */}
+                  {/* Display username with logout option */}
+                  {username ? (
+                    <li className="relative flex items-center">
+                      <span
+                        className="text-black cursor-pointer"
+                        onClick={() => setIsDropdownOpen((prev) => !prev)} // Toggle dropdown on click
+                      >
+                        Welcome, {username}
+                      </span>
+                      {isDropdownOpen && (
+                        <div
+                          onMouseEnter={() => setIsDropdownOpen(true)} // Keep dropdown open when hovered
+                          onMouseLeave={() => setIsDropdownOpen(false)} // Close dropdown when mouse leaves
+                          className="absolute right-0 mt-2 bg-white border border-gray-300 rounded shadow-lg"
+                        >
+                          <Link
+                            to="/user-info" // Adjust the route as necessary
+                            className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
+                          >
+                            User Information
+                          </Link>
+                          <button
+                            onClick={handleLogout}
+                            className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
+                          >
+                            Logout
+                          </button>
+                        </div>
+                      )}
+                    </li>
+                  ) : (
+                    <li>
+                      <Link to="/admin/login" className="flex items-center">
+                        <i className="pi pi-user text-lg mr-1"></i>
+                        {t("login")}
+                      </Link>
+                    </li>
+                  )}
+                  {/* Language buttons for mobile */}
+                  <div className="flex gap-2 mt-4">
+                    <button
+                      onClick={() => changeLanguage("en")}
+                      className="flex items-center"
+                    >
+                      <img
+                        src={flagEnglish}
+                        alt="English"
+                        className="h-6 mr-1"
+                      />
+                    </button>
+                    <button
+                      onClick={() => changeLanguage("vi")}
+                      className="flex items-center"
+                    >
+                      <img
+                        src={flagVietnamese}
+                        alt="Vietnamese"
+                        className="h-6 mr-1"
+                      />
                     </button>
                   </div>
-                )}
-              </li>
-            ) : (
-              <li>
-                <Link to="/admin/login" className="flex items-center">
-                  <i className="pi pi-user text-lg mr-1"></i>
-                  {t("login")}
-                </Link>
-              </li>
+                </ul>
+              </div>
             )}
             {/* Language buttons for mobile */}
             <div className="flex gap-2 mt-4">
