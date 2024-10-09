@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from "react-i18next";
 import {
   MDBBtn,
   MDBContainer,
@@ -16,7 +17,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 function Signup() {
   const [showPassword, setShowPassword] = useState(false); // state để điều khiển việc hiển thị password
   const [showConfirmPassword, setShowConfirmPassword] = useState(false); // state cho confirm password
-
+  const { t, i18n } = useTranslation();
   return (
     <MDBContainer fluid className='p-4 background-radial-gradient overflow-hidden'>
 
@@ -25,14 +26,12 @@ function Signup() {
         <MDBCol md='6' className='text-center text-md-start d-flex flex-column justify-content-center'>
 
           <h1 className="my-5 display-3 fw-bold ls-tight px-3" style={{color: 'hsl(218, 81%, 95%)'}}>
-            Cùng chúng tôi <br />
-            <span style={{color: 'hsl(218, 81%, 75%)'}}>tạo cơ hội thứ hai cho thú cưng</span>
+          {t("lg1")} <br />
+            <span style={{color: 'hsl(218, 81%, 75%)'}}>{t("lg2")}</span>
           </h1>
 
           <p className='px-3' style={{color: 'hsl(218, 81%, 85%)'}}>
-            Hãy giúp chúng tôi mang lại cuộc sống mới cho những thú cưng bị bỏ rơi. 
-            Với sự ủng hộ của bạn, chúng tôi có thể cung cấp nơi ở an toàn, chăm sóc y tế, và tình yêu thương cho những người bạn bốn chân này. 
-            Mỗi sự đóng góp và hành động nhận nuôi đều làm thay đổi cuộc đời một thú cưng.
+          {t("lg3")}
           </p>
 
         </MDBCol>
