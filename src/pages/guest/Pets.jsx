@@ -65,8 +65,9 @@ const Pets = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {currentPets.map((pet) => (
           <div key={pet.id} className="border p-4 rounded-lg shadow">
+            {/* Use the URL for the pet image instead of base64 */}
             <img
-              src={`data:image/jpeg;base64,${pet.image}`} // Assuming the image is JPEG
+              src={pet.image} // Assuming 'pet.image' now contains the image URL
               alt={pet.name}
               className="w-full h-48 object-cover mb-4"
             />
