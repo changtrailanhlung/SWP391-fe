@@ -70,14 +70,14 @@ function Navbar() {
               {t("pets")}
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               className="text-black no-underline hover:underline"
               to="/registration-form"
             >
               {t("registrationform")}
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               className="text-black no-underline hover:underline"
@@ -149,14 +149,14 @@ function Navbar() {
                 {t("pets")}
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 className="text-black no-underline hover:underline"
                 to="/registration-form"
               >
                 {t("registrationform")}
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 className="text-black no-underline hover:underline"
