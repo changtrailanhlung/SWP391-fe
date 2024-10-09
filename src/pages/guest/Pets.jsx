@@ -96,9 +96,6 @@ const Pets = () => {
                 {t("color")}: {pet.color}
               </p>
               <p>
-                {t("adoption-status")}: {pet.adoptionStatus}
-              </p>
-              <p>
                 {t("description")}: {pet.description}
               </p>
 
