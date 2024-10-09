@@ -1,0 +1,36 @@
+/* src/style/AdminNavbar.css */
+.admin-navbar {
+    width: 250px;
+    background-color: #343a40;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .navbar-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .navbar-list li {
+    margin: 20px 0;
+  }
+  
+  .navbar-list a, .logout-button {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logout-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  

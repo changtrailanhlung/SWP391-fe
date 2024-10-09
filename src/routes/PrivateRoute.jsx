@@ -1,32 +1,13 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import Dashboard from "../pages/admin/Dashboard";
-import Login from "../pages/admin/Login";
-import Sidebar from "../components/Sidebar";
-import PrivateRoute from "./PrivateRoute";
+// src/routes/PrivateRoute.jsx
+import React from 'react';
+import { Navigate } from 'react-router-dom';
 
-const AdminRoutes = () => {
-  return (
-    <Routes>
-      <Route path="login" element={<Login />} />
-      <Route
-        path="/*"
-        element={
-          <div className="flex min-h-screen">
-            <Sidebar />
-            <main className="flex-grow p-6 bg-gray-100">
-              <Routes>
-                <Route
-                  path="dashboard"
-                  element={<PrivateRoute element={<Dashboard />} />}
-                />
-              </Routes>
-            </main>
-          </div>
-        }
-      />
-    </Routes>
-  );
+const PrivateRoute = ({ element, allowedRoles }) => {
+  const userRoles = JSON.parse(localStorage.getItem('userRoles')) || [];
+
+  const isAuthorized = userRoles.some(role => allowedRoles.includes(role));
+
+  return isAuthorized ? element : <Navigate to="/admin/login" replace />;
 };
 
-export default AdminRoutes;
+export default PrivateRoute;
