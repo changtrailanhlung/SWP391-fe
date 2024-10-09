@@ -24,5 +24,7 @@
     "previous": "Previous",
     "next": "Next",
     "page": "Page",
-    "of": "of"
+    "of": "of",
+    "logout": "Logout",
+    "userinformation": "User Information"
 }

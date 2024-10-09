@@ -105,7 +105,8 @@ function Navbar() {
                 className="text-black cursor-pointer"
                 onClick={() => setIsDropdownOpen((prev) => !prev)} // Toggle dropdown on click
               >
-                Welcome, {username}
+                <i className="pi pi-user text-lg mr-1"></i>
+                {username}
               </span>
               {isDropdownOpen && (
                 <div
@@ -117,13 +118,13 @@ function Navbar() {
                     to="/user-info" // Adjust the route as necessary
                     className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
                   >
-                    User Information
+                    {t("userinformation")}
                   </Link>
                   <button
                     onClick={handleLogout}
                     className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
                   >
-                    Logout
+                    {t("logout")}
                   </button>
                 </div>
               )}
@@ -227,7 +228,8 @@ function Navbar() {
                         className="text-black cursor-pointer"
                         onClick={() => setIsDropdownOpen((prev) => !prev)} // Toggle dropdown on click
                       >
-                        Welcome, {username}
+                        <i className="pi pi-user text-lg mr-1"></i>
+                        {username}
                       </span>
                       {isDropdownOpen && (
                         <div
@@ -239,13 +241,13 @@ function Navbar() {
                             to="/user-info" // Adjust the route as necessary
                             className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
                           >
-                            User Information
+                            {t("userinformation")}
                           </Link>
                           <button
                             onClick={handleLogout}
                             className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
                           >
-                            Logout
+                            {t("logout")}
                           </button>
                         </div>
                       )}

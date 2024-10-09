@@ -24,5 +24,7 @@
     "previous": "Trước",
     "next": "Sau",
     "page": "Trang",
-    "of": "của"
+    "of": "của",
+    "logout": "Đăng xuất",
+    "userinformation": "Thông tin người dùng"
 }
