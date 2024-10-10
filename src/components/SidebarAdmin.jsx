@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { MDBIcon } from 'mdb-react-ui-kit';
 
 const SidebarAdmin = () => {
   const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState(true);
+  const [username, setUsername] = useState('');
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
 
   const handleCloseSideBar = () => {
     if (window.innerWidth <= 900) {
@@ -16,15 +23,16 @@ const SidebarAdmin = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('userRoles');
+    localStorage.removeItem('username');
     navigate('/admin/login');
   };
 
-  const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2';
-  const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2';
+  const activeLink = 'flex items-center gap-1 pl-4 pt-3 pb-2.5 rounded-lg text-black font-bold m-2'; 
+const normalLink = 'flex items-center gap-1 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 hover:text-black m-2'; 
 
   const links = [
     {
-      title: 'Main',
+      title: username || 'Main',
       links: [
         { name: 'dashboard', icon: <MDBIcon icon="chart-line" /> },
         { name: 'users', icon: <MDBIcon icon="users" /> },
@@ -37,7 +45,7 @@ const SidebarAdmin = () => {
       {activeMenu && (
         <>
           <div className="flex justify-between items-center">
-            <Link to="/admin/dashboard" onClick={handleCloseSideBar} className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
+            <Link to="/admin/dashboard" onClick={handleCloseSideBar} className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-black text-slate-900">
               <MDBIcon icon="shield-alt" /> <span>Admin Panel</span>
             </Link>
             <button
@@ -53,7 +61,7 @@ const SidebarAdmin = () => {
             {links.map((item) => (
               <div key={item.title}>
                 <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
-                  {item.title}
+                Welcome: {item.title}
                 </p>
                 {item.links.map((link) => (
                   <NavLink
@@ -69,8 +77,8 @@ const SidebarAdmin = () => {
               </div>
             ))}
           </div>
-          <div className="mt-10">
-            <button onClick={handleLogout} className={`${normalLink} text-red-600 hover:text-red-800`}>
+          <div className="mt-15">
+            <button onClick={handleLogout} className={`${normalLink} text-Grey-600 hover:text-red-800`}>
               <MDBIcon icon="sign-out-alt" />
               <span className="capitalize ml-3">Logout</span>
             </button>
