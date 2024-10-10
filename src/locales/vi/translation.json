@@ -9,5 +9,22 @@
     "login": "Đăng nhập",
     "lg1": "Cùng chúng tôi ",
     "lg2": "tạo cơ hội thứ hai cho thú cưng",
-    "lg3": "Hãy giúp chúng tôi mang lại cuộc sống mới cho những thú cưng bị bỏ rơi. Với sự ủng hộ của bạn, chúng tôi có thể cung cấp nơi ở an toàn, chăm sóc y tế, và tình yêu thương cho những người bạn bốn chân này. Mỗi sự đóng góp và hành động nhận nuôi đều làm thay đổi cuộc đời một thú cưng."
+    "lg3": "Hãy giúp chúng tôi mang lại cuộc sống mới cho những thú cưng bị bỏ rơi. Với sự ủng hộ của bạn, chúng tôi có thể cung cấp nơi ở an toàn, chăm sóc y tế, và tình yêu thương cho những người bạn bốn chân này. Mỗi sự đóng góp và hành động nhận nuôi đều làm thay đổi cuộc đời một thú cưng.",
+    "type": "Loại",
+    "breed": "Giống",
+    "age": "Tuổi",
+    "gender": "Giới tính",
+    "size": "Kích thước",
+    "color": "Màu sắc",
+    "status": "Trạng thái",
+    "adoption-status": "Tình trạng nhận nuôi",
+    "description": "Mô tả",
+    "years": "tuổi",
+    "adopt": "Nhận nuôi",
+    "previous": "Trước",
+    "next": "Sau",
+    "page": "Trang",
+    "of": "của",
+    "logout": "Đăng xuất",
+    "userinformation": "Thông tin người dùng"
 }

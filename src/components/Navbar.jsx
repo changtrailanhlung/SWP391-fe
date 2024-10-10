@@ -8,10 +8,22 @@ import flagVietnamese from "../assets/images/flagVietnamese.png";
 function Navbar() {
   const { t, i18n } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const mobileMenuRef = useRef(null);
+
+  // Retrieve username from localStorage
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("token");
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    localStorage.removeItem("token"); // Remove token
+    // Redirect to login or home page after logout if needed
+    window.location.href = "/admin/login"; // Change this if you have a different route
   };
 
   // Close mobile menu when clicking outside
@@ -73,14 +85,6 @@ function Navbar() {
           <li>
             <Link
               className="text-black no-underline hover:underline"
-              to="/registration-form"
-            >
-              {t("registrationform")}
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="text-black no-underline hover:underline"
               to="/donate"
             >
               {t("donate")}
@@ -94,12 +98,45 @@ function Navbar() {
               {t("contact")}
             </Link>
           </li>
-          <li>
-            <Link to="/admin/login" className="flex items-center">
-              <i className="pi pi-user text-lg mr-1"></i>
-              {t("login")}
-            </Link>
-          </li>
+          {/* Display username with logout option */}
+          {username ? (
+            <li className="relative flex items-center">
+              <span
+                className="text-black cursor-pointer"
+                onClick={() => setIsDropdownOpen((prev) => !prev)} // Toggle dropdown on click
+              >
+                <i className="pi pi-user text-lg mr-1"></i>
+                {username}
+              </span>
+              {isDropdownOpen && (
+                <div
+                  onMouseEnter={() => setIsDropdownOpen(true)} // Keep dropdown open when hovered
+                  onMouseLeave={() => setIsDropdownOpen(false)} // Close dropdown when mouse leaves
+                  className="absolute right-0 mt-2 bg-white border border-gray-300 rounded shadow-lg"
+                >
+                  <Link
+                    to="/user-info" // Adjust the route as necessary
+                    className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
+                  >
+                    {t("userinformation")}
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
+                  >
+                    {t("logout")}
+                  </button>
+                </div>
+              )}
+            </li>
+          ) : (
+            <li>
+              <Link to="/admin/login" className="flex items-center">
+                <i className="pi pi-user text-lg mr-1"></i>
+                {t("login")}
+              </Link>
+            </li>
+          )}
           {/* Language buttons */}
           <div className="hidden md:flex gap-2">
             <button
@@ -152,14 +189,6 @@ function Navbar() {
             <li>
               <Link
                 className="text-black no-underline hover:underline"
-                to="/registration-form"
-              >
-                {t("registrationform")}
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-black no-underline hover:underline"
                 to="/donate"
               >
                 {t("donate")}
@@ -173,12 +202,90 @@ function Navbar() {
                 {t("contact")}
               </Link>
             </li>
-            <li>
-              <Link to="/admin/login" className="flex items-center">
-                <i className="pi pi-user text-lg mr-1"></i>
-                {t("login")}
-              </Link>
-            </li>
+            {/* Display username with logout option */}
+            {isMobileMenuOpen && (
+              <div
+                ref={mobileMenuRef}
+                className="flex flex-col items-center p-4 md:hidden"
+              >
+                <Link to="/" className="mb-4">
+                  <img src={logo} alt="Logo" className="h-24" />
+                </Link>
+                <ul className="flex flex-col items-center gap-4">
+                  <li>
+                    <Link
+                      className="text-black no-underline hover:underline"
+                      to="/"
+                    >
+                      {t("home")}
+                    </Link>
+                  </li>
+                  {/* Other links... */}
+                  {/* Display username with logout option */}
+                  {username ? (
+                    <li className="relative flex items-center">
+                      <span
+                        className="text-black cursor-pointer"
+                        onClick={() => setIsDropdownOpen((prev) => !prev)} // Toggle dropdown on click
+                      >
+                        <i className="pi pi-user text-lg mr-1"></i>
+                        {username}
+                      </span>
+                      {isDropdownOpen && (
+                        <div
+                          onMouseEnter={() => setIsDropdownOpen(true)} // Keep dropdown open when hovered
+                          onMouseLeave={() => setIsDropdownOpen(false)} // Close dropdown when mouse leaves
+                          className="absolute right-0 mt-2 bg-white border border-gray-300 rounded shadow-lg"
+                        >
+                          <Link
+                            to="/user-info" // Adjust the route as necessary
+                            className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
+                          >
+                            {t("userinformation")}
+                          </Link>
+                          <button
+                            onClick={handleLogout}
+                            className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
+                          >
+                            {t("logout")}
+                          </button>
+                        </div>
+                      )}
+                    </li>
+                  ) : (
+                    <li>
+                      <Link to="/admin/login" className="flex items-center">
+                        <i className="pi pi-user text-lg mr-1"></i>
+                        {t("login")}
+                      </Link>
+                    </li>
+                  )}
+                  {/* Language buttons for mobile */}
+                  <div className="flex gap-2 mt-4">
+                    <button
+                      onClick={() => changeLanguage("en")}
+                      className="flex items-center"
+                    >
+                      <img
+                        src={flagEnglish}
+                        alt="English"
+                        className="h-6 mr-1"
+                      />
+                    </button>
+                    <button
+                      onClick={() => changeLanguage("vi")}
+                      className="flex items-center"
+                    >
+                      <img
+                        src={flagVietnamese}
+                        alt="Vietnamese"
+                        className="h-6 mr-1"
+                      />
+                    </button>
+                  </div>
+                </ul>
+              </div>
+            )}
             {/* Language buttons for mobile */}
             <div className="flex gap-2 mt-4">
               <button
