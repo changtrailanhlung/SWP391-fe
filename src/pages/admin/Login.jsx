@@ -44,13 +44,17 @@ function Login() {
         // Lấy vai trò của người dùng
         const roleResponse = await axios.get(`/userrole/role/${userId}/roles`);
         const userRoles = roleResponse.data[0].roles;
-  
-        localStorage.setItem('userRoles', JSON.stringify(userRoles));
-  
-        if (userRoles.includes('Admin')) {
-          navigate('/admin/dashboard');
-        } else if (userRoles.includes('ShelterStaff')) {
-          navigate('/shelter/dashboard');
+
+        localStorage.setItem("userRoles", JSON.stringify(userRoles));
+
+        // Set user in context
+        setUser({ id: userId, username, roles: userRoles });
+
+        // Redirect based on role
+        if (userRoles && userRoles.includes("Admin")) {
+          navigate("/admin/dashboard");
+        } else if (userRoles.includes("ShelterStaff")) {
+          navigate("/shelter/dashboard");
         } else {
           navigate('/');
         }
