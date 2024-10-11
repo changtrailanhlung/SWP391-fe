@@ -5,7 +5,8 @@ import { useAuth } from "../context/AuthContext"; // Adjust the path as necessar
 const PrivateRoute = ({ element, allowedRoles }) => {
   const { user } = useAuth(); // Assuming `user` contains user info including roles
 
-  const isAllowed = user && allowedRoles.includes(user.role); // Replace `user.role` with your logic
+  const isAllowed = user && user.roles && user.roles.some(role => allowedRoles.includes(role)); // Replace `user.role` with your logic
+  
 
   return isAllowed ? element : <Navigate to="/admin/login" replace />;
 };
