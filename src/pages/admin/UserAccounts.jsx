@@ -1,94 +1,85 @@
-// src/pages/admin/UserAccounts.jsx
-
-import React, { useEffect, useState } from 'react';
-import {
-  GridComponent,
-  ColumnsDirective,
-  ColumnDirective,
-  Page,
-  Selection,
-  Inject,
-  Edit,
-  Toolbar,
-  Sort,
-  Filter
-} from '@syncfusion/ej2-react-grids';
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import axios from "../../services/axiosClient";
+import React, { useEffect, useState } from "react";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { Toast } from "primereact/toast";
+import api from "../../services/axiosClient"; // Import your API utility
 
 const UserAccounts = () => {
   const [users, setUsers] = useState([]);
-  const { t } = useTranslation();
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const toast = React.useRef(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('/users');
-        const usersWithRoles = await Promise.all(
-          response.data.map(async (user) => {
-            const roleResponse = await axios.get(`/userrole/role/${user.id}/roles`);
-            const rolesArray = roleResponse.data.map(role => role.roles).flat();
-            return { ...user, roles: rolesArray.join(', ') };
-          })
-        );
-        setUsers(usersWithRoles);
+        const response = await api.get("/users"); // Fetch user data
+        setUsers(response.data); // Update state with user data
       } catch (error) {
-        console.error('Lỗi khi tải danh sách người dùng:', error);
-        if (error.response && error.response.status === 401) {
-          toast.error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
-          navigate("/admin/login");
-        } else {
-          toast.error("Có lỗi xảy ra khi tải danh sách người dùng.");
-        }
+        console.error(error);
+        toast.current.show({
+          severity: "error",
+          summary: "Error",
+          detail: "Could not fetch users",
+          life: 3000,
+        });
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchUsers();
-  }, [navigate]);
-
-  const selectionSettings = { persistSelection: true };
-  const toolbarOptions = ['Delete'];
-  const editing = { allowDeleting: true, allowEditing: true };
-
-  const userColumns = [
-    { field: 'username', headerText: t('username'), width: '120', textAlign: 'Center' },
-    { field: 'email', headerText: t('email'), width: '150', textAlign: 'Center' },
-    { field: 'phone', headerText: t('phone'), width: '120', textAlign: 'Center', template: (row) => row.phone || 'N/A' },
-    { field: 'password', headerText: t('password'), width: '120', textAlign: 'Center', template: () => '********' },
-    { field: 'location', headerText: t('location'), width: '120', textAlign: 'Center', template: (row) => row.location || 'N/A' },
-    { field: 'roles', headerText: t('roles'), width: '150', textAlign: 'Center' },
-  ];
+  }, []);
 
   return (
-    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      
-      <div className="mb-10">
-    <p className="text-lg text-gray-400">Page</p>
-    <p className="text-3xl font-extrabold tracking-tight text-slate-900">
-      {t("userAccounts")}
-    </p>
-  </div>
-      <GridComponent
-        dataSource={users}
-        allowPaging
-        pageSettings={{ pageCount: 5 }}
-        selectionSettings={selectionSettings}
-        toolbar={toolbarOptions}
-        editSettings={editing}
-        allowSorting
-        allowFiltering
-        enableHover={false}
-      >
-        <ColumnsDirective>
-          {userColumns.map((item, index) => (
-            <ColumnDirective key={index} {...item} />
-          ))}
-        </ColumnsDirective>
-        <Inject services={[Page, Selection, Toolbar, Edit, Sort, Filter]} />
-      </GridComponent>
+    <div className="container mx-auto p-4">
+      <Toast ref={toast} />
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">User Accounts</h2>
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+        <DataTable
+          value={users}
+          loading={loading}
+          paginator
+          rows={10}
+          className="p-datatable-custom"
+          tableStyle={{ minWidth: "50rem" }} // Minimum width for responsiveness
+        >
+          <Column
+            field="id"
+            header="ID"
+            sortable
+            className="border border-gray-300 p-2"
+            headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
+          />
+          <Column
+            field="username"
+            header="Username"
+            sortable
+            className="border border-gray-300 p-2"
+            headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
+          />
+          <Column
+            field="email"
+            header="Email"
+            sortable
+            className="border border-gray-300 p-2"
+            headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
+          />
+          <Column
+            field="phone"
+            header="Phone"
+            sortable
+            className="border border-gray-300 p-2"
+            headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
+          />
+          <Column
+            field="location"
+            header="Location"
+            sortable
+            className="border border-gray-300 p-2"
+            headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
+          />
+        </DataTable>
+      </div>
     </div>
   );
 };

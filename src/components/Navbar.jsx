@@ -23,7 +23,7 @@ function Navbar() {
     localStorage.removeItem("username");
     localStorage.removeItem("token"); // Remove token
     // Redirect to login or home page after logout if needed
-    window.location.href = "/admin/login"; // Change this if you have a different route
+    window.location.href = "/"; // Change this if you have a different route
   };
 
   // Close mobile menu when clicking outside

@@ -26,5 +26,13 @@
     "page": "Trang",
     "of": "của",
     "logout": "Đăng xuất",
-    "userinformation": "Thông tin người dùng"
+    "userinformation": "Thông tin người dùng",
+    "profile": {
+        "title": "Hồ sơ người dùng",
+        "username": "Tên người dùng",
+        "email": "Email",
+        "phone": "Điện thoại",
+        "location": "Địa điểm",
+        "noData": "Không có dữ liệu"
+    }
 }
