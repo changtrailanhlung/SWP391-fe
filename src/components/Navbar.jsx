@@ -20,8 +20,7 @@ function Navbar() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("username");
-    localStorage.removeItem("token"); // Remove token
+    localStorage.clear();
     // Redirect to login or home page after logout if needed
     window.location.href = "/"; // Change this if you have a different route
   };
