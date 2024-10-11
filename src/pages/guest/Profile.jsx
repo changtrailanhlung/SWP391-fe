@@ -6,7 +6,7 @@ const Profile = () => {
   const { t } = useTranslation();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const userId = 6; // Set this to the ID of the user you want to fetch
+  const userId = localStorage.getItem("nameid");
 
   useEffect(() => {
     const fetchUserData = async () => {
