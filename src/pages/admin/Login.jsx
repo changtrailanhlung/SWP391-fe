@@ -18,6 +18,7 @@ import {
 import "../../style/LoginPage.css";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { jwtDecode } from "jwt-decode";
 
 function Login() {
   const { setUser } = useAuth();
@@ -44,11 +45,13 @@ function Login() {
       if (loginResponse.status === 200 && loginResponse.data.data) {
         const { id: userId, username } = loginResponse.data.data.user;
         const token = loginResponse.data.data.token;
+        const user = jwtDecode(token); // Decode token to get user details
 
         // Store token and user information in localStorage
         localStorage.setItem("token", token);
-        localStorage.setItem("nameid", userId);
-        localStorage.setItem("username", username);
+        localStorage.setItem("nameid", user.nameid);
+        localStorage.setItem("username", user.unique_name);
+        localStorage.setItem("role", user.role);
 
         // Fetch user roles
         const roleResponse = await axios.get(`/userrole/role/${userId}/roles`);
