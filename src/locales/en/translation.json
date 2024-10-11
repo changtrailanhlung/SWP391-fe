@@ -26,5 +26,13 @@
     "page": "Page",
     "of": "of",
     "logout": "Logout",
-    "userinformation": "User Information"
+    "userinformation": "User Information",
+    "profile": {
+        "title": "User Profile",
+        "username": "Username",
+        "email": "Email",
+        "phone": "Phone",
+        "location": "Location",
+        "noData": "No data available"
+    }
 }
