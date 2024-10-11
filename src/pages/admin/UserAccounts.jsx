@@ -44,6 +44,13 @@ const UserAccounts = () => {
           tableStyle={{ minWidth: "50rem" }} // Minimum width for responsiveness
         >
           <Column
+            field="id"
+            header="ID"
+            sortable
+            className="border border-gray-300 p-2"
+            headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
+          />
+          <Column
             field="username"
             header="Username"
             sortable
