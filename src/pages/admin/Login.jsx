@@ -60,7 +60,9 @@ function Login() {
         setUser({ id: userId, username, roles: userRoles });
 
         // Redirect based on role
-        if (userRoles.includes("Admin")) {
+
+        if (userRoles && userRoles.includes("Admin")) {
+
           navigate("/admin/dashboard");
         } else if (userRoles.includes("ShelterStaff")) {
           navigate("/shelter/dashboard");
