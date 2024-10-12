@@ -18,7 +18,7 @@ import {
 import "../../style/LoginPage.css";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 
 function Login() {
   const { setUser } = useAuth();
@@ -26,7 +26,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
 
   const handleRegisterClick = () => {
     navigate("/admin/signup");
@@ -34,7 +34,7 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true when logging in
+    setLoading(true);
 
     try {
       const loginResponse = await axios.post("/auth/login", {
@@ -45,9 +45,8 @@ function Login() {
       if (loginResponse.status === 200 && loginResponse.data.data) {
         const { id: userId, username } = loginResponse.data.data.user;
         const token = loginResponse.data.data.token;
-        const user = jwtDecode(token); // Decode token to get user details
+        const user = jwtDecode(token);
 
-        // Store token and user information in localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("nameid", user.nameid);
         localStorage.setItem("username", user.unique_name);
@@ -55,17 +54,18 @@ function Login() {
 
         // Fetch user roles
         const roleResponse = await axios.get(`/userrole/role/${userId}/roles`);
-        const userRoles = roleResponse.data[0].roles;
+        let userRoles = [];
+
+        if (roleResponse.data && roleResponse.data.roles) {
+          userRoles = roleResponse.data.roles;
+        } else {
+          throw new Error("User roles not found");
+        }
 
         localStorage.setItem("userRoles", JSON.stringify(userRoles));
-
-        // Set user in context
         setUser({ id: userId, username, roles: userRoles });
 
-        // Redirect based on role
-
-        if (userRoles && userRoles.includes("Admin")) {
-
+        if (userRoles.includes("Admin")) {
           navigate("/admin/dashboard");
         } else if (userRoles.includes("ShelterStaff")) {
           navigate("/shelter/dashboard");
@@ -83,7 +83,7 @@ function Login() {
       console.error("Lỗi đăng nhập:", error);
       toast.error("Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại.");
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
@@ -110,7 +110,6 @@ function Login() {
             {t("lg3")}
           </p>
         </MDBCol>
-
         {/* Login form */}
         <MDBCol md="6" className="position-relative">
           <div
