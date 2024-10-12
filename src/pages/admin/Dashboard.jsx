@@ -54,6 +54,7 @@ const Dashboard = () => {
             label: 'Donation Amount',
             backgroundColor: backgroundColors,
             borderColor: borderColors,
+            borderRadius: 10,
             data
           }]
         });
@@ -63,8 +64,14 @@ const Dashboard = () => {
           aspectRatio: 0.8,
           plugins: {
             legend: {
+              display: true,
               labels: {
-                fontColor: textColor
+                fontColor: textColor,
+                boxWidth: 0, // Set width of color box to 0 to hide it
+                font: {
+                  size: 16, // Phóng to chữ
+                  weight: 'bold' // In đậm chữ
+                }
               }
             }
           },
@@ -102,8 +109,6 @@ const Dashboard = () => {
 
   return (
     <div className="p-4 bg-white shadow rounded-lg">
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-      <p>Welcome to the admin dashboard! Here, you can manage and view statistics.</p>
       <div className="card">
         <Chart type="bar" data={chartData} options={chartOptions} />
       </div>
