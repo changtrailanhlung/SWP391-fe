@@ -42,11 +42,11 @@ const UpdateInfo = () => {
     setLoading(true); // Set loading state to true
     try {
       await axios.put(`/users/${userId}`, userData); // PUT request to update user info
-      toast.success(t("profileUpdateSuccess")); // Show success toast
+      toast.success(t("updateInfo.profileUpdateSuccess")); // Show success toast
       navigate("/user-info"); // Redirect to user info page
     } catch (error) {
       console.error("Error updating user info:", error);
-      toast.error(t("profileUpdateError")); // Show error toast
+      toast.error(t("updateInfo.profileUpdateError")); // Show error toast
     } finally {
       setLoading(false); // Reset loading state
     }
