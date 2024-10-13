@@ -57,7 +57,39 @@ const [totalRecords, setTotalRecords] = useState(0); // Add total records state
     // Clear error when user starts typing in the input
     if (errors[name]) setErrors({ ...errors, [name]: null });
   };
+  const handleDeleteUser = async (userId) => {
+    try {
+      const response = await axios.delete(`https://localhost:7130/api/users/${userId}`);
+      if (response.status === 200) {
+        setUsers(users.filter(user => user.id !== userId));
+        toast.current.show({
+          severity: "success",
+          summary: "Deleted",
+          detail: "User deleted successfully",
+          life: 3000,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: "Could not delete user",
+        life: 3000,
+      });
+    }
+  };
 
+  const deleteBodyTemplate = (rowData) => {
+    return (
+      <Button
+        label="Delete"
+        icon="pi pi-times"
+        className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-full inline-flex items-center transition-colors duration-300"
+        onClick={() => handleDeleteUser(rowData.id)}
+      />
+    );
+  };
   const findFormErrors = () => {
     const { username, email, location, phone, password, role } = newUser;
     const newErrors = {};
@@ -152,9 +184,10 @@ const [totalRecords, setTotalRecords] = useState(0); // Add total records state
     <div className="container mx-auto p-4">
       <Toast ref={toast} />
       <h2 className="text-3xl font-bold mb-6 text-gray-800">User Accounts</h2>
+      <Button label=" Create User" icon="pi pi-plus" class="bg-blue-500 text-white font-bold py-2 px-2 rounded-lg" onClick={() => setVisible(true)} />
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         {/* Nút để mở dialog tạo tài khoản */}
-        <Button label="Create User" icon="pi pi-plus" onClick={() => setVisible(true)} />
+        
         
         <DataTable
           value={users}
@@ -207,6 +240,12 @@ const [totalRecords, setTotalRecords] = useState(0); // Add total records state
           <Column
           header="Roles"
           body={roleBodyTemplate}
+          className="border border-gray-300 p-2"
+          headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
+        />  
+        <Column
+          
+          body={deleteBodyTemplate}
           className="border border-gray-300 p-2"
           headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
         />
