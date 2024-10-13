@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import GuestRoutes from "./routes/GuestRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
+import EventDetail from "./pages/guest/EventDetail";
 import { AuthProvider } from "./context/AuthContext"; // Import your AuthProvider
 import "./style/tailwind.css";
 import "primeicons/primeicons.css";
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/*" element={<GuestRoutes />} />
           <Route path="/admin/*" element={<AdminRoutes />} />
+          <Route path="/events/:id" element={<EventDetail />} />
         </Routes>
       </Router>
     </AuthProvider>
