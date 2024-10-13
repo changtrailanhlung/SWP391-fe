@@ -8,6 +8,10 @@ import Pets from "../pages/guest/Pets";
 import Profile from "../pages/guest/Profile";
 import Donates from "../pages/guest/Donates";
 import Events from "../pages/guest/Events";
+import ChangePassword from "../pages/guest/ChangePassword";
+import UpdateProfile from "../pages/guest/UpdateInfo";
+import EventDetail from "../pages/guest/EventDetail";
+import DonationForm from "../pages/guest/DonationForm"; // Adjust import path as necessary
 import ScrollToTopButton from "../components/ScrollToTopButton";
 
 const GuestRoutes = () => {
@@ -22,6 +26,10 @@ const GuestRoutes = () => {
           <Route path="/user-info" element={<Profile />} />
           <Route path="/donate" element={<Donates />} />
           <Route path="/event" element={<Events />} />
+          <Route path="/change-password" element={<ChangePassword />} />
+          <Route path="/update-profile" element={<UpdateProfile />} />
+          <Route path="/event/:id" element={<EventDetail />} />
+          <Route path="/donate/:shelterId" element={<DonationForm />} />
         </Route>
       </Routes>
       <ScrollToTopButton />

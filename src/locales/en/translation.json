@@ -33,6 +33,14 @@
         "email": "Email",
         "phone": "Phone",
         "location": "Location",
-        "noData": "No data available"
+        "noData": "No data available",
+        "donate": "Total Donation",
+        "changePassword": "Change Password",
+        "updateInfo": "Update Info",
+        "oldPassword": "Old Password",
+        "newPassword": "New Password",
+        "loading": "Loading...",
+        "passwordChangeSuccess": "Password changed successfully!",
+        "passwordChangeError": "Error changing password. Please try again."
     }
 }

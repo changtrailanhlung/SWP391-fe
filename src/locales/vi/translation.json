@@ -33,6 +33,14 @@
         "email": "Email",
         "phone": "Điện thoại",
         "location": "Địa điểm",
-        "noData": "Không có dữ liệu"
+        "noData": "Không có dữ liệu",
+        "donate": "Tổng số tiền đã quyên góp",
+        "changePassword": "Đổi mật khẩu",
+        "updateInfo": "Cập nhật thông tin",
+        "oldPassword": "Mật Khẩu Cũ",
+        "newPassword": "Mật Khẩu Mới",
+        "loading": "Đang Tải...",
+        "passwordChangeSuccess": "Đổi mật khẩu thành công!",
+        "passwordChangeError": "Lỗi khi đổi mật khẩu. Vui lòng thử lại."
     }
 }
