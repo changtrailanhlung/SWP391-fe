@@ -30,6 +30,11 @@ const UserAccounts = () => {
     fetchUsers();
   }, []);
 
+  // Image column template
+  const imageBodyTemplate = (rowData) => {
+    return <img src={rowData.image} alt={rowData.username} className="w-16 h-16 object-cover rounded-lg" />;
+  };
+
   return (
     <div className="container mx-auto p-4">
       <Toast ref={toast} />
@@ -44,9 +49,14 @@ const UserAccounts = () => {
           tableStyle={{ minWidth: "50rem" }} // Minimum width for responsiveness
         >
           <Column
-            field="id"
-            header="ID"
-            sortable
+            header="No."
+            body={(rowData, { rowIndex }) => rowIndex + 1}
+            className="border border-gray-300 p-2"
+            headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
+          />
+          <Column
+            header="Image"
+            body={imageBodyTemplate}
             className="border border-gray-300 p-2"
             headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
           />

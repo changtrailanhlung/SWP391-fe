@@ -5,16 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 import axios from "../../services/axiosClient";
-import {
-  MDBBtn,
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-  MDBIcon,
-} from "mdb-react-ui-kit";
+import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBIcon } from "mdb-react-ui-kit";
 import "../../style/LoginPage.css";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -35,7 +26,6 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const loginResponse = await axios.post("/auth/login", {
         email,
@@ -45,25 +35,29 @@ function Login() {
       if (loginResponse.status === 200 && loginResponse.data.data) {
         const { id: userId, username } = loginResponse.data.data.user;
         const token = loginResponse.data.data.token;
-        const user = jwtDecode(token);
+        const decodedUser = jwtDecode(token);
 
         localStorage.setItem("token", token);
-        localStorage.setItem("nameid", user.nameid);
-        localStorage.setItem("username", user.unique_name);
-        localStorage.setItem("role", user.role);
+        localStorage.setItem("nameid", decodedUser.nameid);
+        localStorage.setItem("username", decodedUser.unique_name);
+        localStorage.setItem("role", decodedUser.role);
 
         // Fetch user roles
         const roleResponse = await axios.get(`/userrole/role/${userId}/roles`);
         let userRoles = [];
-
         if (roleResponse.data && roleResponse.data.roles) {
           userRoles = roleResponse.data.roles;
         } else {
           throw new Error("User roles not found");
         }
-
         localStorage.setItem("userRoles", JSON.stringify(userRoles));
-        setUser({ id: userId, username, roles: userRoles });
+
+        const userData = {
+          id: userId,
+          username,
+          roles: userRoles,
+        };
+        setUser(userData);
 
         if (userRoles.includes("Admin")) {
           navigate("/admin/dashboard");
@@ -72,12 +66,9 @@ function Login() {
         } else {
           navigate("/");
         }
-
         toast.success("Đăng nhập thành công!");
       } else {
-        toast.error(
-          "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập."
-        );
+        toast.error("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập.");
       }
     } catch (error) {
       console.error("Lỗi đăng nhập:", error);
