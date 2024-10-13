@@ -7,10 +7,10 @@ import PrivateRoute from "./PrivateRoute";
 
 const ShelterRoutes = () => {
   return (
-    <Routes>
+    <Routes>src/routes/ShelterRoutes.jsx
       <Route element={<ShelterLayout />}>
         <Route
-          path="shelter/dashboard"
+          path="dashboard"
           element={
             <PrivateRoute
               element={<Dashboard />}
