@@ -44,6 +44,7 @@ const [totalRecords, setTotalRecords] = useState(0); // Add total records state
     };
     fetchUsers();
   }, []);
+  
 
   const imageBodyTemplate = (rowData) => {
     return <img src={rowData.image} alt={rowData.username} className="w-16 h-16 object-cover rounded-lg" />;
@@ -126,7 +127,27 @@ const [totalRecords, setTotalRecords] = useState(0); // Add total records state
     );
     
     }}
-
+    const roleBodyTemplate = (rowData) => {
+      const roleClasses = {
+        admin: 'bg-red-500 text-white font-bold py-1 px-2 rounded-lg',
+        shelterstaff: 'bg-green-500 text-white font-bold py-1 px-2 rounded-lg',
+        donor: 'bg-yellow-500 text-white font-bold py-1 px-2 rounded-lg',
+        volunteer: 'bg-blue-500 text-white font-bold py-1 px-2 rounded-lg',
+        adopter: 'bg-purple-500 text-white font-bold py-1 px-2 rounded-lg'
+      };
+    
+      return (
+        <div className="flex flex-wrap">
+          {rowData.roles.map((role, index) => (
+            <span key={index} className={`${roleClasses[role.toLowerCase()]}`}>
+              {role}
+            </span>
+          ))}
+        </div>
+      );
+    };
+    
+    
   return (
     <div className="container mx-auto p-4">
       <Toast ref={toast} />
@@ -183,6 +204,13 @@ const [totalRecords, setTotalRecords] = useState(0); // Add total records state
             className="border border-gray-300 p-2"
             headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
           />
+          <Column
+          header="Roles"
+          body={roleBodyTemplate}
+          className="border border-gray-300 p-2"
+          headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
+        />
+
         </DataTable>
       </div>
 
