@@ -159,7 +159,7 @@ const Dashboard = () => {
           <div className="flex justify-content-between gap-5">
             <div className="flex flex-column gap-1">
               <span className="text-secondary text-sm">Total Pets</span>
-              <span className="font-bold text-lg">{totalPets}</span>
+              <span className="font-bold text-lg">{totalAvailablePets}</span>
             </div>
             <span className="w-2rem h-2rem border-circle inline-flex justify-content-center align-items-center text-center" style={{ backgroundColor: '#fbbf24', color: '#ffffff' }}>
               <i className="pi pi-apple" />
@@ -188,17 +188,7 @@ const Dashboard = () => {
             </span>
           </div>
         </Card>
-        <Card className="flex-1">
-          <div className="flex justify-content-between gap-5">
-            <div className="flex flex-column gap-1">
-              <span className="text-secondary text-sm">Available Pets</span>
-              <span className="font-bold text-lg">{totalAvailablePets}</span>
-            </div>
-            <span className="w-2rem h-2rem border-circle inline-flex justify-content-center align-items-center text-center" style={{ backgroundColor: '#60a5fa', color: '#ffffff' }}>
-              <i className="pi pi-paw" />
-            </span>
-          </div>
-        </Card>
+        
       </div>
       <div className="card">
         <Chart type="bar" data={chartData} options={chartOptions} />
