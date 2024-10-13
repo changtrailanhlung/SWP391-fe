@@ -27,10 +27,10 @@ api.interceptors.response.use(
         window.location.href = "/admin/login"; // Adjust to your login route
       } else if (error.response.status >= 400) {
         // Handle other errors globally
-        alert(
-          "An error occurred: " +
-            (error.response.data?.message || "Unknown error")
-        );
+        // alert(
+        //   "An error occurred: " +
+        //     (error.response.data?.message || "Unknown error")
+        // );
       }
     } else {
       // Handle network errors

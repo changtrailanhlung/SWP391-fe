@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import axios from "../../services/axiosClient";
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 
 const Profile = () => {
   const { t } = useTranslation();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("nameid");
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -27,6 +29,14 @@ const Profile = () => {
   const formatNumber = (number) => {
     if (!number) return "0";
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Format number with dots
+  };
+
+  const handleChangePassword = () => {
+    navigate("/change-password"); // Navigate to change password route
+  };
+
+  const handleUpdateInfo = () => {
+    navigate("/update-profile"); // Navigate to update profile route
   };
 
   if (loading) {
@@ -81,6 +91,22 @@ const Profile = () => {
               {formatNumber(user?.totalDonation)} VND
             </span>
           </h4>
+
+          {/* Add buttons for changing password and updating info */}
+          <div className="mt-4 flex space-x-4">
+            <button
+              onClick={handleChangePassword}
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              {t("profile.changePassword")}
+            </button>
+            <button
+              onClick={handleUpdateInfo}
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              {t("profile.updateInfo")}
+            </button>
+          </div>
         </div>
       </div>
     </div>
