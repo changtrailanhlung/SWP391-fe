@@ -27,7 +27,7 @@ const UpdateInfo = () => {
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
-        toast.error(t("profileUpdateError")); // Show error toast if fetching fails
+        toast.error(t("updateInfo.profileUpdateError")); // Show error toast if fetching fails
       } finally {
         setLoading(false); // Set loading to false once data is fetched
       }
