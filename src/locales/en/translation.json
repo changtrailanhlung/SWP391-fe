@@ -42,5 +42,14 @@
         "loading": "Loading...",
         "passwordChangeSuccess": "Password changed successfully!",
         "passwordChangeError": "Error changing password. Please try again."
+    },
+    "updateInfo": {
+        "title": "Update Information",
+        "username": "Username",
+        "location": "Location",
+        "phone": "Phone",
+        "button": "Update Info",
+        "profileUpdateSuccess": "Profile updated successfully!",
+        "profileUpdateError": "Error updating profile. Please try again."
     }
 }
