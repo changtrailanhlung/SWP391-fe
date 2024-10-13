@@ -24,6 +24,11 @@ const Profile = () => {
     fetchUserData();
   }, [userId]);
 
+  const formatNumber = (number) => {
+    if (!number) return "0";
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Format number with dots
+  };
+
   if (loading) {
     return <div className="text-center mt-5">Loading...</div>; // Add a loading spinner or message if desired
   }
@@ -68,6 +73,12 @@ const Profile = () => {
             {t("profile.location")}:
             <span className="font-normal">
               {user?.location || t("profile.noData")}
+            </span>
+          </h4>
+          <h4 className="text-lg font-semibold">
+            {t("profile.donate")}:
+            <span className="font-normal">
+              {formatNumber(user?.totalDonation)} VND
             </span>
           </h4>
         </div>

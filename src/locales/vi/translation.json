@@ -33,6 +33,7 @@
         "email": "Email",
         "phone": "Điện thoại",
         "location": "Địa điểm",
-        "noData": "Không có dữ liệu"
+        "noData": "Không có dữ liệu",
+        "donate": "Tổng số tiền đã quyên góp"
     }
 }

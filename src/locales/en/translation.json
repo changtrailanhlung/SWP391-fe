@@ -33,6 +33,7 @@
         "email": "Email",
         "phone": "Phone",
         "location": "Location",
-        "noData": "No data available"
+        "noData": "No data available",
+        "donate": "Total Donation"
     }
 }
