@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom"; // To get the shelter ID from the URL
+import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "../../services/axiosClient"; // Adjust the import path as necessary
+import { toast } from "react-toastify"; // Import toast
 
 const DonationForm = () => {
   const { shelterId } = useParams(); // Get shelter ID from URL
   const [amount, setAmount] = useState(0); // State to hold donation amount
-  const [message, setMessage] = useState(""); // State for messages
+  const navigate = useNavigate(); // Initialize useNavigate
 
   // Get donorId from local storage
   const donorId = localStorage.getItem("nameid"); // Ensure donorId is stored in local storage
@@ -19,33 +20,48 @@ const DonationForm = () => {
         shelterId: Number(shelterId), // Convert shelterId to a number
       });
       console.log("Donation Response:", response.data);
-      setMessage("Donation successful! Thank you for your contribution.");
+      toast.success("Donation successful! Thank you for your contribution."); // Show success toast
+      // Redirect to the /donate page after a successful donation
+      setTimeout(() => {
+        navigate("/donate"); // Use navigate to redirect
+      }, 2000); // Wait for 2 seconds before redirecting
     } catch (error) {
       console.error("Error creating donation:", error);
-      setMessage("An error occurred while processing your donation.");
+      toast.error("An error occurred while processing your donation."); // Show error toast
     }
   };
 
   return (
-    <div className="container mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Make a Donation</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(Number(e.target.value))}
-          placeholder="Enter donation amount"
-          className="border p-2 rounded w-full mb-2"
-          required
-        />
+    <div className="container mx-auto py-8">
+      <h1 className="text-3xl font-bold text-center mb-6">Make a Donation</h1>
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md"
+      >
+        <div className="mb-4">
+          <label
+            className="block text-sm font-medium text-gray-700 mb-1"
+            htmlFor="amount"
+          >
+            Donation Amount
+          </label>
+          <input
+            id="amount"
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(Number(e.target.value))}
+            placeholder="Enter donation amount"
+            className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            required
+          />
+        </div>
         <button
           type="submit"
-          className="bg-green-500 text-white py-2 px-4 rounded"
+          className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition duration-200"
         >
           Donate
         </button>
       </form>
-      {message && <p className="mt-4">{message}</p>}
     </div>
   );
 };

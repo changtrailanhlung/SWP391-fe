@@ -14,7 +14,15 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <ToastContainer />
+        <ToastContainer
+          position="top-right" // Position of the toast
+          autoClose={3000} // Duration before the toast disappears
+          hideProgressBar={false} // Show progress bar or not
+          closeOnClick // Close on click
+          pauseOnHover // Pause on hover
+          draggable // Allow dragging the toast
+          theme="light" // Theme style (light or dark)
+        />
         <Routes>
           <Route path="/*" element={<GuestRoutes />} />
           <Route path="/admin/*" element={<AdminRoutes />} />
