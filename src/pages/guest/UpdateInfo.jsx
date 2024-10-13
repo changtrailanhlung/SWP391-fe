@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Import necessary hooks
+import { useNavigate } from "react-router-dom";
 import axios from "../../services/axiosClient";
-import { toast } from "react-toastify"; // Import toast
-import { useTranslation } from "react-i18next"; // Import useTranslation
+import { toast } from "react-toastify"; // Import toast for notifications
+import { useTranslation } from "react-i18next"; // Import useTranslation for internationalization
 
 const UpdateInfo = () => {
   const { t } = useTranslation(); // Initialize translation
-  const { id } = useParams(); // Get user ID from URL parameters
   const [userData, setUserData] = useState({
     username: "",
     location: "",
     phone: "",
   });
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [loading, setLoading] = useState(true); // Loading state
+  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const userId = localStorage.getItem("nameid"); // Fetch user ID from local storage
 
   // Fetch user data to pre-fill the form
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`/users/${id}`);
+        const response = await axios.get(`/users/${userId}`); // Fetch user data from API
         setUserData({
           username: response.data.username,
           location: response.data.location,
@@ -27,20 +27,21 @@ const UpdateInfo = () => {
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
+        toast.error(t("profileUpdateError")); // Show error toast if fetching fails
       } finally {
-        setLoading(false);
+        setLoading(false); // Set loading to false once data is fetched
       }
     };
 
-    fetchUserData();
-  }, [id]);
+    fetchUserData(); // Call the function to fetch user data
+  }, [userId]); // Dependency array to run effect on user ID change
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
     setLoading(true); // Set loading state to true
     try {
-      await axios.put(`/api/users/${id}`, userData); // PUT request to update user info
+      await axios.put(`/users/${userId}`, userData); // PUT request to update user info
       toast.success(t("profileUpdateSuccess")); // Show success toast
       navigate("/user-info"); // Redirect to user info page
     } catch (error) {
@@ -60,8 +61,9 @@ const UpdateInfo = () => {
     }));
   };
 
+  // Display loading message while fetching data
   if (loading) {
-    return <div className="text-center mt-5">Loading...</div>; // Loading message
+    return <div className="text-center mt-5">Loading...</div>;
   }
 
   return (
