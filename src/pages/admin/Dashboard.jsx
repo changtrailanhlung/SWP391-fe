@@ -20,7 +20,7 @@ const Dashboard = () => {
         const shelterResponse = await axios.get('/shelter');
         const accountResponse = await axios.get('/users');
         const petResponse = await axios.get('/pet');
-        
+
         const donations = donateResponse.data;
         const shelters = shelterResponse.data;
         const accounts = accountResponse.data;
@@ -131,7 +131,6 @@ const Dashboard = () => {
             }
           }
         });
-
       } catch (error) {
         console.error('Error fetching data:', error);
         toast.current.show({ severity: 'error', summary: 'Error', detail: 'Failed to fetch data', life: 3000 });
@@ -143,52 +142,51 @@ const Dashboard = () => {
 
   return (
     <div className="p-4 bg-white shadow rounded-lg">
-      <div className="flex flex-wrap gap-4 mb-4">
+      <div className="flex flex-wrap gap-2 mb-4">
         <Card className="flex-1">
-          <div className="flex justify-content-between gap-5">
-            <div className="flex flex-column gap-1">
-              <span className="text-secondary text-sm">Total Revenue</span>
-              <span className="font-bold text-lg">{totalRevenue.toLocaleString()} VND</span>
-            </div>
-            <span className="w-2rem h-2rem border-circle inline-flex justify-content-center align-items-center text-center" style={{ backgroundColor: '#34d399', color: '#ffffff' }}>
+          <div className="flex items-center gap-2">
+            <span className="w-12 h-12 border-circle flex justify-center items-center text-center bg-green-500 text-white text-2xl rounded-full">
               <i className="pi pi-dollar" />
             </span>
+            <div className="flex flex-col gap-1">
+              <span className="text-gray-500 text-sm font-bold">Total Revenue</span>
+              <span className="font-bold text-lg">{totalRevenue.toLocaleString()} VND</span>
+            </div>
           </div>
         </Card>
         <Card className="flex-1">
-          <div className="flex justify-content-between gap-5">
-            <div className="flex flex-column gap-1">
-              <span className="text-secondary text-sm">Total Pets</span>
+          <div className="flex items-center gap-2">
+            <span className="w-12 h-12 border-circle flex justify-center items-center text-center bg-yellow-500 text-white text-2xl rounded-full">
+              <i className="pi pi-heart-fill" />
+            </span>
+            <div className="flex flex-col gap-1">
+              <span className="text-gray-500 text-sm font-bold">Total Pets</span>
               <span className="font-bold text-lg">{totalAvailablePets}</span>
             </div>
-            <span className="w-2rem h-2rem border-circle inline-flex justify-content-center align-items-center text-center" style={{ backgroundColor: '#fbbf24', color: '#ffffff' }}>
-              <i className="pi pi-apple" />
-            </span>
           </div>
         </Card>
         <Card className="flex-1">
-          <div className="flex justify-content-between gap-5">
-            <div className="flex flex-column gap-1">
-              <span className="text-secondary text-sm">Total Shelters</span>
-              <span className="font-bold text-lg">{totalShelters}</span>
-            </div>
-            <span className="w-2rem h-2rem border-circle inline-flex justify-content-center align-items-center text-center" style={{ backgroundColor: '#60a5fa', color: '#ffffff' }}>
+          <div className="flex items-center gap-2">
+            <span className="w-12 h-12 border-circle flex justify-center items-center text-center bg-blue-500 text-white text-2xl rounded-full">
               <i className="pi pi-home" />
             </span>
+            <div className="flex flex-col gap-1">
+              <span className="text-gray-500 text-sm font-bold">Total Shelters</span>
+              <span className="font-bold text-lg">{totalShelters}</span>
+            </div>
           </div>
         </Card>
         <Card className="flex-1">
-          <div className="flex justify-content-between gap-5">
-            <div className="flex flex-column gap-1">
-              <span className="text-secondary text-sm">Total Accounts</span>
-              <span className="font-bold text-lg">{totalAccounts}</span>
-            </div>
-            <span className="w-2rem h-2rem border-circle inline-flex justify-content-center align-items-center text-center" style={{ backgroundColor: '#c084fc', color: '#ffffff' }}>
+          <div className="flex items-center gap-2">
+            <span className="w-12 h-12 border-circle flex justify-center items-center text-center bg-purple-500 text-white text-2xl rounded-full">
               <i className="pi pi-users" />
             </span>
+            <div className="flex flex-col gap-1">
+              <span className="text-gray-500 text-sm font-bold">Total Accounts</span>
+              <span className="font-bold text-lg">{totalAccounts}</span>
+            </div>
           </div>
         </Card>
-        
       </div>
       <div className="card">
         <Chart type="bar" data={chartData} options={chartOptions} />
