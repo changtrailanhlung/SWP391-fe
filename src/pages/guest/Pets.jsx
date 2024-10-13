@@ -25,36 +25,30 @@ const Pets = () => {
     fetchPets();
   }, []);
 
-  // Check if the user is logged in
   const isLoggedIn = () => {
-    return !!localStorage.getItem("token"); // Replace "token" with your actual token key
+    return !!localStorage.getItem("token");
   };
 
   const handleAdopt = () => {
     if (!isLoggedIn()) {
-      // Redirect to login if not logged in
-      navigate("/admin/login");
       toast.error("Bạn phải login để sử dụng tính năng này");
+      setTimeout(() => {
+        navigate("/admin/login");
+      }, 500); // Delay for redirection after toast
     } else {
-      // Proceed with adoption process if logged in
       navigate("/registration-form");
     }
   };
 
-  // Filter pets to only include those with an adoption status of "Available"
   const availablePets = pets.filter(
     (pet) => pet.adoptionStatus === "Available"
   );
 
-  // Calculate total pages
   const totalPages = Math.ceil(availablePets.length / petsPerPage);
-
-  // Get current pets to display
   const indexOfLastPet = currentPage * petsPerPage;
   const indexOfFirstPet = indexOfLastPet - petsPerPage;
   const currentPets = availablePets.slice(indexOfFirstPet, indexOfLastPet);
 
-  // Handle pagination
   const handlePrevious = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
@@ -72,7 +66,7 @@ const Pets = () => {
           {currentPets.map((pet) => (
             <div key={pet.id} className="border p-4 rounded-lg shadow">
               <img
-                src={pet.image} // Assuming 'pet.image' now contains the image URL
+                src={pet.image}
                 alt={pet.name}
                 className="w-full h-48 object-cover mb-4"
               />
@@ -112,7 +106,6 @@ const Pets = () => {
         <p className="text-center">{t("noAvailablePets")}</p>
       )}
 
-      {/* Pagination controls */}
       {totalPages > 1 && (
         <div className="flex justify-between mt-4">
           <button
