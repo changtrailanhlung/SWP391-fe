@@ -42,5 +42,14 @@
         "loading": "Đang Tải...",
         "passwordChangeSuccess": "Đổi mật khẩu thành công!",
         "passwordChangeError": "Lỗi khi đổi mật khẩu. Vui lòng thử lại."
+    },
+    "updateInfo": {
+        "title": "Cập Nhật Thông Tin",
+        "username": "Tên người dùng",
+        "location": "Địa chỉ",
+        "phone": "Số điện thoại",
+        "button": "Cập Nhật",
+        "profileUpdateSuccess": "Cập nhật hồ sơ thành công!",
+        "profileUpdateError": "Lỗi khi cập nhật hồ sơ. Vui lòng thử lại."
     }
 }
