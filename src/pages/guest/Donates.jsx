@@ -49,6 +49,12 @@ const Donates = () => {
 
   // Function to handle navigation to the donation form
   const handleDonate = (shelterId) => {
+    const donorId = localStorage.getItem("nameid"); // Get donorId from local storage
+    if (!donorId) {
+      // If donorId doesn't exist, redirect to login
+      navigate("/admin/login"); // Navigate to the login page
+      return;
+    }
     navigate(`/donate/${shelterId}`); // Navigate to the DonationForm page with the shelter ID
   };
 
@@ -60,7 +66,6 @@ const Donates = () => {
     <div className="container mx-auto">
       <h1 className="text-2xl font-bold mb-4">Shelter Information</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
-        {" "}
         {/* Grid layout for shelters */}
         {currentShelters.map((shelter) => (
           <div key={shelter.id} className="border p-4 rounded-lg shadow mb-4">
