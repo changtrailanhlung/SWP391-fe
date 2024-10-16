@@ -59,7 +59,7 @@ const UserAccounts = () => {
 
 const handleDeleteUser = async (userId) => {
   try {
-    const response = await delete(`/users/${userId}`);
+    const response = await axios.delete(`/users/${userId}`);
     setUsers(users.filter(user => user.id !== userId));
     toast.current.show({
       severity: "success",

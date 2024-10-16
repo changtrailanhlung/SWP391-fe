@@ -17,7 +17,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const donateResponse = await axios.get('/donate');
-        const shelterResponse = await axios.get('/shelter');
+        const shelterResponse = await axios.get('/shelter/get_all_shelter');
         const accountResponse = await axios.get('/users');
         const petResponse = await axios.get('/pet');
 
