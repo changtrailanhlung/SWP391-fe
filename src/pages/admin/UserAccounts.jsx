@@ -18,9 +18,7 @@ const UserAccounts = () => {
     password: "",
     role: ""
   });
-  const [first, setFirst] = useState(0);
-const [rows, setRows] = useState(10);
-const [totalRecords, setTotalRecords] = useState(0); // Add total records state
+
 
   const [errors, setErrors] = useState({});
   const toast = useRef(null);
@@ -57,28 +55,30 @@ const [totalRecords, setTotalRecords] = useState(0); // Add total records state
     // Clear error when user starts typing in the input
     if (errors[name]) setErrors({ ...errors, [name]: null });
   };
-  const handleDeleteUser = async (userId) => {
-    try {
-      const response = await axios.delete(`https://localhost:7130/api/users/${userId}`);
-      if (response.status === 200) {
-        setUsers(users.filter(user => user.id !== userId));
-        toast.current.show({
-          severity: "success",
-          summary: "Deleted",
-          detail: "User deleted successfully",
-          life: 3000,
-        });
-      }
-    } catch (error) {
-      console.error(error);
-      toast.current.show({
-        severity: "error",
-        summary: "Error",
-        detail: "Could not delete user",
-        life: 3000,
-      });
-    }
-  };
+  
+
+const handleDeleteUser = async (userId) => {
+  try {
+    const response = await delete(`/users/${userId}`);
+    setUsers(users.filter(user => user.id !== userId));
+    toast.current.show({
+      severity: "success",
+      summary: "Deleted",
+      detail: "User deleted successfully",
+      life: 3000,
+    });
+  } catch (error) {
+    console.error(error);
+    toast.current.show({
+      severity: "error",
+      summary: "Error",
+      detail: "Could not delete user",
+      life: 3000,
+    });
+  }
+};
+
+  
 
   const deleteBodyTemplate = (rowData) => {
     return (
