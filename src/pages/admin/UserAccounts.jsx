@@ -12,7 +12,7 @@ import { Dropdown } from 'primereact/dropdown';
 const UserAccounts = () => {
   const [users, setUsers] = useState([]);
   const [updateVisible, setUpdateVisible] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState({ roleIds: [], shelterId: null });
   const [shelters, setShelters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(false);
@@ -173,15 +173,17 @@ const UserAccounts = () => {
     setNewUser({ ...newUser, image: event.files[0] });
   };
   const handleRoleChange = (e) => {
-    const { value } = e.target;
-    if (value === 'admin') {
-      setNewUser({ ...newUser, roleIds: [1] });
-    } else if (value === 'shelterStaff') {
-      setNewUser({ ...newUser, roleIds: [2], shelterId: "" });
-    } else if (value === 'otherRoles') {
-      setNewUser({ ...newUser, roleIds: [] });
+    const selectedRole = e.value;
+    if (selectedRole.length === 0) {
+        setSelectedUser({ ...selectedUser, roleIds: selectedRole });
+        return;
     }
-  };
+    if ([1, 2].includes(selectedRole[selectedRole.length - 1])) {
+        setSelectedUser({ ...selectedUser, roleIds: [selectedRole[selectedRole.length - 1]] });
+    } else {
+        setSelectedUser({ ...selectedUser, roleIds: selectedRole.filter(id => id !== 1 && id !== 2) });
+    }
+};
   const handleMultiSelectChange = (e) => {
     setNewUser({ ...newUser, roleIds: e.value });
   };
@@ -710,50 +712,42 @@ const handleDeleteUser = async (userId) => {
 
               {/* Role field */}
               <div className="p-field">
-                <label htmlFor="role" className="block text-lg font-medium">Vai trò</label>
-                <div className="relative">
-                  <i className="pi pi-list absolute left-3 top-3 text-gray-500 text-2xl" />
-                  <MultiSelect
+            <label htmlFor="role" className="block text-lg font-medium">Vai trò</label>
+            <div className="relative">
+                <i className="pi pi-list absolute left-3 top-3 text-gray-500 text-2xl" />
+                <MultiSelect
                     value={selectedUser.roleIds}
-                    options={[
-                      { label: 'Admin', value: 1 },
-                      { label: 'Shelter Staff', value: 2 },
-                      { label: 'Donor', value: 3 },
-                      { label: 'Volunteer', value: 4 },
-                      { label: 'Adopter', value: 5 }
-                    ]}
-                    onChange={(e) => setSelectedUser({...selectedUser, roleIds: e.value})}
+                    options={roles}
+                    onChange={handleRoleChange}
                     optionLabel="label"
                     placeholder="Chọn vai trò"
                     maxSelectedLabels={3}
                     className="p-inputtext p-component pl-12 text-base py-2 w-full border-2 border-gray-300 rounded-lg h-12 text-gray-700"
                     panelClassName="bg-white shadow-lg rounded-md mt-2"
                     itemClassName="px-4 py-2 text-gray-700 hover:bg-gray-100"
-                  />
-                </div>
-                {errors.roleIds && <small className="text-red-500">{errors.roleIds}</small>}
-              </div>
-
-              {/* Shelter field (only for Shelter Staff) */}
-              {selectedUser.roleIds.includes(2) && (
-                <div className="p-field">
-                  <label htmlFor="shelter" className="block text-lg font-medium">Shelter</label>
-                  <div className="relative">
+                />
+            </div>
+            {errors.roleIds && <small className="text-red-500">{errors.roleIds}</small>}
+        </div>
+        {selectedUser.roleIds.includes(2) && (
+            <div className="p-field">
+                <label htmlFor="shelter" className="block text-lg font-medium">Shelter</label>
+                <div className="relative">
                     <i className="pi pi-home absolute left-3 top-3 text-gray-500 text-2xl" />
                     <Dropdown
-                      id="shelter"
-                      value={selectedUser.shelterId}
-                      options={shelters}
-                      onChange={(e) => setSelectedUser({...selectedUser, shelterId: e.value})}
-                      placeholder="Chọn shelter"
-                      className="p-inputtext p-component pl-12 text-base py-2 w-full border-2 border-gray-300 rounded-lg h-12 text-gray-700"
-                      panelClassName="bg-white shadow-lg rounded-md mt-2"
-                      itemClassName="px-4 py-2 text-black-700 hover:bg-gray-100"
+                        id="shelter"
+                        value={selectedUser.shelterId}
+                        options={shelters}
+                        onChange={(e) => setSelectedUser({ ...selectedUser, shelterId: e.value })}
+                        placeholder="Chọn shelter"
+                        className="p-inputtext p-component pl-12 text-base py-2 w-full border-2 border-gray-300 rounded-lg h-12 text-gray-700"
+                        panelClassName="bg-white shadow-lg rounded-md mt-2"
+                        itemClassName="px-4 py-2 text-black-700 hover:bg-gray-100"
                     />
-                  </div>
-                  {errors.shelterId && <small className="text-red-500">{errors.shelterId}</small>}
                 </div>
-              )}
+                {errors.shelterId && <small className="text-red-500">{errors.shelterId}</small>}
+            </div>
+        )}
 
               {/* Action buttons */}
               <div className="flex justify-end space-x-2 mt-4">
