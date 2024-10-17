@@ -11,7 +11,7 @@ const Donates = () => {
   useEffect(() => {
     const fetchShelters = async () => {
       try {
-        const response = await axios.get("/shelter"); // Fetch shelter information
+        const response = await axios.get("/shelter/get_all_shelter"); // Fetch shelter information
         console.log("API Response:", response.data); // Log the response
         setShelters(response.data); // Store all shelter data in state
       } catch (error) {
