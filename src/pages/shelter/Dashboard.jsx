@@ -9,6 +9,7 @@ const Dashboard = () => {
   const [chartOptions, setChartOptions] = useState({});
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [totalPets, setTotalPets] = useState(0);
+  const [totalAdoptedPets, setTotalAdoptedPets] = useState(0);
   const [totalEvents, setTotalEvents] = useState(0);
   const [totalAvailablePets, setTotalAvailablePets] = useState(0);
   const toast = useRef(null);
@@ -20,13 +21,14 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const donateResponse = await axios.get("/donate");
-        const petResponse = await axios.get("/pet");
+        const petResponse = await axios.get(`/pet?shelterId=${shelterID}`);
         const eventResponse = await axios.get("/events");
+
         const donations = donateResponse.data.filter(
           (donation) => donation.shelterId === parseInt(shelterID)
         );
         const pets = petResponse.data.filter(
-          (pets) => petResponse.shelterId === parseInt(shelterID)
+          (pet) => pet.shelterID === parseInt(shelterID)
         );
         const events = eventResponse.data.filter(
           (event) => event.shelterId === parseInt(shelterID)
@@ -35,6 +37,7 @@ const Dashboard = () => {
         // Tính tổng số lượng sự kiện cho shelter này
         const totalEventCount = events.length;
         setTotalEvents(totalEventCount);
+
         // Extract years from donations and set available years
         const availableYears = [
           ...new Set(
@@ -62,7 +65,11 @@ const Dashboard = () => {
           (pet) => pet.adoptionStatus === "Available"
         ).length;
         setTotalAvailablePets(availablePetCount);
-
+        // Đếm số thú cưng Adopted
+        const adoptedPetCount = pets.filter(
+          (pet) => pet.adoptionStatus === "Adopted"
+        ).length;
+        setTotalAdoptedPets(adoptedPetCount);
         // Tạo biểu đồ hiển thị donation theo tháng
         const groupedDonations = filteredDonations.reduce((acc, donation) => {
           const month = new Date(donation.date).getMonth();
@@ -74,7 +81,6 @@ const Dashboard = () => {
           new Date(0, i).toLocaleString("en", { month: "long" })
         );
         const data = labels.map((_, i) => groupedDonations[i] || 0);
-
         const getRandomColor = () => {
           const r = Math.floor(Math.random() * 256);
           const g = Math.floor(Math.random() * 256);
@@ -84,7 +90,6 @@ const Dashboard = () => {
 
         const backgroundColors = data.map(() => getRandomColor());
         const borderColors = backgroundColors;
-
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue("--text-color");
         const textColorSecondary = documentStyle.getPropertyValue(
@@ -156,6 +161,7 @@ const Dashboard = () => {
         });
       }
     };
+
     fetchData();
   }, [shelterID, year]);
 
@@ -184,9 +190,22 @@ const Dashboard = () => {
             </span>
             <div className="flex flex-col gap-1">
               <span className="text-gray-500 text-sm font-bold">
-                Total Pets
+                Total Available Pets
               </span>
               <span className="font-bold text-lg">{totalAvailablePets}</span>
+            </div>
+          </div>
+        </Card>
+        <Card className="flex-1">
+          <div className="flex items-center gap-2">
+            <span className="w-12 h-12 border-circle flex justify-center items-center text-center bg-green-500 text-white text-2xl rounded-full">
+              <i className="pi pi-check-circle" />
+            </span>
+            <div className="flex flex-col gap-1">
+              <span className="text-gray-500 text-sm font-bold">
+                Total Adopted Pets
+              </span>
+              <span className="font-bold text-lg">{totalAdoptedPets}</span>
             </div>
           </div>
         </Card>
@@ -205,19 +224,19 @@ const Dashboard = () => {
         </Card>
       </div>
       <div className="flex justify-end mb-4">
-  <Dropdown
-    value={year}
-    options={years.map((yr) => ({ label: yr, value: yr }))} // Adjust options to ensure they have label and value
-    onChange={(e) => setYear(e.value)}
-    placeholder="Select Year"
-    className="w-40 bg-white border border-gray-300 text-black font-bold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-    itemTemplate={(option) => (
-      <div className="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white cursor-pointer rounded-md">
-        {option.label}
+        <Dropdown
+          value={year}
+          options={years.map((yr) => ({ label: yr, value: yr }))} // Adjust options to ensure they have label and value
+          onChange={(e) => setYear(e.value)}
+          placeholder="Select Year"
+          className="w-40 bg-white border border-gray-300 text-black font-bold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          itemTemplate={(option) => (
+            <div className="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white cursor-pointer rounded-md">
+              {option.label}
+            </div>
+          )}
+        />
       </div>
-    )}
-  />
-</div>
 
       <div className="card">
         <Chart type="bar" data={chartData} options={chartOptions} />
