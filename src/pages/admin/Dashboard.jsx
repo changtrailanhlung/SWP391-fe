@@ -52,12 +52,17 @@ const Dashboard = () => {
           return acc;
         }, {});
 
-        const groupedDonations = donations.reduce((acc, donation) => {
-          const shelterName = shelterNames[donation.shelterId];
-          acc[shelterName] = acc[shelterName] || 0;
-          acc[shelterName] += donation.amount;
-          return acc;
-        }, {});
+        const groupedDonations = shelters.reduce((acc, shelter) => {
+        acc[shelter.name] = 0; // Khởi tạo giá trị donation là 0 cho tất cả các shelter
+        return acc;
+      }, {});
+
+      donations.forEach(donation => {
+        const shelterName = shelterNames[donation.shelterId];
+        if (groupedDonations[shelterName] !== undefined) {
+          groupedDonations[shelterName] += donation.amount;
+        }
+      });
 
         const labels = Object.keys(groupedDonations);
         const data = Object.values(groupedDonations);
