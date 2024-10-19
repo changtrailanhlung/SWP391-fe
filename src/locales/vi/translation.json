@@ -27,6 +27,7 @@
     "of": "của",
     "logout": "Đăng xuất",
     "userinformation": "Thông tin người dùng",
+    "no": "Số thứ tự",
     "profile": {
         "title": "Hồ sơ người dùng",
         "username": "Tên người dùng",
@@ -62,5 +63,12 @@
     "tabprofile": {
         "tab1": "Thông tin người dùng",
         "tab2": "Lịch sử quyên góp"
+    },
+    "donationHistory": {
+        "title": "Lịch sử quyên góp",
+        "noData": "Không có quyên góp nào.",
+        "amount": "Số tiền (VND)",
+        "date": "Ngày",
+        "export": "Xuất"
     }
 }
