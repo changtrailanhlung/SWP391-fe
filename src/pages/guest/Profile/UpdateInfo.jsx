@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../services/axiosClient";
+import axios from "../../../services/axiosClient";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 

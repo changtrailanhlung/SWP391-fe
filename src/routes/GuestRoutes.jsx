@@ -5,11 +5,11 @@ import Home from "../pages/guest/Home";
 import RegistrationForm from "../pages/guest/RegistrationForm";
 import Contact from "../pages/guest/Contact";
 import Pets from "../pages/guest/Pets";
-import Profile from "../pages/guest/Profile";
+import Profile from "../pages/guest/Profile/TabProfile";
 import Donates from "../pages/guest/Donates";
 import Events from "../pages/guest/Events";
-import ChangePassword from "../pages/guest/ChangePassword";
-import UpdateProfile from "../pages/guest/UpdateInfo";
+import ChangePassword from "../pages/guest/Profile/ChangePassword";
+import UpdateProfile from "../pages/guest/Profile/UpdateInfo";
 import EventDetail from "../pages/guest/EventDetail";
 import DonationForm from "../pages/guest/DonationForm"; // Adjust import path as necessary
 import ScrollToTopButton from "../components/ScrollToTopButton";

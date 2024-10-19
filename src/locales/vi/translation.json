@@ -58,5 +58,9 @@
         "location": "Địa điểm",
         "phone": "Điện thoại",
         "donate": "Quyên góp"
+    },
+    "tabprofile": {
+        "tab1": "Thông tin người dùng",
+        "tab2": "Lịch sử quyên góp"
     }
 }
