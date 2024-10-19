@@ -48,7 +48,9 @@ const HistoryDonation = () => {
       </h2>
       <div className="bg-white shadow-md rounded-lg p-6">
         {donations.length === 0 ? (
-          <p className="text-center">{t("donationHistory.noData")}</p>
+          <p className="text-center text-gray-500">
+            {t("donationHistory.noData")}
+          </p>
         ) : (
           <DataTable
             value={donations}
