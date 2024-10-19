@@ -98,17 +98,17 @@ const Donates = () => {
           disabled={currentPage === 1}
           className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
         >
-          Previous
+          {t("previous")}
         </button>
         <span>
-          Page {currentPage} of {totalPages}
+          {t("page")} {currentPage} {t("of")} {totalPages}
         </span>
         <button
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
           className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
         >
-          Next
+          {t("next")}
         </button>
       </div>
     </div>
