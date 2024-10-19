@@ -51,5 +51,11 @@
         "button": "Cập Nhật",
         "profileUpdateSuccess": "Cập nhật hồ sơ thành công!",
         "profileUpdateError": "Lỗi khi cập nhật hồ sơ. Vui lòng thử lại."
+    },
+    "donates": {
+        "title": "Thông tin Shelter",
+        "location": "Địa điểm",
+        "phone": "Điện thoại",
+        "donate": "Quyên góp"
     }
 }

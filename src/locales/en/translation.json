@@ -51,5 +51,11 @@
         "button": "Update Info",
         "profileUpdateSuccess": "Profile updated successfully!",
         "profileUpdateError": "Error updating profile. Please try again."
+    },
+    "donates": {
+        "title": "Thông tin Shelter Information",
+        "location": "Location",
+        "phone": "Phone Number",
+        "donate": "Donate"
     }
 }
