@@ -25,7 +25,7 @@ const SidebarAdmin = () => {
     // localStorage.removeItem('userRoles');
     // localStorage.removeItem('username');
     localStorage.clear();
-    navigate("/admin/login");
+    navigate("/");
   };
 
   const activeLink =

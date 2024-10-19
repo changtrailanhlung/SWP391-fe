@@ -1,16 +1,26 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // Holds user information
-  const [toggle, setToggle] = useState(false); // Example state, if applicable
+  const [user, setUser] = useState(null);
+  const [toggle, setToggle] = useState(false);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
+    }
+  }, []);
 
   const value = {
     user,
-    setUser,
+    setUser: (userData) => {
+      localStorage.setItem("user", JSON.stringify(userData));
+      setUser(userData);
+    },
     toggle,
     setToggle,
   };
