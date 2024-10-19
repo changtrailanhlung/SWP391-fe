@@ -50,7 +50,8 @@
         "phone": "Phone",
         "button": "Update Info",
         "profileUpdateSuccess": "Profile updated successfully!",
-        "profileUpdateError": "Error updating profile. Please try again."
+        "profileUpdateError": "Error updating profile. Please try again.",
+        "image": "Image"
     },
     "donates": {
         "title": "Thông tin Shelter Information",

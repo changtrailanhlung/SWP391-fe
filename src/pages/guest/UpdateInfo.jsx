@@ -1,58 +1,84 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../services/axiosClient";
-import { toast } from "react-toastify"; // Import toast for notifications
-import { useTranslation } from "react-i18next"; // Import useTranslation for internationalization
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const UpdateInfo = () => {
-  const { t } = useTranslation(); // Initialize translation
+  const { t } = useTranslation();
   const [userData, setUserData] = useState({
     username: "",
     location: "",
     phone: "",
+    status: true,
+    shelterId: "", // Cần cập nhật giá trị hợp lệ
+    roleIds: [], // Cần cập nhật giá trị hợp lệ
+    image: null, // Cần cập nhật giá trị hợp lệ
   });
-  const [loading, setLoading] = useState(true); // Loading state
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
-  const userId = localStorage.getItem("nameid"); // Fetch user ID from local storage
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const userId = localStorage.getItem("nameid");
 
-  // Fetch user data to pre-fill the form
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`/users/${userId}`); // Fetch user data from API
+        const response = await axios.get(`/users/${userId}`);
         setUserData({
           username: response.data.username,
           location: response.data.location,
           phone: response.data.phone,
+          status: response.data.status || true, // Khởi tạo giá trị từ API
+          shelterId: response.data.shelterId || "", // Khởi tạo giá trị từ API
+          roleIds: response.data.roleIds || [], // Khởi tạo giá trị từ API
+          image: response.data.image || null, // Khởi tạo giá trị từ API
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
-        toast.error(t("updateInfo.profileUpdateError")); // Show error toast if fetching fails
+        toast.error(t("updateInfo.profileUpdateError"));
       } finally {
-        setLoading(false); // Set loading to false once data is fetched
+        setLoading(false);
       }
     };
 
-    fetchUserData(); // Call the function to fetch user data
-  }, [userId]); // Dependency array to run effect on user ID change
+    fetchUserData();
+  }, [userId]);
 
-  // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-    setLoading(true); // Set loading state to true
+    e.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData(); // Khởi tạo FormData
+
+    // Thêm các trường vào FormData
+    formData.append("Username", userData.username);
+    formData.append("Location", userData.location);
+    formData.append("Phone", userData.phone);
+    formData.append("Status", userData.status);
+    if (userData.image) {
+      formData.append("Image", userData.image); // Đảm bảo rằng userData.image có dữ liệu hình ảnh hợp lệ
+    }
+    formData.append("ShelterId", userData.shelterId);
+    userData.roleIds.forEach((roleId) => formData.append("RoleIds", roleId)); // Thêm từng roleId vào FormData
+
     try {
-      await axios.put(`/users/${userId}`, userData); // PUT request to update user info
-      toast.success(t("updateInfo.profileUpdateSuccess")); // Show success toast
-      navigate("/user-info"); // Redirect to user info page
+      await axios.put(`/users/${userId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Đặt Content-Type cho yêu cầu
+        },
+      });
+      toast.success(t("updateInfo.profileUpdateSuccess"));
+      navigate("/user-info");
     } catch (error) {
-      console.error("Error updating user info:", error);
-      toast.error(t("updateInfo.profileUpdateError")); // Show error toast
+      console.error(
+        "Error updating user info:",
+        error.response ? error.response.data : error
+      );
+      toast.error(t("updateInfo.profileUpdateError"));
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
-  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData((prevData) => ({
@@ -61,7 +87,16 @@ const UpdateInfo = () => {
     }));
   };
 
-  // Display loading message while fetching data
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setUserData((prevData) => ({
+        ...prevData,
+        image: file, // Cập nhật hình ảnh được chọn
+      }));
+    }
+  };
+
   if (loading) {
     return <div className="text-center mt-5">Loading...</div>;
   }
@@ -126,10 +161,27 @@ const UpdateInfo = () => {
             className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
           />
         </div>
+        <div className="mb-4">
+          <label
+            className="block text-sm font-medium text-gray-700 mb-1"
+            htmlFor="image"
+          >
+            {t("updateInfo.image")}
+            {/* Thay đổi để hiển thị label cho hình ảnh */}
+          </label>
+          <input
+            id="image"
+            name="image"
+            type="file"
+            accept="image/*" // Chỉ cho phép chọn hình ảnh
+            onChange={handleImageChange}
+            className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+          />
+        </div>
         <button
           type="submit"
           className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition duration-200"
-          disabled={loading} // Disable button while loading
+          disabled={loading}
         >
           {loading ? t("loading") : t("updateInfo.button")}
         </button>

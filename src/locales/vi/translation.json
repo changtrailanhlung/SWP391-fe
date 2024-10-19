@@ -50,7 +50,8 @@
         "phone": "Số điện thoại",
         "button": "Cập Nhật",
         "profileUpdateSuccess": "Cập nhật hồ sơ thành công!",
-        "profileUpdateError": "Lỗi khi cập nhật hồ sơ. Vui lòng thử lại."
+        "profileUpdateError": "Lỗi khi cập nhật hồ sơ. Vui lòng thử lại.",
+        "image": "Hình ảnh"
     },
     "donates": {
         "title": "Thông tin Shelter",
