@@ -51,7 +51,16 @@ function Login() {
           throw new Error("User roles not found");
         }
         localStorage.setItem("userRoles", JSON.stringify(userRoles));
-
+        let shelterID = null;
+        if (userRoles.includes("ShelterStaff")) {
+        const shelterResponse = await axios.get(`/shelter/user/${userId}`);
+        if (shelterResponse.data && shelterResponse.data.id) {
+          shelterID = shelterResponse.data.id;
+          localStorage.setItem("shelterID", shelterID);
+        } else {
+          throw new Error("Shelter ID not found");
+        }
+      }
         const userData = {
           id: userId,
           username,
