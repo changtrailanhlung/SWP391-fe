@@ -62,13 +62,14 @@
     },
     "tabprofile": {
         "tab1": "Thông tin người dùng",
-        "tab2": "Lịch sử quyên góp"
+        "tab2": "Lịch sử quyên góp",
+        "tab3": "Form đăng kí nhận nuôi pet"
     },
     "donationHistory": {
         "title": "Lịch sử quyên góp",
         "noData": "Không có quyên góp nào.",
         "amount": "Số tiền (VND)",
         "date": "Ngày",
-        "shelterId": "Donate cho Shelter"
+        "shelterId": "Quyên góp cho Shelter"
     }
 }
