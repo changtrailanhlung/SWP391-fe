@@ -13,7 +13,8 @@ const UpdateInfo = () => {
     status: true,
     shelterId: "", // Cần cập nhật giá trị hợp lệ
     roleIds: [], // Cần cập nhật giá trị hợp lệ
-    image: null, // Cần cập nhật giá trị hợp lệ
+    image: null, // Hình ảnh mới được chọn
+    currentImage: null, // Hình ảnh hiện tại từ API
   });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -23,15 +24,16 @@ const UpdateInfo = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`/users/${userId}`);
-        setUserData({
+        setUserData((prevData) => ({
+          ...prevData,
           username: response.data.username,
           location: response.data.location,
           phone: response.data.phone,
           status: response.data.status || true, // Khởi tạo giá trị từ API
           shelterId: response.data.shelterId || "", // Khởi tạo giá trị từ API
           roleIds: response.data.roleIds || [], // Khởi tạo giá trị từ API
-          image: response.data.image || null, // Khởi tạo giá trị từ API
-        });
+          currentImage: response.data.image || null, // Lưu hình ảnh hiện tại từ API
+        }));
       } catch (error) {
         console.error("Error fetching user data:", error);
         toast.error(t("updateInfo.profileUpdateError"));
@@ -92,7 +94,8 @@ const UpdateInfo = () => {
     if (file) {
       setUserData((prevData) => ({
         ...prevData,
-        image: file, // Cập nhật hình ảnh được chọn
+        image: file, // Cập nhật hình ảnh mới
+        currentImage: URL.createObjectURL(file), // Cập nhật hình ảnh hiện tại để hiển thị
       }));
     }
   };
@@ -177,6 +180,17 @@ const UpdateInfo = () => {
             onChange={handleImageChange}
             className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
           />
+
+          {/* Hiển thị hình ảnh hiện tại nếu có */}
+          {userData.currentImage && (
+            <div className="mb-4">
+              <img
+                src={userData.currentImage} // Sử dụng hình ảnh mới hoặc hình ảnh từ API
+                alt="Current"
+                className="w-32 h-32 object-cover rounded-md mb-2 p-2" // Kích thước hình ảnh
+              />
+            </div>
+          )}
         </div>
         <button
           type="submit"
