@@ -35,7 +35,7 @@ api.interceptors.response.use(
       }
     } else {
       // Handle network errors
-      alert("Network error. Please check your internet connection.");
+      // alert("Network error. Please check your internet connection.");
     }
     return Promise.reject(error);
   }

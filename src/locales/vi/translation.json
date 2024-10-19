@@ -27,6 +27,7 @@
     "of": "của",
     "logout": "Đăng xuất",
     "userinformation": "Thông tin người dùng",
+    "no": "Số thứ tự",
     "profile": {
         "title": "Hồ sơ người dùng",
         "username": "Tên người dùng",
@@ -50,6 +51,24 @@
         "phone": "Số điện thoại",
         "button": "Cập Nhật",
         "profileUpdateSuccess": "Cập nhật hồ sơ thành công!",
-        "profileUpdateError": "Lỗi khi cập nhật hồ sơ. Vui lòng thử lại."
+        "profileUpdateError": "Lỗi khi cập nhật hồ sơ. Vui lòng thử lại.",
+        "image": "Hình ảnh"
+    },
+    "donates": {
+        "title": "Thông tin Shelter",
+        "location": "Địa điểm",
+        "phone": "Điện thoại",
+        "donate": "Quyên góp"
+    },
+    "tabprofile": {
+        "tab1": "Thông tin người dùng",
+        "tab2": "Lịch sử quyên góp"
+    },
+    "donationHistory": {
+        "title": "Lịch sử quyên góp",
+        "noData": "Không có quyên góp nào.",
+        "amount": "Số tiền (VND)",
+        "date": "Ngày",
+        "shelterId": "Donate cho Shelter"
     }
 }

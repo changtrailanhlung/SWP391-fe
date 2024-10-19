@@ -1,176 +1,117 @@
 import React, { useState } from "react";
-import { post } from "../../services/axiosClient";
+import { useLocation } from "react-router-dom";
+import axios from "../../services/axiosClient";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-function RegistrationForm() {
-  // Form state
-  const [formData, setFormData] = useState({
-    identityProof: "",
-    incomeAmount: 0,
-    image: "",
-    condition: "",
-    adopterId: 0,
-    shelterStaffId: 0,
-    petId: 0,
-  });
-  const [imagePreview, setImagePreview] = useState(null);
+const RegistrationForm = () => {
+  const location = useLocation();
+  const petID = location.state?.petID; // Safely extract petId
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const [socialAccount, setSocialAccount] = useState("");
+  const [incomeAmount, setIncomeAmount] = useState(0);
+  const [identificationImage, setIdentificationImage] = useState(null);
+  const [identificationImageBackSide, setIdentificationImageBackSide] =
+    useState(null);
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
+  const navigate = useNavigate();
+  const userId = localStorage.getItem("nameid"); // Fetch user ID from local storage
+
+  const handleImageChange = (event, setImage) => {
+    const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-        setFormData((prevData) => ({
-          ...prevData,
-          image: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
+      setImage(file); // Store the image file directly
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    console.log("Form submitted!");
+    const formData = new FormData();
+    formData.append("SocialAccount", socialAccount);
+    formData.append("IncomeAmount", incomeAmount);
+    formData.append("IdentificationImage", identificationImage);
+    formData.append("IdentificationImageBackSide", identificationImageBackSide);
+    formData.append("AdopterId", parseInt(userId, 10));
+    formData.append("PetId", parseInt(petID, 10));
+
     try {
-      await post("/adoptionregistrationform", formData);
-      toast.success("Form submitted successfully!");
-      setFormData({
-        identityProof: "",
-        incomeAmount: 0,
-        image: "",
-        condition: "",
-        adopterId: 0,
-        shelterStaffId: 0,
-        petId: 0,
+      console.log("Submitting form data:", formData); // FormData cannot be logged directly
+      await axios.post("/form", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
-      setImagePreview(null);
+      toast.success("Registration successful!");
+      navigate("/success");
     } catch (error) {
-      toast.error("Error submitting form. Please try again.");
+      console.error(
+        "Error submitting the form:",
+        error.response || error.message
+      );
+      toast.error(
+        error.response?.data?.message ||
+          "Registration failed, please try again."
+      );
     }
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg mt-28">
-      <h1 className="text-2xl font-bold mb-6">Adoption Registration Form</h1>
+    <div className="container mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Registration Form</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
-            Identity Proof
-          </label>
+          <label className="block mb-2">Social Account</label>
           <input
             type="text"
-            name="identityProof"
-            value={formData.identityProof}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            value={socialAccount}
+            onChange={(e) => setSocialAccount(e.target.value)}
+            className="border p-2 w-full"
             required
           />
         </div>
-
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Income</label>
+          <label className="block mb-2">Income Amount</label>
           <input
             type="number"
-            name="incomeAmount"
-            value={formData.incomeAmount}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            value={incomeAmount}
+            onChange={(e) => setIncomeAmount(e.target.value)}
+            className="border p-2 w-full"
             required
           />
         </div>
-
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
-            Upload Image
-          </label>
+          <label className="block mb-2">Identification Image (Front)</label>
           <input
             type="file"
             accept="image/*"
-            onChange={handleImageUpload}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            onChange={(e) => handleImageChange(e, setIdentificationImage)}
+            className="border p-2 w-full"
             required
           />
-          {imagePreview && (
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="mt-4 w-full h-auto rounded-lg"
-            />
-          )}
         </div>
-
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
-            Condition
-          </label>
+          <label className="block mb-2">Identification Image (Back)</label>
           <input
-            type="text"
-            name="condition"
-            value={formData.condition}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+            type="file"
+            accept="image/*"
+            onChange={(e) =>
+              handleImageChange(e, setIdentificationImageBackSide)
+            }
+            className="border p-2 w-full"
             required
           />
         </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
-            Adopter ID
-          </label>
-          <input
-            type="number"
-            name="adopterId"
-            value={formData.adopterId}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
-            Shelter Staff ID
-          </label>
-          <input
-            type="number"
-            name="shelterStaffId"
-            value={formData.shelterStaffId}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Pet ID</label>
-          <input
-            type="number"
-            name="petId"
-            value={formData.petId}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-            required
-          />
-        </div>
-
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+          className="px-4 py-2 bg-blue-500 text-white rounded"
         >
           Submit
         </button>
       </form>
     </div>
   );
-}
+};
 
 export default RegistrationForm;

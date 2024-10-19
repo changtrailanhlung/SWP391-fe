@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import axios from "../../services/axiosClient"; // Adjust the import path as necessary
+import { useTranslation } from "react-i18next"; // Import useTranslation
 
 const Donates = () => {
+  const { t } = useTranslation(); // Initialize translation
   const [shelters, setShelters] = useState([]); // State to hold an array of shelter data
   const [currentPage, setCurrentPage] = useState(1); // State for the current page
   const [sheltersPerPage] = useState(9); // Display 9 shelters per page
@@ -64,17 +66,17 @@ const Donates = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Shelter Information</h1>
+      <h1 className="text-2xl font-bold mb-4">{t("donates.title")}</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
         {/* Grid layout for shelters */}
         {currentShelters.map((shelter) => (
           <div key={shelter.id} className="border p-4 rounded-lg shadow mb-4">
             <h2 className="text-xl font-semibold">{shelter.name}</h2>
             <p>
-              <strong>Location:</strong> {shelter.location}
+              <strong>{t("donates.location")}:</strong> {shelter.location}
             </p>
             <p>
-              <strong>Phone Number:</strong> {shelter.phoneNumber}
+              <strong>{t("donates.phone")}:</strong> {shelter.phoneNumber}
             </p>
             <p>
               <strong>Email:</strong> {shelter.email}
@@ -83,7 +85,7 @@ const Donates = () => {
               onClick={() => handleDonate(shelter.id)} // Pass shelter ID to handleDonate
               className="bg-green-500 text-white py-2 px-4 rounded"
             >
-              Donate
+              {t("donates.donate")}
             </button>
           </div>
         ))}
@@ -96,17 +98,17 @@ const Donates = () => {
           disabled={currentPage === 1}
           className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
         >
-          Previous
+          {t("previous")}
         </button>
         <span>
-          Page {currentPage} of {totalPages}
+          {t("page")} {currentPage} {t("of")} {totalPages}
         </span>
         <button
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
           className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
         >
-          Next
+          {t("next")}
         </button>
       </div>
     </div>

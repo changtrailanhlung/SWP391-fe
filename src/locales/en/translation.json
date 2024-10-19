@@ -27,6 +27,7 @@
     "of": "of",
     "logout": "Logout",
     "userinformation": "User Information",
+    "no": "No",
     "profile": {
         "title": "User Profile",
         "username": "Username",
@@ -50,6 +51,24 @@
         "phone": "Phone",
         "button": "Update Info",
         "profileUpdateSuccess": "Profile updated successfully!",
-        "profileUpdateError": "Error updating profile. Please try again."
+        "profileUpdateError": "Error updating profile. Please try again.",
+        "image": "Image"
+    },
+    "donates": {
+        "title": "Thông tin Shelter Information",
+        "location": "Location",
+        "phone": "Phone Number",
+        "donate": "Donate"
+    },
+    "tabprofile": {
+        "tab1": "User Information",
+        "tab2": "History Donation"
+    },
+    "donationHistory": {
+        "title": "Donation History",
+        "noData": "No donations found.",
+        "amount": "Amount (VND)",
+        "date": "Date",
+        "shelterId": "Donate for Shelter"
     }
 }

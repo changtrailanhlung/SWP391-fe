@@ -29,14 +29,14 @@ const Pets = () => {
     return !!localStorage.getItem("token");
   };
 
-  const handleAdopt = () => {
+  const handleAdopt = (petID) => {
     if (!isLoggedIn()) {
       toast.error("Bạn phải login để sử dụng tính năng này");
       setTimeout(() => {
         navigate("/admin/login");
       }, 500); // Delay for redirection after toast
     } else {
-      navigate("/registration-form");
+      navigate("/registration-form", { state: { petID } }); // Pass the petId in state
     }
   };
 
@@ -64,7 +64,7 @@ const Pets = () => {
       {availablePets.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {currentPets.map((pet) => (
-            <div key={pet.id} className="border p-4 rounded-lg shadow">
+            <div key={pet.petID} className="border p-4 rounded-lg shadow">
               <img
                 src={pet.image}
                 alt={pet.name}
@@ -94,7 +94,7 @@ const Pets = () => {
               </p>
 
               <button
-                onClick={handleAdopt}
+                onClick={() => handleAdopt(pet.petID)}
                 className="px-4 py-2 mt-4 bg-blue-500 text-white rounded"
               >
                 {t("adopt")}
