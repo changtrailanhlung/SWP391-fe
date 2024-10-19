@@ -69,6 +69,6 @@
         "noData": "Không có quyên góp nào.",
         "amount": "Số tiền (VND)",
         "date": "Ngày",
-        "export": "Xuất"
+        "shelterId": "Donate cho Shelter"
     }
 }

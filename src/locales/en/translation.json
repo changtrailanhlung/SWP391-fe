@@ -68,6 +68,7 @@
         "title": "Donation History",
         "noData": "No donations found.",
         "amount": "Amount (VND)",
-        "date": "Date"
+        "date": "Date",
+        "shelterId": "Donate for Shelter"
     }
 }

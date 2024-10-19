@@ -8,23 +8,27 @@ import { Column } from "primereact/column";
 const HistoryDonation = () => {
   const { t } = useTranslation();
   const [donations, setDonations] = useState([]);
+  const [shelters, setShelters] = useState([]); // State to hold shelter data
   const [loading, setLoading] = useState(true);
   const donorId = localStorage.getItem("nameid"); // Assuming the donor ID is stored in localStorage
 
   useEffect(() => {
     const fetchDonationHistory = async () => {
       try {
-        const response = await axios.get(`/donate/by-donor/${donorId}`);
-        console.log(response.data); // Log the response data
+        const donationResponse = await axios.get(`/donate/by-donor/${donorId}`);
+        const shelterResponse = await axios.get(`/shelter/get_all_shelter`); // Fetch all shelters
+        console.log(donationResponse.data); // Log the donation response data
+        console.log(shelterResponse.data); // Log the shelter response data
 
         // Sort donations by date in descending order
-        const sortedDonations = response.data.sort(
+        const sortedDonations = donationResponse.data.sort(
           (a, b) => new Date(b.date) - new Date(a.date)
         );
 
         setDonations(sortedDonations); // Set the sorted donations
+        setShelters(shelterResponse.data); // Set the shelter data
       } catch (error) {
-        console.error("Error fetching donation history:", error);
+        console.error("Error fetching donation history or shelters:", error);
       } finally {
         setLoading(false);
       }
@@ -39,6 +43,12 @@ const HistoryDonation = () => {
 
   const formatDate = (date) => {
     return new Date(date).toLocaleString(); // Format date as needed
+  };
+
+  // Function to get the shelter name by ID
+  const getShelterNameById = (id) => {
+    const shelter = shelters.find((shelter) => shelter.id === id);
+    return shelter ? shelter.name : t("donationHistory.noData"); // Return shelter name or no data message
   };
 
   return (
@@ -73,6 +83,12 @@ const HistoryDonation = () => {
               field="date"
               header={t("donationHistory.date")}
               body={(rowData) => formatDate(rowData.date)}
+              sortable
+            />
+            <Column
+              field="shelterId" // Add a new column for shelterId
+              header={t("donationHistory.shelterId")}
+              body={(rowData) => getShelterNameById(rowData.shelterId)} // Display shelter name
               sortable
             />
           </DataTable>
