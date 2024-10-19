@@ -71,5 +71,8 @@
         "amount": "Số tiền (VND)",
         "date": "Ngày",
         "shelterId": "Quyên góp cho Shelter"
+    },
+    "HistoryForm": {
+        "title": "Lịch sử nhận nuôi thú cưng"
     }
 }

@@ -70,5 +70,8 @@
         "amount": "Amount (VND)",
         "date": "Date",
         "shelterId": "Donate for Shelter"
+    },
+    "HistoryForm": {
+        "title": "Pet adoption history"
     }
 }

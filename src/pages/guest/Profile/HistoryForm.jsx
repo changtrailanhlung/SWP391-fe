@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { useTranslation } from "react-i18next"; // Import useTranslation
 import axios from "../../../services/axiosClient"; // Import your axios instance
 
 const HistoryForm = () => {
+  const { t } = useTranslation();
   const [petId, setPetId] = useState(10); // Assuming petId is 10; adjust as needed
   const [status, setStatus] = useState(null); // Default status to null
   const [data, setData] = useState([]); // State to hold data for the DataTable
@@ -67,17 +69,20 @@ const HistoryForm = () => {
   };
 
   return (
-    <div className="p-col-12">
+    <div className="container mx-auto p-6">
+      <h2 className="text-2xl font-bold text-center mb-4">
+        {t("HistoryForm.title")}
+      </h2>
       <DataTable value={data} paginator rows={10} className="p-mt-3">
         <Column
           body={(rowData, options) => options.rowIndex + 1} // Display the row index + 1 as "No."
           header="No."
         />
-        <Column field="petName" header="Pet Name" />
-        <Column field="gender" header="Gender" />
-        <Column field="age" header="Age" />
-        <Column field="color" header="Color" />
-        <Column field="status" header="Status" />
+        <Column field="petName" sortable header="Pet Name" />
+        <Column field="gender" sortable header="Gender" />
+        <Column field="age" sortable header="Age" />
+        <Column field="color" sortable header="Color" />
+        <Column field="status" sortable header="Status" />
       </DataTable>
     </div>
   );
