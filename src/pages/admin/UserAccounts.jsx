@@ -129,7 +129,6 @@ const UserAccounts = () => {
       });
       return;
     }
-
     const formData = new FormData();
     for (const key in selectedUser) {
       if (key === "roleIds") {
@@ -249,7 +248,7 @@ const UserAccounts = () => {
   };
   const fetchShelters = async () => {
     try {
-      const response = await axios.get("/shelter/get_all_shelter");
+      const response = await axios.get("/shelter");
       setShelters(
         response.data.map((shelter) => ({
           label: shelter.name,
