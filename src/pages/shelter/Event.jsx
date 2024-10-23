@@ -142,7 +142,7 @@ const Event = () => {
             className="w-full mb-2"
             showIcon
           />
-          <QuillToolbar /> {/* Add the QuillToolbar here */}
+          <QuillToolbar />
           <ReactQuill
             value={newEvent.description}
             onChange={(value) =>
@@ -188,7 +188,16 @@ const Event = () => {
                 sortable
                 body={(rowData) => new Date(rowData.date).toLocaleString()}
               />
-              <Column field="description" header="Description" sortable />
+              <Column
+                field="description"
+                header="Description"
+                sortable
+                body={(rowData) => (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: rowData.description }}
+                  />
+                )}
+              />
               <Column field="location" header="Location" sortable />
               <Column field="shelterName" header="Shelter Name" sortable />
             </DataTable>
