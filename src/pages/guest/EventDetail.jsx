@@ -17,8 +17,8 @@ const EventDetail = () => {
         setEvent(response.data); // Store the event details
         checkUserRegistration(); // Check if the user is registered
       } catch (error) {
-        console.error("Error fetching event details:", error);
-        toast.error("Failed to fetch event details.");
+        // console.error("Error fetching event details:", error);
+        // toast.error("Failed to fetch event details.");
       }
     };
 
@@ -28,15 +28,6 @@ const EventDetail = () => {
   const checkUserRegistration = async () => {
     if (!userId) return; // Exit if userId is not available
 
-    try {
-      const response = await axios.get(`/events/${id}/users/${userId}`); // Check if user is registered
-      if (response.data.isRegistered) {
-        setIsRegistered(true); // Set registration status
-      }
-    } catch (error) {
-      console.error("Error checking user registration:", error);
-      toast.error("Failed to check registration status.");
-    }
   };
 
   const handleJoinEvent = async () => {
