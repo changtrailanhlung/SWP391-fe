@@ -17,7 +17,7 @@ const Event = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDialog, setShowDialog] = useState(false);
   const [newEvent, setNewEvent] = useState({
-    shelterId: localStorage.getItem("nameid") || 0,
+    shelterId: localStorage.getItem("shelterId") || 0,
     name: "",
     date: "",
     description: "",
@@ -48,7 +48,7 @@ const Event = () => {
     try {
       const response = await axios.get("/shelter");
       const shelterData = response.data.reduce((acc, shelter) => {
-        acc[shelter.id] = shelter.name;
+        acc[shelter.id] = shelter.name; // Store shelter name by ID
         return acc;
       }, {});
       setShelters(shelterData);
@@ -63,7 +63,7 @@ const Event = () => {
       await axios.post("/events", newEvent);
       toast.success("Event created successfully!");
       setShowDialog(false);
-      fetchEvents();
+      fetchEvents(); // Re-fetch events after creating a new one
     } catch (error) {
       console.error("Error creating event:", error);
       toast.error("Error creating event. Please try again later.");
@@ -71,16 +71,17 @@ const Event = () => {
   };
 
   useEffect(() => {
-    fetchShelters();
+    fetchShelters(); // Fetch shelters on initial load
   }, []);
 
   useEffect(() => {
     if (Object.keys(shelters).length > 0) {
-      fetchEvents();
+      fetchEvents(); // Fetch events only when shelters are available
     }
   }, [shelters]);
 
   useEffect(() => {
+    // Filter events when searchTerm changes
     const filtered = events.filter(
       (event) =>
         event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -95,7 +96,7 @@ const Event = () => {
     toolbar: [
       [{ header: [1, 2, false] }],
       ["bold", "italic", "underline"],
-      ["clean"], // remove formatting button
+      ["clean"], // Remove formatting button
     ],
   };
 

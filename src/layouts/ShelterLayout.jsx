@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import SidebarShelter from "../components/SlidebarShelter";
 import { useAuth } from "../context/AuthContext";
-const AdminLayout = () => {
+const ShelterLayout = () => {
   const { user, setUser } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
@@ -32,4 +32,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+export default ShelterLayout;

@@ -94,6 +94,16 @@ const SidebarShelter = () => {
             <MDBIcon icon="paw" />
             <span className="capitalize ml-3">Adoption Form</span>
           </NavLink>
+          <NavLink
+            to="/shelter/event"
+            className={({ isActive }) =>
+              isActive ? `${normalLink} font-bold` : normalLink
+            }
+          >
+            <MDBIcon fas icon="calendar-alt" /> {/* Icon cho event */}
+            <span className="capitalize">Events</span>
+          </NavLink>
+
           <div className="mt-15">
             <button
               onClick={handleLogout}
