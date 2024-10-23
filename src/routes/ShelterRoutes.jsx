@@ -7,6 +7,7 @@ import PrivateRoute from "./PrivateRoute";
 import PetDetail from "../pages/shelter/PetDetail";
 import Adoption from "../pages/shelter/AdoptionForm";
 import CreatePet from "../pages/shelter/CreatePet";
+import Event from "../pages/shelter/Event";
 const ShelterRoutes = () => {
   return (
     <Routes>
@@ -53,6 +54,21 @@ const ShelterRoutes = () => {
             />
           }
         />
+        <Route
+        path="/shelter/event"
+        element={
+          <PrivateRoute allowedRoles={["ShelterStaff"]}>
+            <ShelterLayout>
+              <Event />
+            </ShelterLayout>
+          </PrivateRoute>
+        }
+      />
+      <Route path="dashboard" element={<Dashboard />} />
+        <Route path="pets" element={<Pet />} />
+        <Route path="adoption" element={<Adoption />} />
+        <Route path="create-pet" element={<CreatePet />} />
+        <Route path="event" element={<Event />} />
       </Route>
     </Routes>
   );
