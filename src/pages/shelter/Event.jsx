@@ -7,9 +7,9 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Dialog } from "primereact/dialog";
-import ReactQuill from "react-quill"; // Import ReactQuill
-import "react-quill/dist/quill.snow.css"; // Import Quill styles
-import QuillToolbar from "../../components/QuillToolbar"; // Import the QuillToolbar
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import QuillToolbar from "../../components/QuillToolbar";
 
 const Event = () => {
   const [events, setEvents] = useState([]);
@@ -25,6 +25,8 @@ const Event = () => {
     location: "",
   });
   const [showDialog, setShowDialog] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState(null);
 
   const fetchEvents = async () => {
     setLoading(true);
@@ -64,18 +66,50 @@ const Event = () => {
       await axios.post("/events", newEvent);
       toast.success("Event created successfully!");
       fetchEvents();
-      setNewEvent({
-        shelterId: localStorage.getItem("nameid") || 0,
-        name: "",
-        date: null,
-        description: "",
-        location: "",
-      });
+      resetNewEvent();
       setShowDialog(false);
     } catch (error) {
       console.error("Error creating event:", error);
       toast.error("Error creating event. Please try again later.");
     }
+  };
+
+  const updateEvent = async () => {
+    try {
+      await axios.put(`/events/${selectedEventId}`, newEvent);
+      toast.success("Event updated successfully!");
+      fetchEvents();
+      resetNewEvent();
+      setShowDialog(false);
+    } catch (error) {
+      console.error("Error updating event:", error);
+      toast.error("Error updating event. Please try again later.");
+    }
+  };
+
+  const resetNewEvent = () => {
+    setNewEvent({
+      shelterId: localStorage.getItem("nameid") || 0,
+      name: "",
+      date: null,
+      description: "",
+      location: "",
+    });
+    setIsEditing(false);
+    setSelectedEventId(null);
+  };
+
+  const handleEditClick = (event) => {
+    setNewEvent({
+      shelterId: event.shelterId,
+      name: event.name,
+      date: new Date(event.date),
+      description: event.description,
+      location: event.location,
+    });
+    setSelectedEventId(event.id);
+    setIsEditing(true);
+    setShowDialog(true);
   };
 
   useEffect(() => {
@@ -118,12 +152,15 @@ const Event = () => {
 
         <Button
           label="Create New Event"
-          onClick={() => setShowDialog(true)}
+          onClick={() => {
+            resetNewEvent();
+            setShowDialog(true);
+          }}
           className="mb-4 bg-blue-500 text-white hover:bg-blue-600"
         />
 
         <Dialog
-          header="Create New Event"
+          header={isEditing ? "Edit Event" : "Create New Event"}
           visible={showDialog}
           style={{ width: "50vw" }}
           onHide={() => setShowDialog(false)}
@@ -160,8 +197,8 @@ const Event = () => {
             className="w-full mb-2 border border-gray-300 rounded-lg shadow-sm"
           />
           <Button
-            label="Create Event"
-            onClick={createEvent}
+            label={isEditing ? "Update Event" : "Create Event"}
+            onClick={isEditing ? updateEvent : createEvent}
             className="mt-2 bg-blue-500 text-white hover:bg-blue-600"
           />
         </Dialog>
@@ -200,6 +237,16 @@ const Event = () => {
               />
               <Column field="location" header="Location" sortable />
               <Column field="shelterName" header="Shelter Name" sortable />
+              <Column
+                header="Actions"
+                body={(rowData) => (
+                  <Button
+                    label="Edit"
+                    onClick={() => handleEditClick(rowData)}
+                    className="p-button-sm p-button-info"
+                  />
+                )}
+              />
             </DataTable>
           )}
         </div>
