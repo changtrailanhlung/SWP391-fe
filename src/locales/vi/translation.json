@@ -73,7 +73,12 @@
     "shelterId": "Quyên góp cho Shelter"
   },
   "HistoryForm": {
-    "title": "Lịch sử nhận nuôi thú cưng"
+    "title": "Lịch sử nhận nuôi thú cưng",
+    "status": {
+      "approved": "Đã duyệt",
+      "denied": "Không được duyệt",
+      "pending": "Đang chờ xử lý"
+    }
   },
   "donation": {
     "formTitle": "Biểu mẫu quyên góp",
