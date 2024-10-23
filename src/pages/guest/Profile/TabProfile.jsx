@@ -4,7 +4,8 @@ import axios from "../../../services/axiosClient";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 import { TabView, TabPanel } from "primereact/tabview"; // Import TabView and TabPanel
 import ProfileInfo from "./ProfileInfo"; // Import the ProfileInfo component
-import ProfileSettings from "./HistoryDonation"; // Import the ProfileSettings component
+import HistoryDonation from "./HistoryDonation"; // Import the ProfileSettings component
+import RegisterForm from "./HistoryForm"; // Import the ProfileSettings component
 
 const Profile = () => {
   const { t } = useTranslation();
@@ -60,7 +61,10 @@ const Profile = () => {
             />
           </TabPanel>
           <TabPanel header={t("tabprofile.tab2")}>
-            <ProfileSettings />
+            <HistoryDonation />
+          </TabPanel>
+          <TabPanel header={t("tabprofile.tab3")}>
+            <RegisterForm />
           </TabPanel>
         </TabView>
       </div>
