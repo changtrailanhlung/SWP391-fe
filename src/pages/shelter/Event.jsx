@@ -4,6 +4,9 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { toast } from "react-toastify";
 import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
+import { Calendar } from "primereact/calendar";
+import { Dialog } from "primereact/dialog";
 
 const Event = () => {
   const [events, setEvents] = useState([]);
@@ -11,6 +14,14 @@ const Event = () => {
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [newEvent, setNewEvent] = useState({
+    shelterId: localStorage.getItem("nameid") || 0,
+    name: "",
+    date: null,
+    description: "",
+    location: "",
+  });
+  const [showDialog, setShowDialog] = useState(false);
 
   const fetchEvents = async () => {
     setLoading(true);
@@ -45,6 +56,25 @@ const Event = () => {
     }
   };
 
+  const createEvent = async () => {
+    try {
+      await axios.post("/events", newEvent);
+      toast.success("Event created successfully!");
+      fetchEvents();
+      setNewEvent({
+        shelterId: localStorage.getItem("nameid") || 0,
+        name: "",
+        date: null,
+        description: "",
+        location: "",
+      });
+      setShowDialog(false);
+    } catch (error) {
+      console.error("Error creating event:", error);
+      toast.error("Error creating event. Please try again later.");
+    }
+  };
+
   useEffect(() => {
     fetchShelters();
   }, []);
@@ -67,25 +97,74 @@ const Event = () => {
   }, [searchTerm, events]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-lg">Loading...</div>;
   }
 
   return (
-    <div>
-      <h1>Event Page</h1>
-      <div className="container mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-4">Events</h1>
+    <div className="bg-gray-100 min-h-screen py-6">
+      <div className="container mx-auto p-6 bg-white rounded-lg shadow-lg">
+        <h1 className="text-4xl font-bold mb-6 text-center">Events</h1>
         <div className="mb-4">
           <InputText
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by event name, description, location, or shelter"
-            className="w-full p-inputtext-sm"
+            className="w-full p-inputtext-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-        <div className="bg-white shadow-md rounded-lg p-6">
+
+        <Button
+          label="Create New Event"
+          onClick={() => setShowDialog(true)}
+          className="mb-4 bg-blue-500 text-white hover:bg-blue-600"
+        />
+
+        <Dialog
+          header="Create New Event"
+          visible={showDialog}
+          style={{ width: "50vw" }}
+          onHide={() => setShowDialog(false)}
+          className="p-dialog"
+        >
+          <InputText
+            value={newEvent.name}
+            onChange={(e) => setNewEvent({ ...newEvent, name: e.target.value })}
+            placeholder="Event Name"
+            className="w-full mb-2 border border-gray-300 rounded-lg shadow-sm"
+          />
+          <Calendar
+            value={newEvent.date}
+            onChange={(e) => setNewEvent({ ...newEvent, date: e.value })}
+            placeholder="Event Date"
+            className="w-full mb-2"
+            showIcon
+          />
+          <InputText
+            value={newEvent.description}
+            onChange={(e) =>
+              setNewEvent({ ...newEvent, description: e.target.value })
+            }
+            placeholder="Description"
+            className="w-full mb-2 border border-gray-300 rounded-lg shadow-sm"
+          />
+          <InputText
+            value={newEvent.location}
+            onChange={(e) =>
+              setNewEvent({ ...newEvent, location: e.target.value })
+            }
+            placeholder="Location"
+            className="w-full mb-2 border border-gray-300 rounded-lg shadow-sm"
+          />
+          <Button
+            label="Create Event"
+            onClick={createEvent}
+            className="mt-2 bg-blue-500 text-white hover:bg-blue-600"
+          />
+        </Dialog>
+
+        <div className="bg-white shadow-md rounded-lg p-6 mt-4">
           {filteredEvents.length === 0 ? (
-            <p>No events found.</p>
+            <p className="text-center">No events found.</p>
           ) : (
             <DataTable
               value={filteredEvents}
