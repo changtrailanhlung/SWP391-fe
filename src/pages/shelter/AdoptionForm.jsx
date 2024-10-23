@@ -79,37 +79,104 @@ const AdoptionForm = () => {
     }
   };
 
-  const updateStatus = async (id) => {
+  const updateStatus = async (id, newStatus) => {
     try {
-      const response = await axios.put(`/form/${id}/status?status=true`, null, {
+      const currentForm = forms.find(form => form.id === id);
+      
+      // Kiểm tra nếu đang confirm và pet đã có form được confirm
+      if (newStatus && checkPetHasConfirmedForm(currentForm.petId)) {
+        toast.current.show({ 
+          severity: 'warning', 
+          summary: 'Warning', 
+          detail: 'This pet already has a confirmed adoption form. Please reject other forms first.', 
+          life: 3000 
+        });
+        return;
+      }
+  
+      const shelterStaffId = parseInt(localStorage.getItem('nameid'));
+        
+      const formData = new FormData();
+      formData.append('SocialAccount', currentForm.socialAccount || '');
+      formData.append('IncomeAmount', currentForm.incomeAmount || 0);
+      formData.append('IdentificationImage', currentForm.identificationImage || '');
+      formData.append('IdentificationImageBackSide', currentForm.identificationImageBackSide || '');
+      formData.append('AdopterId', currentForm.adopterId || 0);
+      formData.append('PetId', currentForm.petId || 0);
+      formData.append('Status', newStatus);
+      formData.append('ShelterStaffId', shelterStaffId);
+      formData.append('Shelter', `Shelter${shelterID}`);
+  
+      const response = await axios.put(`/form/${id}`, formData, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'accept': '*/*',
+          'Content-Type': 'multipart/form-data',
         }
       });
-
-      if (response.data.message) {
+  
+      if (response.status === 200) {
         toast.current.show({ 
           severity: 'success', 
           summary: 'Success', 
-          detail: 'Form status updated successfully', 
+          detail: `Form ${newStatus ? 'confirmed' : 'rejected'} successfully`, 
           life: 3000 
         });
         
+        // Cập nhật state forms chỉ cho form hiện tại
         setForms(forms.map(form => 
-          form.id === id ? { ...form, status: true } : form
+          form.id === id 
+            ? { 
+                ...form, 
+                status: newStatus, 
+                shelterStaffId: shelterStaffId,
+                shelter: `Shelter${shelterID}`
+              } 
+            : form
         ));
       }
     } catch (error) {
-      console.error('Error updating status:', error);
+      console.error('Error updating form:', error);
       toast.current.show({ 
         severity: 'error', 
         summary: 'Error', 
-        detail: 'Failed to update status', 
+        detail: 'Failed to update form', 
         life: 3000 
       });
     }
   };
+
+
+  const confirmStatusUpdate = (id, newStatus) => {
+    const currentForm = forms.find(form => form.id === id);
+    
+    // Kiểm tra nếu đang confirm và pet đã có form được confirm
+    if (newStatus && checkPetHasConfirmedForm(currentForm.petId)) {
+      toast.current.show({ 
+        severity: 'warning', 
+        summary: 'Warning', 
+        detail: 'This pet already has a confirmed adoption form. Please reject other forms first.', 
+        life: 3000 
+      });
+      return;
+    }
+
+    const action = newStatus ? 'confirm' : 'reject';
+    confirmDialog({
+      message: `Are you sure you want to ${action} this adoption form?`,
+      header: `${action.charAt(0).toUpperCase() + action.slice(1)} Confirmation`,
+      icon: 'pi pi-exclamation-triangle',
+      acceptClassName: `bg-${newStatus ? 'green' : 'red'}-500 hover:bg-${newStatus ? 'green' : 'red'}-600 text-white font-semibold py-2 px-4 rounded-full inline-flex items-center transition-colors duration-300 mr-4`,
+      rejectClassName: 'bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-full inline-flex items-center transition-colors duration-300',
+      acceptLabel: newStatus ? 'Confirm' : 'Reject',
+      rejectLabel: 'Cancel',
+      className: 'custom-confirm-dialog',
+      accept: () => updateStatus(id, newStatus),
+      style: { width: '400px' },
+      contentStyle: { padding: '1.5rem' },
+    });
+  };
+
 
   const deleteForm = async (id) => {
     try {
@@ -154,7 +221,9 @@ const AdoptionForm = () => {
       contentStyle: { padding: '1.5rem' },
     });
   };
-
+  const checkPetHasConfirmedForm = (petId) => {
+    return forms.some(form => form.petId === petId && form.status === true);
+  };
   const imageBodyTemplate = (rowData) => {
     return <img src={rowData.identificationImage} alt={`ID Front ${rowData.id}`} className="w-16 h-16 object-cover rounded-lg" />;
   };
@@ -169,22 +238,48 @@ const AdoptionForm = () => {
 
   const statusBodyTemplate = (rowData) => {
     return (
-      <span className={`px-3 py-1 rounded-full ${rowData.status ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-        {rowData.status ? 'Confirmed' : 'Unconfirmed'}
+      <span className={`px-3 py-1 rounded-full ${
+        rowData.status === null 
+          ? 'bg-yellow-100 text-yellow-800'
+          : rowData.status 
+            ? 'bg-green-100 text-green-800'
+            : 'bg-red-100 text-red-800'
+      }`}>
+        {rowData.status === null 
+          ? 'Pending'
+          : rowData.status 
+            ? 'Confirmed' 
+            : 'Rejected'}
       </span>
     );
   };
 
   const actionBodyTemplate = (rowData) => {
+    const hasConfirmedForm = forms.some(form => 
+      form.petId === rowData.petId && 
+      form.status === true && 
+      form.id !== rowData.id
+    );
+
     return (
       <div className="flex gap-2">
-        {!rowData.status && (
-          <Button
-            icon="pi pi-check"
-            className="p-button-rounded p-button-success p-button-sm"
-            onClick={() => updateStatus(rowData.id)}
-            tooltip="Confirm Form"
-          />
+        {rowData.status === null && (
+          <>
+            {!hasConfirmedForm && (
+              <Button
+                icon="pi pi-check"
+                className="p-button-rounded p-button-success p-button-sm"
+                onClick={() => confirmStatusUpdate(rowData.id, true)}
+                tooltip="Confirm Form"
+              />
+            )}
+            <Button
+              icon="pi pi-times"
+              className="p-button-rounded p-button-danger p-button-sm"
+              onClick={() => confirmStatusUpdate(rowData.id, false)}
+              tooltip="Reject Form"
+            />
+          </>
         )}
         <Button
           icon="pi pi-info-circle"

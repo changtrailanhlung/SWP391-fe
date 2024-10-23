@@ -18,7 +18,7 @@ const CreatePet = () => {
     type: "",
     breed: "",
     gender: "",
-    age: 0,
+    age: "",
     size: "",
     color: "",
     description: "",
