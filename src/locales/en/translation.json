@@ -1,77 +1,83 @@
 {
-    "home": "Home",
-    "event": "Event",
-    "about": "About Us",
-    "contact": "Contact",
-    "pets": "Pets",
-    "registrationform": "Registration Form",
-    "donate": "Donate",
-    "login": "Login",
-    "lg1": "Join us in",
-    "lg2": "creating second chances for pets",
-    "lg3": "Help us bring new life to abandoned pets. With your support, we can provide safe shelter, medical care, and love for these four-legged friends. Every contribution and adoption changes the life of a pet.",
-    "type": "Type",
-    "breed": "Breed",
-    "age": "Age",
-    "gender": "Gender",
-    "size": "Size",
-    "color": "Color",
-    "status": "Status",
-    "adoption-status": "Adoption Status",
-    "description": "Description",
-    "years": "years",
-    "adopt": "Adopt",
-    "previous": "Previous",
-    "next": "Next",
-    "page": "Page",
-    "of": "of",
-    "logout": "Logout",
-    "userinformation": "User Information",
-    "no": "No",
-    "profile": {
-        "title": "User Profile",
-        "username": "Username",
-        "email": "Email",
-        "phone": "Phone",
-        "location": "Location",
-        "noData": "No data available",
-        "donate": "Total Donation",
-        "changePassword": "Change Password",
-        "updateInfo": "Update Info",
-        "oldPassword": "Old Password",
-        "newPassword": "New Password",
-        "loading": "Loading...",
-        "passwordChangeSuccess": "Password changed successfully!",
-        "passwordChangeError": "Error changing password. Please try again."
-    },
-    "updateInfo": {
-        "title": "Update Information",
-        "username": "Username",
-        "location": "Location",
-        "phone": "Phone",
-        "button": "Update Info",
-        "profileUpdateSuccess": "Profile updated successfully!",
-        "profileUpdateError": "Error updating profile. Please try again.",
-        "image": "Image"
-    },
-    "donates": {
-        "title": "Thông tin Shelter Information",
-        "location": "Location",
-        "phone": "Phone Number",
-        "donate": "Donate"
-    },
-    "tabprofile": {
-        "tab1": "User Information",
-        "tab2": "History Donation"
-    },
-    "donationHistory": {
-        "title": "Donation History",
-        "noData": "No donations found.",
-        "amount": "Amount (VND)",
-        "date": "Date",
-        "shelterId": "Donate for Shelter"
-    },
-    "HistoryForm": {
-        "title": "Pet adoption history"
-    }
+  "home": "Home",
+  "event": "Event",
+  "about": "About Us",
+  "contact": "Contact",
+  "pets": "Pets",
+  "registrationform": "Registration Form",
+  "donate": "Donate",
+  "login": "Login",
+  "lg1": "Join us in",
+  "lg2": "creating second chances for pets",
+  "lg3": "Help us bring new life to abandoned pets. With your support, we can provide safe shelter, medical care, and love for these four-legged friends. Every contribution and adoption changes the life of a pet.",
+  "type": "Type",
+  "breed": "Breed",
+  "age": "Age",
+  "gender": "Gender",
+  "size": "Size",
+  "color": "Color",
+  "status": "Status",
+  "adoption-status": "Adoption Status",
+  "description": "Description",
+  "years": "years",
+  "adopt": "Adopt",
+  "previous": "Previous",
+  "next": "Next",
+  "page": "Page",
+  "of": "of",
+  "logout": "Logout",
+  "userinformation": "User Information",
+  "no": "No",
+  "profile": {
+    "title": "User Profile",
+    "username": "Username",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location",
+    "noData": "No data available",
+    "donate": "Total Donation",
+    "changePassword": "Change Password",
+    "updateInfo": "Update Info",
+    "oldPassword": "Old Password",
+    "newPassword": "New Password",
+    "loading": "Loading...",
+    "passwordChangeSuccess": "Password changed successfully!",
+    "passwordChangeError": "Error changing password. Please try again."
+  },
+  "updateInfo": {
+    "title": "Update Information",
+    "username": "Username",
+    "location": "Location",
+    "phone": "Phone",
+    "button": "Update Info",
+    "profileUpdateSuccess": "Profile updated successfully!",
+    "profileUpdateError": "Error updating profile. Please try again.",
+    "image": "Image"
+  },
+  "donates": {
+    "title": "Thông tin Shelter Information",
+    "location": "Location",
+    "phone": "Phone Number",
+    "donate": "Donate"
+  },
+  "tabprofile": {
+    "tab1": "User Information",
+    "tab2": "History Donation"
+  },
+  "donationHistory": {
+    "title": "Donation History",
+    "noData": "No donations found.",
+    "amount": "Amount (VND)",
+    "date": "Date",
+    "shelterId": "Donate for Shelter"
+  },
+  "HistoryForm": {
+    "title": "Pet adoption history"
+  },
+  "donation": {
+    "formTitle": "Donation Form",
+    "amount": "Donation Amount",
+    "submit": "Submit",
+    "successMessage": "Thank you for your donation!"
+  }
 }
