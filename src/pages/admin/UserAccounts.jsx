@@ -6,7 +6,7 @@ import { Button } from "primereact/button";
 import { MultiSelect } from "primereact/multiselect";
 import { FileUpload } from "primereact/fileupload";
 import axios from "../../services/axiosClient"; // Import your API utility
-import { Checkbox } from "primereact/checkbox";
+
 import { Dropdown } from "primereact/dropdown";
 
 const UserAccounts = () => {
@@ -129,7 +129,6 @@ const UserAccounts = () => {
       });
       return;
     }
-
     const formData = new FormData();
     for (const key in selectedUser) {
       if (key === "roleIds") {
@@ -206,16 +205,7 @@ const UserAccounts = () => {
     setUpdateVisible(true);
   };
 
-  const updateBodyTemplate = (rowData) => {
-    return (
-      <Button
-        label="Update"
-        icon="pi pi-pencil"
-        className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-full inline-flex items-center transition-colors duration-300"
-        onClick={() => handleEditUser(rowData)}
-      />
-    );
-  };
+  
   const [errors, setErrors] = useState({});
   const toast = useRef(null);
 
@@ -249,7 +239,7 @@ const UserAccounts = () => {
   };
   const fetchShelters = async () => {
     try {
-      const response = await axios.get("/shelter/get_all_shelter");
+      const response = await axios.get("/shelter");
       setShelters(
         response.data.map((shelter) => ({
           label: shelter.name,
@@ -322,16 +312,7 @@ const UserAccounts = () => {
     }
   };
 
-  const deleteBodyTemplate = (rowData) => {
-    return (
-      <Button
-        label="Delete"
-        icon="pi pi-times"
-        className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-full inline-flex items-center transition-colors duration-300"
-        onClick={() => handleDeleteUser(rowData.id)}
-      />
-    );
-  };
+  
   const findFormErrors = (user) => {
     const newErrors = {};
 
@@ -437,6 +418,22 @@ const UserAccounts = () => {
       </div>
     );
   };
+  const actionsBodyTemplate = (rowData) => {
+    return (
+      <div className="flex gap-2">
+        <Button
+          icon="pi pi-pencil"
+          className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-full inline-flex items-center transition-colors duration-300"
+          onClick={() => handleEditUser(rowData)}
+        />
+        <Button
+          icon="pi pi-trash"
+          className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-full inline-flex items-center transition-colors duration-300"
+          onClick={() => handleDeleteUser(rowData.id)}
+        />
+      </div>
+    );
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -506,12 +503,8 @@ const UserAccounts = () => {
             headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
           />
           <Column
-            body={updateBodyTemplate}
-            className="border border-gray-300 p-2"
-            headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
-          />
-          <Column
-            body={deleteBodyTemplate}
+            header=""
+            body={actionsBodyTemplate}
             className="border border-gray-300 p-2"
             headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
           />
@@ -799,7 +792,7 @@ const UserAccounts = () => {
               </div>
 
               {/* Email field */}
-              <div className="p-field">
+              {/* <div className="p-field">
                 <label htmlFor="email" className="block text-lg font-medium">
                   Email
                 </label>
@@ -823,7 +816,7 @@ const UserAccounts = () => {
                 {errors.email && (
                   <small className="text-red-500">{errors.email}</small>
                 )}
-              </div>
+              </div> */}
 
               {/* Phone field */}
               <div className="p-field">

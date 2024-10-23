@@ -30,7 +30,8 @@ const SidebarShelter = () => {
     navigate("/");
   };
 
-  const normalLink = "flex items-center gap-1 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 hover:text-black m-2";
+  const normalLink =
+    "flex items-center gap-1 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 hover:text-black m-2";
 
   return (
     <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
@@ -65,12 +66,34 @@ const SidebarShelter = () => {
             <NavLink
               to="/shelter/dashboard"
               onClick={handleCloseSideBar}
-              className={({ isActive }) => (isActive ? `${normalLink} font-bold` : normalLink)}
+              className={({ isActive }) =>
+                isActive ? `${normalLink} font-bold` : normalLink
+              }
             >
               <MDBIcon icon="tachometer-alt" />
               <span className="capitalize ml-3">Dashboard</span>
             </NavLink>
           </div>
+          <NavLink
+            to="/shelter/pets"
+            onClick={handleCloseSideBar}
+            className={({ isActive }) =>
+              isActive ? `${normalLink} font-bold` : normalLink
+            }
+          >
+            <MDBIcon icon="paw" />
+            <span className="capitalize ml-3">Pets</span>
+          </NavLink>
+          <NavLink
+            to="/shelter/Adoptions"
+            onClick={handleCloseSideBar}
+            className={({ isActive }) =>
+              isActive ? `${normalLink} font-bold` : normalLink
+            }
+          >
+            <MDBIcon icon="paw" />
+            <span className="capitalize ml-3">Adoption Form</span>
+          </NavLink>
           <div className="mt-15">
             <button
               onClick={handleLogout}
