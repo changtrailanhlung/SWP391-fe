@@ -27,7 +27,6 @@ const RegistrationForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("Form submitted!");
     const formData = new FormData();
     formData.append("SocialAccount", socialAccount);
     formData.append("IncomeAmount", incomeAmount);
@@ -37,7 +36,6 @@ const RegistrationForm = () => {
     formData.append("PetId", parseInt(petID, 10));
 
     try {
-      console.log("Submitting form data:", formData); // FormData cannot be logged directly
       await axios.post("/form", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -58,58 +56,66 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="container mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Registration Form</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block mb-2">Social Account</label>
-          <input
-            type="text"
-            value={socialAccount}
-            onChange={(e) => setSocialAccount(e.target.value)}
-            className="border p-2 w-full"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Income Amount</label>
-          <input
-            type="number"
-            value={incomeAmount}
-            onChange={(e) => setIncomeAmount(e.target.value)}
-            className="border p-2 w-full"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Identification Image (Front)</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => handleImageChange(e, setIdentificationImage)}
-            className="border p-2 w-full"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2">Identification Image (Back)</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) =>
-              handleImageChange(e, setIdentificationImageBackSide)
-            }
-            className="border p-2 w-full"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded"
-        >
-          Submit
-        </button>
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold text-center mb-6">
+          Registration Form
+        </h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Social Account</label>
+            <input
+              type="text"
+              value={socialAccount}
+              onChange={(e) => setSocialAccount(e.target.value)}
+              className="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Income Amount</label>
+            <input
+              type="number"
+              value={incomeAmount}
+              onChange={(e) => setIncomeAmount(e.target.value)}
+              className="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">
+              Identification Image (Front)
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e, setIdentificationImage)}
+              className="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">
+              Identification Image (Back)
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) =>
+                handleImageChange(e, setIdentificationImageBackSide)
+              }
+              className="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

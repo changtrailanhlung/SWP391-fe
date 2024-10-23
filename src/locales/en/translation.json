@@ -72,7 +72,12 @@
     "shelterId": "Donate for Shelter"
   },
   "HistoryForm": {
-    "title": "Pet adoption history"
+    "title": "Pet adoption history",
+    "status": {
+      "approved": "Approved",
+      "denied": "Denied",
+      "pending": "Pending"
+    }
   },
   "donation": {
     "formTitle": "Donation Form",
