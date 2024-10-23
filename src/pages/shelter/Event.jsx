@@ -7,6 +7,9 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Dialog } from "primereact/dialog";
+import ReactQuill from "react-quill"; // Import ReactQuill
+import "react-quill/dist/quill.snow.css"; // Import Quill styles
+import QuillToolbar from "../../components/QuillToolbar"; // Import the QuillToolbar
 
 const Event = () => {
   const [events, setEvents] = useState([]);
@@ -139,13 +142,14 @@ const Event = () => {
             className="w-full mb-2"
             showIcon
           />
-          <InputText
+          <QuillToolbar /> {/* Add the QuillToolbar here */}
+          <ReactQuill
             value={newEvent.description}
-            onChange={(e) =>
-              setNewEvent({ ...newEvent, description: e.target.value })
+            onChange={(value) =>
+              setNewEvent({ ...newEvent, description: value })
             }
             placeholder="Description"
-            className="w-full mb-2 border border-gray-300 rounded-lg shadow-sm"
+            className="mb-2 border border-gray-300 rounded-lg"
           />
           <InputText
             value={newEvent.location}
