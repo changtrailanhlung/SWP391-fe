@@ -14,7 +14,7 @@ const HistoryForm = () => {
   // Function to fetch pet details for each petId in data
   const fetchPetDetails = async (petId) => {
     try {
-      const response = await axios.get(`/pet/get-petbyid/${petId}`);
+      const response = await axios.get(`/pet/id/${petId}`);
       return response.data; // Return pet details
     } catch (error) {
       console.error(`Error fetching pet details for petId ${petId}:`, error);
