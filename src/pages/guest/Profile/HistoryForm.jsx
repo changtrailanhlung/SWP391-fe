@@ -40,6 +40,7 @@ const HistoryForm = () => {
             gender: petDetails ? petDetails.gender : "Unknown",
             age: petDetails ? petDetails.age : "Unknown",
             color: petDetails ? petDetails.color : "Unknown",
+            shelterName: item.shelter || "Unknown", // Sử dụng trường shelter từ item
             status: statusText,
           };
         })
@@ -85,6 +86,7 @@ const HistoryForm = () => {
         <Column field="gender" sortable header="Gender" />
         <Column field="age" sortable header="Age" />
         <Column field="color" sortable header="Color" />
+        <Column field="shelterName" sortable header="Shelter Name" />
         <Column field="status" sortable header="Status" />
       </DataTable>
     </div>
