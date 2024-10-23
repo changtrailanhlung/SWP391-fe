@@ -87,6 +87,17 @@ const Event = () => {
     }
   };
 
+  const deleteEvent = async (id) => {
+    try {
+      await axios.delete(`/events/${id}`);
+      toast.success("Event deleted successfully!");
+      fetchEvents();
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      toast.error("Error deleting event. Please try again later.");
+    }
+  };
+
   const resetNewEvent = () => {
     setNewEvent({
       shelterId: localStorage.getItem("nameid") || 0,
@@ -240,11 +251,26 @@ const Event = () => {
               <Column
                 header="Actions"
                 body={(rowData) => (
-                  <Button
-                    label="Edit"
-                    onClick={() => handleEditClick(rowData)}
-                    className="p-button-sm p-button-info"
-                  />
+                  <div>
+                    <Button
+                      label="Edit"
+                      onClick={() => handleEditClick(rowData)}
+                      className="p-button-sm p-button-info mr-2"
+                    />
+                    <Button
+                      label="Delete"
+                      onClick={() => {
+                        if (
+                          window.confirm(
+                            "Are you sure you want to delete this event?"
+                          )
+                        ) {
+                          deleteEvent(rowData.id);
+                        }
+                      }}
+                      className="p-button-sm p-button-danger"
+                    />
+                  </div>
                 )}
               />
             </DataTable>
