@@ -15,8 +15,8 @@ const HistoryDonation = () => {
   useEffect(() => {
     const fetchDonationHistory = async () => {
       try {
-        const donationResponse = await axios.get(`/donate/by-donor/${donorId}`);
-        const shelterResponse = await axios.get(`/shelter/get_all_shelter`); // Fetch all shelters
+        const donationResponse = await axios.get(`/donate`);
+        const shelterResponse = await axios.get(`/shelter`); // Fetch all shelters
         console.log(donationResponse.data); // Log the donation response data
         console.log(shelterResponse.data); // Log the shelter response data
 
