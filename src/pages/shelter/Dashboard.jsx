@@ -1,44 +1,71 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Chart } from "primereact/chart";
 import { Card } from "primereact/card";
-import { Dropdown } from "primereact/dropdown"; // Import Dropdown for year selection
+import { Dropdown } from "primereact/dropdown";
 import axios from "../../services/axiosClient";
 
 const Dashboard = () => {
-  const [chartData, setChartData] = useState({});
-  const [chartOptions, setChartOptions] = useState({});
-  const [totalRevenue, setTotalRevenue] = useState(0);
-  const [totalPets, setTotalPets] = useState(0);
-  const [totalAdoptedPets, setTotalAdoptedPets] = useState(0);
-  const [totalEvents, setTotalEvents] = useState(0);
-  const [totalAvailablePets, setTotalAvailablePets] = useState(0);
+  // Khởi tạo các state cần thiết
+  const [chartData, setChartData] = useState({}); // Dữ liệu biểu đồ
+  const [chartOptions, setChartOptions] = useState({}); // Tùy chọn biểu đồ
+  const [totalRevenue, setTotalRevenue] = useState(0); // Tổng doanh thu
+  const [totalPets, setTotalPets] = useState(0); // Tổng số thú cưng
+  const [totalAdoptedPets, setTotalAdoptedPets] = useState(0); // Số thú cưng đã được nhận nuôi
+  const [totalEvents, setTotalEvents] = useState(0); // Tổng số sự kiện
+  const [totalAvailablePets, setTotalAvailablePets] = useState(0); // Số thú cưng có sẵn
+  const [shelterInfo, setShelterInfo] = useState(null); // Thông tin shelter
   const toast = useRef(null);
-  const shelterID = localStorage.getItem("shelterID");
-  const [year, setYear] = useState(new Date().getFullYear()); // Set initial year to current year
-  const [years, setYears] = useState([]); // State to store available years
+  const shelterID = localStorage.getItem("shelterID"); // Lấy ID shelter từ localStorage
+  const [year, setYear] = useState(new Date().getFullYear()); // Năm hiện tại
+  const [years, setYears] = useState([]); // Danh sách các năm có dữ liệu
 
   useEffect(() => {
+    // Hàm lấy thông tin chi tiết của shelter
+    const fetchShelterInfo = async () => {
+      try {
+        const response = await axios.get(`/shelter/${shelterID}`);
+        setShelterInfo(response.data);
+      } catch (error) {
+        console.error("Lỗi khi lấy thông tin shelter:", error);
+        toast.current.show({
+          severity: "error",
+          summary: "Lỗi",
+          detail: "Không thể lấy thông tin shelter",
+          life: 3000,
+        });
+      }
+    };
+
+    // Hàm lấy tất cả dữ liệu cần thiết cho dashboard
     const fetchData = async () => {
       try {
-        const donateResponse = await axios.get("/donate");
-        const petResponse = await axios.get(`/pet?shelterId=${shelterID}`);
-        const eventResponse = await axios.get("/events");
+        // Gọi đồng thời các API để lấy dữ liệu
+        const [donateResponse, petResponse, eventResponse] = await Promise.all([
+          axios.get("/donate"),
+          axios.get(`/pet?shelterId=${shelterID}`),
+          axios.get("/events"),
+          fetchShelterInfo()
+        ]);
 
+        // Lọc donations theo shelterID
         const donations = donateResponse.data.filter(
           (donation) => donation.shelterId === parseInt(shelterID)
         );
+
+        // Lọc pets theo shelterID
         const pets = petResponse.data.filter(
           (pet) => pet.shelterID === parseInt(shelterID)
         );
+
+        // Lọc events theo shelterID
         const events = eventResponse.data.filter(
           (event) => event.shelterId === parseInt(shelterID)
         );
 
-        // Tính tổng số lượng sự kiện cho shelter này
-        const totalEventCount = events.length;
-        setTotalEvents(totalEventCount);
+        // Tính tổng số sự kiện
+        setTotalEvents(events.length);
 
-        // Extract years from donations and set available years
+        // Lấy danh sách các năm có donation
         const availableYears = [
           ...new Set(
             donations.map((donation) => new Date(donation.date).getFullYear())
@@ -46,7 +73,7 @@ const Dashboard = () => {
         ];
         setYears(availableYears);
 
-        // Tính tổng số tiền donate cho shelter này theo năm đã chọn
+        // Lọc donations theo năm đã chọn và tính tổng
         const filteredDonations = donations.filter(
           (donation) => new Date(donation.date).getFullYear() === year
         );
@@ -56,31 +83,29 @@ const Dashboard = () => {
         );
         setTotalRevenue(total);
 
-        // Tính tổng số lượng pet cho shelter này
-        const totalPetCount = pets.length;
-        setTotalPets(totalPetCount);
+        // Cập nhật các thống kê về pets
+        setTotalPets(pets.length);
+        setTotalAvailablePets(
+          pets.filter((pet) => pet.adoptionStatus === "Available").length
+        );
+        setTotalAdoptedPets(
+          pets.filter((pet) => pet.adoptionStatus === "Adopted").length
+        );
 
-        // Đếm số thú cưng Available
-        const availablePetCount = pets.filter(
-          (pet) => pet.adoptionStatus === "Available"
-        ).length;
-        setTotalAvailablePets(availablePetCount);
-        // Đếm số thú cưng Adopted
-        const adoptedPetCount = pets.filter(
-          (pet) => pet.adoptionStatus === "Adopted"
-        ).length;
-        setTotalAdoptedPets(adoptedPetCount);
-        // Tạo biểu đồ hiển thị donation theo tháng
+        // Tạo dữ liệu cho biểu đồ
         const groupedDonations = filteredDonations.reduce((acc, donation) => {
           const month = new Date(donation.date).getMonth();
           acc[month] = (acc[month] || 0) + donation.amount;
           return acc;
         }, {});
 
+        // Tạo labels cho các tháng
         const labels = Array.from({ length: 12 }, (_, i) =>
           new Date(0, i).toLocaleString("en", { month: "long" })
         );
         const data = labels.map((_, i) => groupedDonations[i] || 0);
+
+        // Hàm tạo màu ngẫu nhiên cho biểu đồ
         const getRandomColor = () => {
           const r = Math.floor(Math.random() * 256);
           const g = Math.floor(Math.random() * 256);
@@ -90,19 +115,21 @@ const Dashboard = () => {
 
         const backgroundColors = data.map(() => getRandomColor());
         const borderColors = backgroundColors;
+
+        // Lấy style từ document
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue("--text-color");
         const textColorSecondary = documentStyle.getPropertyValue(
           "--text-color-secondary"
         );
-        const surfaceBorder =
-          documentStyle.getPropertyValue("--surface-border");
+        const surfaceBorder = documentStyle.getPropertyValue("--surface-border");
 
+        // Cấu hình dữ liệu biểu đồ
         setChartData({
           labels,
           datasets: [
             {
-              label: "Donation Amount",
+              label: "Số tiền quyên góp",
               backgroundColor: backgroundColors,
               borderColor: borderColors,
               borderRadius: 10,
@@ -111,6 +138,7 @@ const Dashboard = () => {
           ],
         });
 
+        // Cấu hình tùy chọn biểu đồ
         setChartOptions({
           maintainAspectRatio: false,
           aspectRatio: 0.8,
@@ -152,11 +180,11 @@ const Dashboard = () => {
           },
         });
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Lỗi khi lấy dữ liệu:", error);
         toast.current.show({
           severity: "error",
-          summary: "Error",
-          detail: "Failed to fetch data",
+          summary: "Lỗi",
+          detail: "Không thể lấy dữ liệu",
           life: 3000,
         });
       }
@@ -167,6 +195,39 @@ const Dashboard = () => {
 
   return (
     <div className="p-4 bg-white shadow rounded-lg">
+      {/* Phần hiển thị thông tin shelter */}
+      {shelterInfo && (
+        <Card className="mb-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="flex flex-col">
+              <span className="text-gray-500 text-sm font-bold">Tên Shelter</span>
+              <span className="font-bold text-lg">{shelterInfo.name}</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-gray-500 text-sm font-bold">Địa chỉ</span>
+              <span className="font-bold text-lg">{shelterInfo.location}</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-gray-500 text-sm font-bold">Số điện thoại</span>
+              <span className="font-bold text-lg">{shelterInfo.phoneNumber}</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-gray-500 text-sm font-bold">Email</span>
+              <span className="font-bold text-lg">{shelterInfo.email}</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-gray-500 text-sm font-bold">Diện tích(Ha)</span>
+              <span className="font-bold text-lg">{shelterInfo.capacity}</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-gray-500 text-sm font-bold">Tổng tiền quyên góp</span>
+              <span className="font-bold text-lg">{shelterInfo.donationAmount?.toLocaleString()} VND</span>
+            </div>
+          </div>
+        </Card>
+      )}
+
+      {/* Phần hiển thị các thống kê */}
       <div className="flex flex-wrap gap-2 mb-4">
         <Card className="flex-1">
           <div className="flex items-center gap-2">
@@ -174,12 +235,8 @@ const Dashboard = () => {
               <i className="pi pi-dollar" />
             </span>
             <div className="flex flex-col gap-1">
-              <span className="text-gray-500 text-sm font-bold">
-                Total Revenue
-              </span>
-              <span className="font-bold text-lg">
-                {totalRevenue.toLocaleString()} VND
-              </span>
+              <span className="text-gray-500 text-sm font-bold">Tổng doanh thu</span>
+              <span className="font-bold text-lg">{totalRevenue.toLocaleString()} VND</span>
             </div>
           </div>
         </Card>
@@ -189,9 +246,7 @@ const Dashboard = () => {
               <i className="pi pi-heart-fill" />
             </span>
             <div className="flex flex-col gap-1">
-              <span className="text-gray-500 text-sm font-bold">
-                Total Available Pets
-              </span>
+              <span className="text-gray-500 text-sm font-bold">Thú cưng có sẵn</span>
               <span className="font-bold text-lg">{totalAvailablePets}</span>
             </div>
           </div>
@@ -202,9 +257,7 @@ const Dashboard = () => {
               <i className="pi pi-check-circle" />
             </span>
             <div className="flex flex-col gap-1">
-              <span className="text-gray-500 text-sm font-bold">
-                Total Adopted Pets
-              </span>
+              <span className="text-gray-500 text-sm font-bold">Thú cưng đã nhận nuôi</span>
               <span className="font-bold text-lg">{totalAdoptedPets}</span>
             </div>
           </div>
@@ -215,20 +268,20 @@ const Dashboard = () => {
               <i className="pi pi-calendar" />
             </span>
             <div className="flex flex-col gap-1">
-              <span className="text-gray-500 text-sm font-bold">
-                Total Events
-              </span>
+              <span className="text-gray-500 text-sm font-bold">Tổng số sự kiện</span>
               <span className="font-bold text-lg">{totalEvents}</span>
             </div>
           </div>
         </Card>
       </div>
+
+      {/* Phần chọn năm và hiển thị biểu đồ */}
       <div className="flex justify-end mb-4">
         <Dropdown
           value={year}
-          options={years.map((yr) => ({ label: yr, value: yr }))} // Adjust options to ensure they have label and value
+          options={years.map((yr) => ({ label: yr, value: yr }))}
           onChange={(e) => setYear(e.value)}
-          placeholder="Select Year"
+          placeholder="Chọn năm"
           className="w-40 bg-white border border-gray-300 text-black font-bold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           itemTemplate={(option) => (
             <div className="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white cursor-pointer rounded-md">
