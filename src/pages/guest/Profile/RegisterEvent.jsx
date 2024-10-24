@@ -55,37 +55,34 @@ const RegisterEvent = () => {
   }
 
   return (
-    <DataTable
-      value={events}
-      paginator
-      rows={10}
-      header="Event List"
-      role="table"
-    >
-      <Column
-        header="No."
-        body={(rowData, { rowIndex }) => rowIndex + 1}
-        sortable
-      />
-      <Column field="name" header="Name" sortable />
-      <Column
-        field="date"
-        header="Date"
-        sortable
-        body={(rowData) => {
-          const date = new Date(rowData.date);
-          return isNaN(date) ? "Invalid Date" : date.toLocaleString();
-        }}
-      />
-      <Column
-        field="description"
-        header="Description"
-        body={(rowData) => (
-          <div dangerouslySetInnerHTML={{ __html: rowData.description }} />
-        )}
-      />
-      <Column field="location" header="Location" sortable />
-    </DataTable>
+    <div className="container mx-auto p-6">
+      <h2 className="text-2xl font-bold text-center mb-4">Event List</h2>
+      <DataTable value={events} paginator rows={10} role="table">
+        <Column
+          header="No."
+          body={(rowData, { rowIndex }) => rowIndex + 1}
+          sortable
+        />
+        <Column field="name" header="Name" sortable />
+        <Column
+          field="date"
+          header="Date"
+          sortable
+          body={(rowData) => {
+            const date = new Date(rowData.date);
+            return isNaN(date) ? "Invalid Date" : date.toLocaleString();
+          }}
+        />
+        <Column
+          field="description"
+          header="Description"
+          body={(rowData) => (
+            <div dangerouslySetInnerHTML={{ __html: rowData.description }} />
+          )}
+        />
+        <Column field="location" header="Location" sortable />
+      </DataTable>
+    </div>
   );
 };
 
