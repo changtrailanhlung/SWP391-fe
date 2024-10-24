@@ -63,8 +63,7 @@
   "tabprofile": {
     "tab1": "Thông tin người dùng",
     "tab2": "Lịch sử quyên góp",
-    "tab3": "Form đăng kí nhận nuôi pet",
-    "tab4": "Lịch sử đăng kí tham gia Event"
+    "tab3": "Form đăng kí nhận nuôi pet"
   },
   "donationHistory": {
     "title": "Lịch sử quyên góp",

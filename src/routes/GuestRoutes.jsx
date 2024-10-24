@@ -12,9 +12,7 @@ import ChangePassword from "../pages/guest/Profile/ChangePassword";
 import UpdateProfile from "../pages/guest/Profile/UpdateInfo";
 import EventDetail from "../pages/guest/EventDetail";
 import DonationForm from "../pages/guest/DonationForm"; // Adjust import path as necessary
-import DonateWallet from "../pages/guest/Wallet";
 import ScrollToTopButton from "../components/ScrollToTopButton";
-import VNPAYResponseHandler from "../components/VNPAYResponseHandler";
 
 const GuestRoutes = () => {
   return (
@@ -30,10 +28,8 @@ const GuestRoutes = () => {
           <Route path="/event" element={<Events />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/update-profile" element={<UpdateProfile />} />
-          <Route path="/donate-wallet" element={<DonateWallet />} />
           <Route path="/event/:id" element={<EventDetail />} />
           <Route path="/donate/:shelterId" element={<DonationForm />} />
-          <Route path="/vnpay-response" element={<VNPAYResponseHandler />} />
         </Route>
       </Routes>
       <ScrollToTopButton />

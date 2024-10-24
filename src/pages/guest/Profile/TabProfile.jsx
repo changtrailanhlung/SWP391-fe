@@ -6,7 +6,6 @@ import { TabView, TabPanel } from "primereact/tabview"; // Import TabView and Ta
 import ProfileInfo from "./ProfileInfo"; // Import the ProfileInfo component
 import HistoryDonation from "./HistoryDonation"; // Import the ProfileSettings component
 import RegisterForm from "./HistoryForm"; // Import the ProfileSettings component
-import RegisterEvent from "./RegisterEvent";
 
 const Profile = () => {
   const { t } = useTranslation();
@@ -66,9 +65,6 @@ const Profile = () => {
           </TabPanel>
           <TabPanel header={t("tabprofile.tab3")}>
             <RegisterForm />
-          </TabPanel>
-          <TabPanel header={t("tabprofile.tab4")}>
-            <RegisterEvent />
           </TabPanel>
         </TabView>
       </div>
