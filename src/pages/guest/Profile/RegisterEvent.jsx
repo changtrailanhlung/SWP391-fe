@@ -73,13 +73,19 @@ const RegisterEvent = () => {
             return isNaN(date) ? "Invalid Date" : date.toLocaleString();
           }}
         />
-        <Column
+        {/* <Column
           field="description"
           header="Description"
-          body={(rowData) => (
-            <div dangerouslySetInnerHTML={{ __html: rowData.description }} />
-          )}
-        />
+          body={(rowData) => {
+            const shortDescription = rowData.description.substring(0, 20);
+            return (
+              <div>
+                {shortDescription}
+                {rowData.description.length > 20 && "..."}
+              </div>
+            );
+          }}
+        /> */}
         <Column field="location" header="Location" sortable />
       </DataTable>
     </div>
