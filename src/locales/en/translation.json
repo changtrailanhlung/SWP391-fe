@@ -62,7 +62,9 @@
   },
   "tabprofile": {
     "tab1": "User Information",
-    "tab2": "History Donation"
+    "tab2": "History Donation",
+    "tab3": "Pet adoption registration history",
+    "tab4": "Event registration history"
   },
   "donationHistory": {
     "title": "Donation History",
