@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { post } from "../../services/axiosClient";
 
 const Wallet = () => {
-  const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState(""); // Giá trị mặc định là rỗng
 
   const handleDonate = async () => {
     const fullName = localStorage.getItem("username");
@@ -15,15 +14,16 @@ const Wallet = () => {
 
     const numericAmount = amount ? Number(amount) : 0;
 
-    if (!description.trim()) {
-      alert("Vui lòng nhập mô tả.");
+    // Kiểm tra xem số tiền có hợp lệ không
+    if (numericAmount <= 0) {
+      alert("Vui lòng nhập số tiền hợp lệ.");
       return;
     }
 
     const data = {
       fullName,
       amount: numericAmount,
-      description,
+      description: "", // Mô tả sẽ là chuỗi trống
     };
 
     try {
@@ -44,19 +44,9 @@ const Wallet = () => {
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          min="0"
+          min="0" // Đảm bảo số tiền không âm
           className="mt-1 block w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           placeholder="Nhập số tiền"
-        />
-      </label>
-      <label className="block mb-2">
-        <span className="text-gray-700">Mô tả:</span>
-        <input
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="mt-1 block w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-          placeholder="Nhập mô tả"
         />
       </label>
       <button
