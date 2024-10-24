@@ -27,9 +27,12 @@ const Wallet = () => {
     };
 
     try {
-      const result = await post("/donate/vnpay", data);
-      console.log("Donation successful:", result);
-      window.location.href = result.url; // Điều hướng tới URL thanh toán
+      const response = await post("/donate/vnpay", data);
+      console.log("Donation successful:", response);
+
+      // Giả sử response chứa URL thanh toán
+      const paymentUrl = response; // Gán trực tiếp nếu response chứa URL
+      window.location.href = paymentUrl; // Chuyển hướng đến URL thanh toán
     } catch (error) {
       console.error("Error during donation:", error);
     }
