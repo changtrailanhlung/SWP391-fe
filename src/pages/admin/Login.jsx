@@ -1,15 +1,24 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 import axios from "../../services/axiosClient";
-import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBIcon } from "mdb-react-ui-kit";
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+  MDBIcon,
+} from "mdb-react-ui-kit";
 import "../../style/LoginPage.css";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 function Login() {
   const { setUser } = useAuth();
@@ -18,7 +27,17 @@ function Login() {
   const [password, setPassword] = useState("");
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
 
+  useEffect(() => {
+    // Kiểm tra signupSuccess trong localStorage
+    const signupSuccess = localStorage.getItem("signupSuccess");
+    if (signupSuccess === "true") {
+      toast.success("Đăng ký thành công! Vui lòng đăng nhập.");
+      // Xóa signupSuccess sau khi đã hiển thị thông báo
+      localStorage.removeItem("signupSuccess");
+    }
+  }, []);
   const handleRegisterClick = () => {
     navigate("/admin/signup");
   };
@@ -53,14 +72,14 @@ function Login() {
         localStorage.setItem("userRoles", JSON.stringify(userRoles));
         let shelterID = null;
         if (userRoles.includes("ShelterStaff")) {
-        const shelterResponse = await axios.get(`/shelter/user/${userId}`);
-        if (shelterResponse.data && shelterResponse.data.id) {
-          shelterID = shelterResponse.data.id;
-          localStorage.setItem("shelterID", shelterID);
-        } else {
-          throw new Error("Shelter ID not found");
+          const shelterResponse = await axios.get(`/shelter/user/${userId}`);
+          if (shelterResponse.data && shelterResponse.data.id) {
+            shelterID = shelterResponse.data.id;
+            localStorage.setItem("shelterID", shelterID);
+          } else {
+            throw new Error("Shelter ID not found");
+          }
         }
-      }
         const userData = {
           id: userId,
           username,
@@ -77,7 +96,9 @@ function Login() {
         }
         toast.success("Đăng nhập thành công!");
       } else {
-        toast.error("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập.");
+        toast.error(
+          "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập."
+        );
       }
     } catch (error) {
       console.error("Lỗi đăng nhập:", error);
