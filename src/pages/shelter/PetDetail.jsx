@@ -24,6 +24,8 @@ const PetDetail = () => {
   const [selectedVaccines, setSelectedVaccines] = useState([]);
   const [originalDiseases, setOriginalDiseases] = useState([]);
   const [originalVaccines, setOriginalVaccines] = useState([]);
+  const [initialDiseases, setInitialDiseases] = useState([]);
+  const [initialVaccines, setInitialVaccines] = useState([]);
   const [editForm, setEditForm] = useState({
     ShelterID: "",
     UserID: "",
@@ -60,31 +62,35 @@ const PetDetail = () => {
         },
       });
       setExistingStatuses(response.data);
-      
+
       // Tách diseases và vaccines từ status data
       const diseases = response.data
-        .filter(status => status.disease)
-        .map(status => ({
+        .filter((status) => status.disease)
+        .map((status) => ({
           id: status.statusId,
           value: status.disease,
-          hasVaccine: status.vaccine !== null
+          hasVaccine: status.vaccine !== null,
         }));
-      
+
       const vaccines = response.data
-        .filter(status => status.vaccine)
-        .map(status => ({
+        .filter((status) => status.vaccine)
+        .map((status) => ({
           id: status.statusId,
           value: status.vaccine,
-          hasDisease: status.disease !== null
+          hasDisease: status.disease !== null,
         }));
-      
+
       setSelectedDiseases(diseases);
       setSelectedVaccines(vaccines);
       setOriginalDiseases(JSON.parse(JSON.stringify(diseases)));
       setOriginalVaccines(JSON.parse(JSON.stringify(vaccines)));
-      
-      setDiseases(diseases.map(d => d.value));
-      setVaccines(vaccines.map(v => v.value));
+        // Lưu trữ trạng thái ban đầu
+      const initialDiseaseValues = diseases.map(d => d.value);
+      const initialVaccineValues = vaccines.map(v => v.value);
+      setInitialDiseases(initialDiseaseValues);
+      setInitialVaccines(initialVaccineValues);
+      setDiseases(diseases.map((d) => d.value));
+      setVaccines(vaccines.map((v) => v.value));
     } catch (error) {
       console.error("Error fetching status details:", error);
       toast.current.show({
@@ -94,6 +100,13 @@ const PetDetail = () => {
         life: 3000,
       });
     }
+  };
+  const handleCloseDialog = () => {
+    setDiseases(initialDiseases.length > 0 ? [...initialDiseases] : ['']);
+    setVaccines(initialVaccines.length > 0 ? [...initialVaccines] : ['']);
+    setSelectedDiseases(JSON.parse(JSON.stringify(originalDiseases)));
+    setSelectedVaccines(JSON.parse(JSON.stringify(originalVaccines)));
+    setIsStatusDialogVisible(false);
   };
   const fetchPetDetails = async () => {
     try {
@@ -259,12 +272,11 @@ const PetDetail = () => {
       newDiseases[index].value = value;
       setSelectedDiseases(newDiseases);
     }
-    
+
     const diseaseValues = [...diseases];
     diseaseValues[index] = value;
     setDiseases(diseaseValues);
   };
-
 
   const handleVaccineChange = (index, value) => {
     const newVaccines = [...selectedVaccines];
@@ -272,7 +284,7 @@ const PetDetail = () => {
       newVaccines[index].value = value;
       setSelectedVaccines(newVaccines);
     }
-    
+
     const vaccineValues = [...vaccines];
     vaccineValues[index] = value;
     setVaccines(vaccineValues);
@@ -291,52 +303,68 @@ const PetDetail = () => {
       setVaccines(newVaccines);
     }
   };
-  
+
   const handleStatusSubmit = async () => {
     setStatusLoading(true);
     try {
       // 1. Xử lý xóa status
       const deletionPromises = [];
       const updatePromises = [];
-      
+
       // Lấy current state của diseases và vaccines từ form
-      const currentDiseases = diseases.filter(d => d);
-      const currentVaccines = vaccines.filter(v => v);
+      const currentDiseases = diseases.filter((d) => d);
+      const currentVaccines = vaccines.filter((v) => v);
 
       // Xử lý xóa diseases
-      selectedDiseases.forEach(disease => {
+      selectedDiseases.forEach((disease) => {
         if (!currentDiseases.includes(disease.value)) {
-          const status = existingStatuses.find(s => s.statusId === disease.id);
-          
+          const status = existingStatuses.find(
+            (s) => s.statusId === disease.id
+          );
+
           if (status) {
             if (!status.vaccine) {
               // Trường hợp 1: Status độc lập - xóa hoàn toàn
               deletionPromises.push(
                 axios.delete(`/statuspet/${disease.id}`, {
-                  headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                  },
                 })
               );
             } else {
               // Trường hợp 2: Status không độc lập
-              const pairedVaccine = selectedVaccines.find(v => v.id === disease.id);
-              
+              const pairedVaccine = selectedVaccines.find(
+                (v) => v.id === disease.id
+              );
+
               if (!currentVaccines.includes(pairedVaccine?.value)) {
                 // 2a: Cả disease và vaccine đều bị xóa - xóa toàn bộ status
                 deletionPromises.push(
                   axios.delete(`/statuspet/${disease.id}`, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+                    headers: {
+                      Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
                   })
                 );
               } else {
                 // 2b: Chỉ xóa disease - update disease thành null
                 updatePromises.push(
-                  axios.put(`/statuspet/${disease.id}`, {
-                    date: new Date().toISOString(),
-                    disease: null,
-                    vaccine: status.vaccine
-                  }, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-                  })
+                  axios.put(
+                    `/statuspet/${disease.id}`,
+                    {
+                      date: new Date().toISOString(),
+                      disease: null,
+                      vaccine: status.vaccine,
+                    },
+                    {
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                          "token"
+                        )}`,
+                      },
+                    }
+                  )
                 );
               }
             }
@@ -345,42 +373,64 @@ const PetDetail = () => {
       });
 
       // Xử lý xóa vaccines
-      selectedVaccines.forEach(vaccine => {
+      selectedVaccines.forEach((vaccine) => {
         if (!currentVaccines.includes(vaccine.value)) {
-          const status = existingStatuses.find(s => s.statusId === vaccine.id);
-          
+          const status = existingStatuses.find(
+            (s) => s.statusId === vaccine.id
+          );
+
           if (status) {
             if (!status.disease) {
               // Trường hợp 1: Status độc lập - xóa hoàn toàn
               deletionPromises.push(
                 axios.delete(`/statuspet/${vaccine.id}`, {
-                  headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                  },
                 })
               );
             } else {
               // Trường hợp 2: Status không độc lập
-              const pairedDisease = selectedDiseases.find(d => d.id === vaccine.id);
-              
+              const pairedDisease = selectedDiseases.find(
+                (d) => d.id === vaccine.id
+              );
+
               if (!currentDiseases.includes(pairedDisease?.value)) {
                 // 2a: Cả disease và vaccine đều bị xóa - xóa toàn bộ status
                 // (Skip nếu đã được xử lý trong phần diseases)
-                if (!deletionPromises.some(p => p.config?.url?.includes(vaccine.id))) {
+                if (
+                  !deletionPromises.some((p) =>
+                    p.config?.url?.includes(vaccine.id)
+                  )
+                ) {
                   deletionPromises.push(
                     axios.delete(`/statuspet/${vaccine.id}`, {
-                      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                          "token"
+                        )}`,
+                      },
                     })
                   );
                 }
               } else {
                 // 2b: Chỉ xóa vaccine - update vaccine thành null
                 updatePromises.push(
-                  axios.put(`/statuspet/${vaccine.id}`, {
-                    date: new Date().toISOString(),
-                    disease: status.disease,
-                    vaccine: null
-                  }, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-                  })
+                  axios.put(
+                    `/statuspet/${vaccine.id}`,
+                    {
+                      date: new Date().toISOString(),
+                      disease: status.disease,
+                      vaccine: null,
+                    },
+                    {
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                          "token"
+                        )}`,
+                      },
+                    }
+                  )
                 );
               }
             }
@@ -391,59 +441,85 @@ const PetDetail = () => {
       // 2. Thực hiện các thao tác update hiện có cho các status còn lại
       // Update diseases đã thay đổi
       selectedDiseases
-        .filter(d => d.id && currentDiseases.includes(d.value))
-        .forEach(d => {
-          const original = originalDiseases.find(od => od.id === d.id);
+        .filter((d) => d.id && currentDiseases.includes(d.value))
+        .forEach((d) => {
+          const original = originalDiseases.find((od) => od.id === d.id);
           if (original && original.value !== d.value) {
             updatePromises.push(
-              axios.put(`/statuspet/${d.id}`, {
-                date: new Date().toISOString(),
-                disease: d.value,
-                vaccine: existingStatuses.find(s => s.statusId === d.id)?.vaccine
-              }, {
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-              })
+              axios.put(
+                `/statuspet/${d.id}`,
+                {
+                  date: new Date().toISOString(),
+                  disease: d.value,
+                  vaccine: existingStatuses.find((s) => s.statusId === d.id)
+                    ?.vaccine,
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                  },
+                }
+              )
             );
           }
         });
 
       // Update vaccines đã thay đổi
       selectedVaccines
-        .filter(v => v.id && currentVaccines.includes(v.value))
-        .forEach(v => {
-          const original = originalVaccines.find(ov => ov.id === v.id);
+        .filter((v) => v.id && currentVaccines.includes(v.value))
+        .forEach((v) => {
+          const original = originalVaccines.find((ov) => ov.id === v.id);
           if (original && original.value !== v.value) {
             updatePromises.push(
-              axios.put(`/statuspet/${v.id}`, {
-                date: new Date().toISOString(),
-                vaccine: v.value,
-                disease: existingStatuses.find(s => s.statusId === v.id)?.disease
-              }, {
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-              })
+              axios.put(
+                `/statuspet/${v.id}`,
+                {
+                  date: new Date().toISOString(),
+                  vaccine: v.value,
+                  disease: existingStatuses.find((s) => s.statusId === v.id)
+                    ?.disease,
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                  },
+                }
+              )
             );
           }
         });
 
       // 3. Xử lý thêm mới status (giữ nguyên logic cũ)
       const createPromises = [];
-      
+
       // Tìm status có trường rỗng để update
-      const emptyDiseaseStatuses = existingStatuses.filter(s => s.disease === null && s.vaccine !== null);
-      const emptyVaccineStatuses = existingStatuses.filter(s => s.vaccine === null && s.disease !== null);
-      
+      const emptyDiseaseStatuses = existingStatuses.filter(
+        (s) => s.disease === null && s.vaccine !== null
+      );
+      const emptyVaccineStatuses = existingStatuses.filter(
+        (s) => s.vaccine === null && s.disease !== null
+      );
+
       // Xử lý diseases mới
-      const newDiseases = currentDiseases.filter(d => !selectedDiseases.some(sd => sd.value === d));
+      const newDiseases = currentDiseases.filter(
+        (d) => !selectedDiseases.some((sd) => sd.value === d)
+      );
       newDiseases.forEach((disease, index) => {
         if (emptyDiseaseStatuses[index]) {
           updatePromises.push(
-            axios.put(`/statuspet/${emptyDiseaseStatuses[index].statusId}`, {
-              date: new Date().toISOString(),
-              disease: disease,
-              vaccine: emptyDiseaseStatuses[index].vaccine
-            }, {
-              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-            })
+            axios.put(
+              `/statuspet/${emptyDiseaseStatuses[index].statusId}`,
+              {
+                date: new Date().toISOString(),
+                disease: disease,
+                vaccine: emptyDiseaseStatuses[index].vaccine,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
+            )
           );
         } else {
           const formData = new FormData();
@@ -451,27 +527,37 @@ const PetDetail = () => {
           formData.append("Vaccine", "");
           formData.append("Date", new Date().toISOString());
           formData.append("PetId", id);
-          
+
           createPromises.push(
             axios.post("/statuspet", formData, {
-              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
             })
           );
         }
       });
 
       // Xử lý vaccines mới
-      const newVaccines = currentVaccines.filter(v => !selectedVaccines.some(sv => sv.value === v));
+      const newVaccines = currentVaccines.filter(
+        (v) => !selectedVaccines.some((sv) => sv.value === v)
+      );
       newVaccines.forEach((vaccine, index) => {
         if (emptyVaccineStatuses[index]) {
           updatePromises.push(
-            axios.put(`/statuspet/${emptyVaccineStatuses[index].statusId}`, {
-              date: new Date().toISOString(),
-              vaccine: vaccine,
-              disease: emptyVaccineStatuses[index].disease
-            }, {
-              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-            })
+            axios.put(
+              `/statuspet/${emptyVaccineStatuses[index].statusId}`,
+              {
+                date: new Date().toISOString(),
+                vaccine: vaccine,
+                disease: emptyVaccineStatuses[index].disease,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
+            )
           );
         } else {
           const formData = new FormData();
@@ -479,10 +565,12 @@ const PetDetail = () => {
           formData.append("Vaccine", vaccine);
           formData.append("Date", new Date().toISOString());
           formData.append("PetId", id);
-          
+
           createPromises.push(
             axios.post("/statuspet", formData, {
-              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
             })
           );
         }
@@ -492,7 +580,7 @@ const PetDetail = () => {
       await Promise.all([
         ...deletionPromises,
         ...updatePromises,
-        ...createPromises
+        ...createPromises,
       ]);
 
       toast.current.show({
@@ -538,7 +626,7 @@ const PetDetail = () => {
             <Button
               label="Cancel"
               icon="pi pi-times"
-              onClick={() => setIsStatusDialogVisible(false)}
+              onClick={handleCloseDialog}
               className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"
             />
             <Button
