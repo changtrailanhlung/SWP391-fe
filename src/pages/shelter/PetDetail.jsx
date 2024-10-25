@@ -1036,7 +1036,7 @@ const PetDetail = () => {
             Health Status
           </h3>
           <Button
-            label="Add Health Status"
+            label="Edit Health Status"
             icon="pi pi-plus"
             onClick={() => setIsStatusDialogVisible(true)}
             className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"
