@@ -49,7 +49,8 @@ const Dashboard = () => {
 
         // Lọc donations theo shelterID
         const donations = donateResponse.data.filter(
-          (donation) => donation.shelterId === parseInt(shelterID)
+          (donation) => donation.shelterId === parseInt(shelterID)&& 
+          donation.status === true
         );
 
         // Lọc pets theo shelterID
@@ -219,10 +220,7 @@ const Dashboard = () => {
               <span className="text-gray-500 text-sm font-bold">Diện tích(Ha)</span>
               <span className="font-bold text-lg">{shelterInfo.capacity}</span>
             </div>
-            <div className="flex flex-col">
-              <span className="text-gray-500 text-sm font-bold">Tổng tiền quyên góp</span>
-              <span className="font-bold text-lg">{shelterInfo.donationAmount?.toLocaleString()} VND</span>
-            </div>
+            
           </div>
         </Card>
       )}
