@@ -55,6 +55,12 @@ const ProfileInfo = ({
           {formatNumber(user?.totalDonation)} VND
         </span>
       </h4>
+      <h4 className="text-lg font-semibold">
+        {t("profile.wallet")}:
+        <span className="font-normal">
+          {formatNumber(user?.wallet)} VND
+        </span>
+      </h4>
       <div className="mt-4 flex space-x-4">
         <button
           onClick={onChangePassword}
