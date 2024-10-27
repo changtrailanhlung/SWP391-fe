@@ -28,6 +28,27 @@
   "logout": "Logout",
   "userinformation": "User Information",
   "no": "No",
+  "lg1": "Join us in",
+  "lg2": "creating second chances for pets",
+  "lg3": "Help us bring new life to abandoned pets. With your support, we can provide safe shelter, medical care, and love for these four-legged friends. Every contribution and adoption changes the life of a pet.",
+  "type": "Type",
+  "breed": "Breed",
+  "age": "Age",
+  "gender": "Gender",
+  "size": "Size",
+  "color": "Color",
+  "status": "Status",
+  "adoption-status": "Adoption Status",
+  "description": "Description",
+  "years": "years",
+  "adopt": "Adopt",
+  "previous": "Previous",
+  "next": "Next",
+  "page": "Page",
+  "of": "of",
+  "logout": "Logout",
+  "userinformation": "User Information",
+  "no": "No",
   "notification": "Notification",
   "profile": {
     "title": "User Profile",
@@ -87,5 +108,8 @@
     "amount": "Donation Amount",
     "submit": "Submit",
     "successMessage": "Thank you for your donation!"
+  }
+}
+
   }
 }
