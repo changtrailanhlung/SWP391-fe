@@ -12,16 +12,23 @@ const RequestRole = () => {
   const [loading, setLoading] = useState(true);
   const [currentRoles, setCurrentRoles] = useState([]); // State to manage currently assigned roles
   const [rolesToSubmit, setRolesToSubmit] = useState([]); // State to manage roles that are selected for submission
+  const [pendingRequests, setPendingRequests] = useState([]); // State to manage pending role requests
   const userId = localStorage.getItem("nameid"); // Get the user ID from local storage
 
   useEffect(() => {
     const fetchRoles = async () => {
       try {
+        // Fetch current roles
         const response = await axios.get(`/userrole/role/${userId}/roles`);
-        setCurrentRoles(response.data.roles || []); // Set current roles to those retrieved from the API
-        setRolesToSubmit(response.data.roles || []); // Initialize rolesToSubmit as the currently assigned roles for new selection
+        setCurrentRoles(response.data.roles || []); // Set current roles
+
+        // Fetch pending requests
+        const pendingResponse = await axios.get(
+          `/userrole/pendingrequests?userId=${userId}`
+        );
+        setPendingRequests(pendingResponse.data || []); // Set pending requests
       } catch (error) {
-        console.error("Error fetching roles:", error);
+        console.error("Error fetching roles or pending requests:", error);
       } finally {
         setLoading(false);
       }
@@ -31,8 +38,11 @@ const RequestRole = () => {
   }, [userId]);
 
   const handleCheckboxChange = (role) => {
-    // Allow selection of roles that are not currently assigned
-    if (!currentRoles.includes(role)) {
+    // Only allow selection of roles that are not currently assigned and not in pending requests
+    if (
+      !currentRoles.includes(role) &&
+      !pendingRequests.some((req) => roles[req.roleId - 1] === role)
+    ) {
       setRolesToSubmit((prevRoles) => {
         if (prevRoles.includes(role)) {
           // Remove role if already selected
@@ -46,17 +56,28 @@ const RequestRole = () => {
   };
 
   const handleRequestRole = async () => {
-    const payload = {
-      userId: userId,
-      roles: rolesToSubmit,
-    };
+    // Filter roles to submit that are not currently assigned
+    const rolesToRequest = rolesToSubmit.filter(
+      (role) => !currentRoles.includes(role)
+    );
 
-    try {
-      await axios.post("/userrole/requestrole", payload);
-      alert("Request submitted successfully!"); // Display success message
-    } catch (error) {
-      console.error("Error submitting request:", error);
-      alert("Failed to submit request."); // Display error message
+    // Loop through each role and send a POST request
+    for (const role of rolesToRequest) {
+      const payload = {
+        userId: userId,
+        roleId: roles.indexOf(role) + 1, // Calculate roleId based on index
+      };
+
+      // Log the payload to the console for each request
+      console.log("Payload for role request:", payload);
+
+      try {
+        await axios.post("/userrole/requestrole", payload); // Send the POST request
+        alert(`Request for role ${role} submitted successfully!`); // Display success message
+      } catch (error) {
+        console.error("Error submitting request:", error);
+        alert(`Failed to submit request for role ${role}.`); // Display error message
+      }
     }
   };
 
@@ -88,21 +109,35 @@ const RequestRole = () => {
       <div className="flex flex-wrap space-x-4 mb-4">
         {" "}
         {/* Flex container for horizontal layout */}
-        {roles.map((role) => (
-          <div key={role} className="flex items-center">
-            <input
-              type="checkbox"
-              id={role}
-              value={role}
-              checked={rolesToSubmit.includes(role)} // Check if the role is selected for submission
-              onChange={() => handleCheckboxChange(role)} // Call the function on change
-              className="mr-2"
-            />
-            <label htmlFor={role} className="text-lg">
-              {role}
-            </label>
-          </div>
-        ))}
+        {roles.map((role) => {
+          const roleId = roles.indexOf(role) + 1; // Calculate the roleId based on index
+          // Check if the role is already in current roles or pending requests
+          const isPending = pendingRequests.some(
+            (req) => req.roleId === roleId
+          );
+          const isCurrent = currentRoles.includes(role);
+
+          // Only show the role if it is not currently assigned or pending
+          return (
+            !isPending &&
+            !isCurrent && (
+              <div key={role} className="flex items-center">
+                <input
+                  type="checkbox"
+                  id={role}
+                  value={role}
+                  checked={rolesToSubmit.includes(role)} // Check if the role is selected for submission
+                  onChange={() => handleCheckboxChange(role)} // Call the function on change
+                  className="mr-2"
+                  disabled={isCurrent || isPending} // Disable checkbox if currently assigned or pending
+                />
+                <label htmlFor={role} className="text-lg">
+                  {role}
+                </label>
+              </div>
+            )
+          );
+        })}
       </div>
       <button
         onClick={handleRequestRole} // Call the function on button click
