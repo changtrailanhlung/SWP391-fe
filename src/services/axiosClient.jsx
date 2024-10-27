@@ -118,4 +118,15 @@ export const remove = async (path) => {
   }
 };
 
+export const ApiRequest = async (values) => {
+  try {
+    const res = await api.get(
+      `payment/vnpay-payment?vnp_TxnRef=${values.params.vnp_TxnRef}&vnp_ResponseCode=${values.params.vnp_ResponseCode}&vnp_OrderInfo=${values.params.vnp_OrderInfo}&vnp_BankCode=${values.params.vnp_BankCode}&vnp_Amount=${values.params.vnp_Amount}&vnp_CardType=${values.params.vnp_CardType}&vnp_PayDate=${values.params.vnp_PayDate}&vnp_TmnCode=${values.params.vnp_TmnCode}&vnp_TransactionNo=${values.params.vnp_TransactionNo}&vnp_TransactionStatus=${values.params.vnp_TransactionStatus}&vnp_SecureHash=${values.params.vnp_SecureHash}&vnp_BankTranNo=${values.params.vnp_BankTranNo}`
+    );
+    return res.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export default api;
