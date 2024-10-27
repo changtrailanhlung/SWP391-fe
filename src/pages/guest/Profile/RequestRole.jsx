@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../../services/axiosClient"; // Adjust the import path as necessary
+import { DataTable } from "primereact/datatable"; // Import PrimeReact DataTable
+import { Column } from "primereact/column"; // Import PrimeReact Column
 
 const RequestRole = () => {
   const [roles] = useState([
@@ -85,6 +87,13 @@ const RequestRole = () => {
     return <div className="text-center mt-5">Loading roles...</div>;
   }
 
+  // Check if there are any roles available for selection
+  const availableRoles = roles.filter(
+    (role) =>
+      !currentRoles.includes(role) &&
+      !pendingRequests.some((req) => req.roleId === roles.indexOf(role) + 1)
+  );
+
   return (
     <div className="container mx-auto p-6">
       {/* Display current roles */}
@@ -104,41 +113,47 @@ const RequestRole = () => {
         )}
       </div>
 
-      {/* Display available roles for selection */}
+      {/* Display available roles for selection or pending requests */}
       <h2 className="text-2xl font-bold mb-4">Change Roles</h2>
-      <div className="flex flex-wrap space-x-4 mb-4">
-        {" "}
-        {/* Flex container for horizontal layout */}
-        {roles.map((role) => {
-          const roleId = roles.indexOf(role) + 1; // Calculate the roleId based on index
-          // Check if the role is already in current roles or pending requests
-          const isPending = pendingRequests.some(
-            (req) => req.roleId === roleId
-          );
-          const isCurrent = currentRoles.includes(role);
+      {availableRoles.length > 0 ? (
+        <div className="flex flex-wrap space-x-4 mb-4">
+          {" "}
+          {/* Flex container for horizontal layout */}
+          {availableRoles.map((role) => (
+            <div key={role} className="flex items-center">
+              <input
+                type="checkbox"
+                id={role}
+                value={role}
+                checked={rolesToSubmit.includes(role)} // Check if the role is selected for submission
+                onChange={() => handleCheckboxChange(role)} // Call the function on change
+                className="mr-2"
+              />
+              <label htmlFor={role} className="text-lg">
+                {role}
+              </label>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>
+          {/* Display pending requests if no roles available for selection */}
+          <h3 className="text-lg font-semibold">Pending Role Requests</h3>
+          <DataTable value={pendingRequests} className="mt-3">
+            <Column
+              field="roleId"
+              header="Role ID"
+              body={(rowData) => roles[rowData.roleId - 1]}
+            />
+            <Column
+              field="createdDate"
+              header="Request Date"
+              body={(rowData) => new Date(rowData.createdDate).toLocaleString()}
+            />
+          </DataTable>
+        </div>
+      )}
 
-          // Only show the role if it is not currently assigned or pending
-          return (
-            !isPending &&
-            !isCurrent && (
-              <div key={role} className="flex items-center">
-                <input
-                  type="checkbox"
-                  id={role}
-                  value={role}
-                  checked={rolesToSubmit.includes(role)} // Check if the role is selected for submission
-                  onChange={() => handleCheckboxChange(role)} // Call the function on change
-                  className="mr-2"
-                  disabled={isCurrent || isPending} // Disable checkbox if currently assigned or pending
-                />
-                <label htmlFor={role} className="text-lg">
-                  {role}
-                </label>
-              </div>
-            )
-          );
-        })}
-      </div>
       <button
         onClick={handleRequestRole} // Call the function on button click
         className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
