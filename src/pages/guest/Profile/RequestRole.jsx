@@ -113,7 +113,7 @@ const RequestRole = () => {
         )}
       </div>
 
-      {/* Display available roles for selection or pending requests */}
+      {/* Display available roles for selection */}
       <h2 className="text-2xl font-bold mb-4">Change Roles</h2>
       {availableRoles.length > 0 ? (
         <div className="flex flex-wrap space-x-4 mb-4">
@@ -136,22 +136,7 @@ const RequestRole = () => {
           ))}
         </div>
       ) : (
-        <div>
-          {/* Display pending requests if no roles available for selection */}
-          <h3 className="text-lg font-semibold">Pending Role Requests</h3>
-          <DataTable value={pendingRequests} className="mt-3">
-            <Column
-              field="roleId"
-              header="Role ID"
-              body={(rowData) => roles[rowData.roleId - 1]}
-            />
-            <Column
-              field="createdDate"
-              header="Request Date"
-              body={(rowData) => new Date(rowData.createdDate).toLocaleString()}
-            />
-          </DataTable>
-        </div>
+        <p>All roles are currently assigned or pending requests.</p>
       )}
 
       <button
@@ -160,6 +145,25 @@ const RequestRole = () => {
       >
         Save Roles
       </button>
+
+      {/* Display pending requests */}
+      <h3 className="text-lg font-semibold mt-6">Pending Role Requests</h3>
+      {pendingRequests.length > 0 ? (
+        <DataTable value={pendingRequests} className="mt-3">
+          <Column
+            field="roleId"
+            header="Role"
+            body={(rowData) => roles[rowData.roleId - 1]}
+          />
+          <Column
+            field="createdDate"
+            header="Request Date"
+            body={(rowData) => new Date(rowData.createdDate).toLocaleString()}
+          />
+        </DataTable>
+      ) : (
+        <p>No pending role requests.</p>
+      )}
     </div>
   );
 };
