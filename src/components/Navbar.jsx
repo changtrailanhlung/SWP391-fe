@@ -125,6 +125,12 @@ function Navbar() {
                   >
                     {t("Nộp tiền vào ví")}
                   </Link>
+                  <Link
+                    to="/notification" // Adjust the route as necessary
+                    className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"
+                  >
+                    {t("notification")}
+                  </Link>
                   <button
                     onClick={handleLogout}
                     className="block px-4 py-2 text-black hover:bg-gray-100 w-full text-left"

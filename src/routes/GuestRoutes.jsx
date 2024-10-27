@@ -16,6 +16,7 @@ import DonateWallet from "../pages/guest/Wallet";
 import RequestRole from "../pages/guest/Profile/RequestRole";
 import ScrollToTopButton from "../components/ScrollToTopButton";
 import VNPAYResponseHandler from "../components/VNPAYResponseHandler";
+import Notification from "../pages/guest/Profile/Notifications";
 
 const GuestRoutes = () => {
   return (
@@ -33,6 +34,7 @@ const GuestRoutes = () => {
           <Route path="/update-profile" element={<UpdateProfile />} />
           <Route path="/donate-wallet" element={<DonateWallet />} />
           <Route path="/request-role" element={<RequestRole />} />
+          <Route path="/notification" element={<Notification />} />
           <Route path="/event/:id" element={<EventDetail />} />
           <Route path="/donate/:shelterId" element={<DonationForm />} />
           <Route path="/vnpay-response" element={<VNPAYResponseHandler />} />
