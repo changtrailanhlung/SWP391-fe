@@ -6,7 +6,7 @@ import { Column } from "primereact/column"; // Import PrimeReact Column
 const RequestRole = () => {
   const [roles] = useState([
     "Admin",
-    "Shelter",
+    "ShelterStaff",
     "Donor",
     "Volunteer",
     "Adopter",
