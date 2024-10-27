@@ -7,28 +7,44 @@
   "registrationform": "Registration Form",
   "donate": "Donate",
   "login": "Login",
-  "lg1": "Join us in",
-  "lg2": "creating second chances for pets",
-  "lg3": "Help us bring new life to abandoned pets. With your support, we can provide safe shelter, medical care, and love for these four-legged friends. Every contribution and adoption changes the life of a pet.",
-  "type": "Type",
-  "breed": "Breed",
-  "age": "Age",
-  "gender": "Gender",
-  "size": "Size",
-  "color": "Color",
-  "status": "Status",
-  "adoption-status": "Adoption Status",
-  "description": "Description",
-  "years": "years",
-  "adopt": "Adopt",
-  "previous": "Previous",
-  "next": "Next",
-  "page": "Page",
-  "of": "of",
   "logout": "Logout",
+
   "userinformation": "User Information",
   "no": "No",
   "notification": "Notification",
+
+  
+  "landing": {
+    "lg1": "Join us in",
+    "lg2": "creating second chances for pets",
+    "lg3": "Help us bring new life to abandoned pets. With your support, we can provide safe shelter, medical care, and love for these four-legged friends. Every contribution and adoption changes the life of a pet."
+  },
+
+  "common": {
+    "type": "Type",
+    "breed": "Breed",
+    "age": "Age",
+    "gender": "Gender",
+    "size": "Size",
+    "color": "Color",
+    "status": "Status",
+    "description": "Description",
+    "years": "years",
+    "no": "No",
+    "notAvailable": "N/A",
+    "userAccounts": "User Accounts",
+    "adoption-status": "Adoption Status",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "adopt": "Adopt",
+    "back": "Back",
+    "success": "Success",
+    "error": "Error"
+  },
+
+
   "profile": {
     "title": "User Profile",
     "username": "Username",
@@ -45,6 +61,7 @@
     "passwordChangeSuccess": "Password changed successfully!",
     "passwordChangeError": "Error changing password. Please try again."
   },
+
   "updateInfo": {
     "title": "Update Information",
     "username": "Username",
@@ -55,18 +72,21 @@
     "profileUpdateError": "Error updating profile. Please try again.",
     "image": "Image"
   },
+
   "donates": {
     "title": "Thông tin Shelter Information",
     "location": "Location",
     "phone": "Phone Number",
     "donate": "Donate"
   },
+
   "tabprofile": {
     "tab1": "User Information",
     "tab2": "History Donation",
     "tab3": "Pet adoption registration history",
     "tab4": "Event registration history"
   },
+
   "donationHistory": {
     "title": "Donation History",
     "noData": "No donations found.",
@@ -74,6 +94,7 @@
     "date": "Date",
     "shelterId": "Donate for Shelter"
   },
+
   "HistoryForm": {
     "title": "Pet adoption history",
     "status": {
@@ -82,10 +103,435 @@
       "pending": "Pending"
     }
   },
+
   "donation": {
     "formTitle": "Donation Form",
     "amount": "Donation Amount",
     "submit": "Submit",
     "successMessage": "Thank you for your donation!"
+  },
+
+  "sidebar": {
+    "main": "Main",
+    "adminPanel": "Admin Panel",
+    "menu": "Menu",
+    "welcome": "Welcome",
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "shelter": "Shelter",
+    "roles": "Roles",
+    "logout": "Logout",
+    "shelterPanel": "Shelter Panel",
+    "pets": "Pets",
+    "adoptionForm": "Adoption Form",
+    "events": "Events"
+  },
+
+  "dashboard": {
+    "totalRevenue": "Total Donation",
+    "totalPets": "Total Pets",
+    "totalShelters": "Total Shelters",
+    "totalAccounts": "Total Accounts",
+    "donationAmount": "Donation Amount",
+    "currency": "VND",
+    "id": "ID",
+    "error": "Error",
+    "fetchError": "Failed to fetch data"
+  },
+
+  "buttons": {
+    "createUser": "Create User",
+    "cancel": "Cancel",
+    "update": "Update",
+    "save": "Save",
+    "viewDetails": "View Details",
+    "approve": "Approve",
+    "reject": "Reject",
+    "yes": "Yes",
+    "no": "No",
+    "backToPets": "Back to Pets",
+    "editPet": "Edit Pet",
+    "saveChanges": "Save Changes",
+    "editHealthStatus": "Edit Health Status",
+    "addDisease": "Add Disease",
+    "addVaccine": "Add Vaccine",
+    "viewMore": "View More",
+    "addNewPet": "Add New Pet"
+  },
+
+  "table": {
+    "no": "No.",
+    "image": "Image",
+    "username": "Username",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location",
+    "roles": "Roles",
+    "actions": "Actions",
+    "password": "Password",
+    "emptyMessage": "No pending requests found",
+    "columns": {
+      "user": "User",
+      "requestedRole": "Requested Role",
+      "requestDate": "Request Date",
+      "actions": "Actions"
+    },
+    "headers": {
+      "no": "No.",
+      "image": "Image",
+      "name": "Name",
+      "type": "Type",
+      "gender": "Gender",
+      "adoptionStatus": "Adoption Status",
+      "actions": "Actions"
+    }
+  },
+
+  "dialog": {
+    "cancel": "Cancel",
+    "createUser": "Create New User",
+    "updateUser": "Update User",
+    "deleteUser": "Delete User",
+    "userDetails": "User Details",
+    "userInfo": {
+      "title": "User Information",
+      "username": "Username",
+      "email": "Email",
+      "phone": "Phone",
+      "location": "Location"
+    },
+    "roleInfo": {
+      "title": "Role Information",
+      "currentRoles": "Current Roles",
+      "requestedRole": "Requested Role",
+      "requestDate": "Request Date"
+    }
+  },
+
+  "roles": {
+    "admin": "Admin",
+    "shelterStaff": "Shelter Staff",
+    "otherRoles": "Other Roles",
+    "donor": "Donor",
+    "volunteer": "Volunteer",
+    "adopter": "Adopter",
+    "chooseroles": "Choose Roles",
+    "Shelter": "Shelter"
+  },
+
+  "validation": {
+    "usernameRequired": "Username is required",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email format",
+    "locationRequired": "Location is required",
+    "phoneRequired": "Phone number is required",
+    "roleRequired": "At least one role must be selected",
+    "shelterRequired": "Shelter is required for Shelter Staff",
+    "invalidUserData": "Invalid user data",
+    "required": "{{field}} is required",
+    "imageRequired": "Image is required"
+  },
+
+  "messages": {
+    "createSuccess": "User created successfully",
+    "updateSuccess": "User updated successfully",
+    "deleteSuccess": "User deleted successfully",
+    "error": "An error occurred"
+  },
+
+  "shelter": {
+    "title1": "Shelter Information",
+    "name": "Shelter Name",
+    "address": "Address",
+    "phone": "Phone Number",
+    "shelterPanel":"Shelter Panel",
+    "email": "Email",
+    "capacity": "Capacity (Ha)",
+    "title": "Shelters Management",
+    "addNew": "Add New Shelter",
+    "noShelters": "No shelters found",
+    "columns": {
+      "no": "No.",
+      "name": "Name",
+      "location": "Location",
+      "phone": "Phone Number",
+      "email": "Email",
+      "capacity": "Capacity (ha)",
+      "donations": "Total Donations",
+      "actions": "Actions"
+    },
+    "modal": {
+      "add": "Add New Shelter",
+      "update": "Update Shelter",
+      "fields": {
+        "name": {
+          "label": "Shelter Name*",
+          "error": "Name is required",
+          "lengthError": "Name must be at least 2 characters"
+        },
+        "location": {
+          "label": "Location*",
+          "error": "Location is required"
+        },
+        "phone": {
+          "label": "Phone Number*",
+          "error": "Phone number is required",
+          "formatError": "Phone number must be 10 digits"
+        },
+        "email": {
+          "label": "Email*",
+          "error": "Email is required",
+          "formatError": "Invalid email format"
+        },
+        "capacity": {
+          "label": "Capacity (ha)*",
+          "error": "Capacity is required",
+          "formatError": "Capacity must be greater than 0"
+        },
+        "bankAccount": {
+          "label": "Bank Account*",
+          "error": "Bank account is required"
+        },
+        "website": {
+          "label": "Website"
+        }
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "save": "Save",
+        "update": "Update"
+      }
+    },
+    "details": {
+      "title": "Shelter Details and Donations",
+      "info": {
+        "title": "Shelter Information",
+        "name": "Name",
+        "location": "Location",
+        "phone": "Phone Number",
+        "email": "Email",
+        "capacity": "Capacity",
+        "bankAccount": "Bank Account",
+        "website": "Website",
+        "totalDonations": "Total Donations",
+        "na": "N/A"
+      },
+      "donations": {
+        "pending": "Pending Donations",
+        "accepted": "Accepted Donations",
+        "noPending": "No pending donations",
+        "noAccepted": "No accepted donations",
+        "columns": {
+          "id": "ID",
+          "amount": "Amount",
+          "date": "Date",
+          "donorId": "Donor",
+          "status": "Status"
+        },
+        "status": {
+          "accepted": "Accepted"
+        },
+        "actions": {
+          "accept": "Accept",
+          "close": "Close"
+        }
+      }
+    },
+    "toast": {
+      "success": {
+        "title": "Success",
+        "create": "Shelter created successfully",
+        "update": "Shelter updated successfully",
+        "delete": "Shelter deleted successfully",
+        "acceptDonation": "Donation accepted successfully"
+      },
+      "error": {
+        "title": "Error",
+        "fetch": "Unable to fetch shelters",
+        "create": "Failed to create shelter",
+        "update": "Failed to update shelter",
+        "delete": "Failed to delete shelter",
+        "fetchDonations": "Unable to fetch donations",
+        "acceptDonation": "Failed to accept donation"
+      }
+    }
+  },
+
+  "confirmDialog": {
+    "approve": {
+      "title": "Approve Confirmation",
+      "message": "Are you sure you want to approve this role request?"
+    },
+    "reject": {
+      "title": "Reject Confirmation",
+      "message": "Are you sure you want to reject this role request?"
+    }
+  },
+
+  "toast": {
+    "error": {
+      "fetchData": "Failed to fetch data. Please try again later.",
+      "approveRequest": "Failed to approve request",
+      "rejectRequest": "Failed to reject request"
+    },
+    "success": {
+      "approveRequest": "Role request approved successfully",
+      "rejectRequest": "Role request rejected successfully"
+    }
+  },
+
+  "headers": {
+    "editPetDetails": "Edit Pet Details",
+    "petDetails": "{{name}} Details",
+    "healthStatus": "Health Status",
+    "updateHealthStatus": "Update Health Status"
+  },
+
+  "labels": {
+    "petName": "Pet Name",
+    "petType": "Pet Type",
+    "breed": "Breed",
+    "gender": "Gender",
+    "age": "Age",
+    "size": "Size",
+    "color": "Color",
+    "adoptionStatus": "Adoption Status",
+    "description": "Description",
+    "petImage": "Pet Image",
+    "id": "ID",
+    "type": "Type",
+    "disease": "Disease",
+    "vaccine": "Vaccine"
+  },
+
+  "placeholders": {
+    "enterPetName": "Enter pet name",
+    "selectPetType": "Select pet type",
+    "enterBreed": "Enter breed",
+    "enterAge": "Enter age",
+    "enterSize": "Enter pet size",
+    "enterColor": "Enter color",
+    "selectGender": "Select gender",
+    "selectAdoptionStatus": "Select adoption status",
+    "enterDescription": "Enter pet description"
+  },
+
+  "gender": {
+    "male": "Male",
+    "female": "Female"
+  },
+
+  "petType": {
+    "dog": "Dog",
+    "cat": "Cat"
+  },
+
+  "adoptionStatus": {
+    "available": "Available",
+    "adopted": "Adopted"
+  },
+  "stats": {
+    "totalRevenue": "Total Revenue",
+    "availablePets": "Available Pets",
+    "adoptedPets": "Adopted Pets",
+    "totalEvents": "Total Events"
+  },
+  "chart": {
+    "donationAmount": "Donation Amount",
+    "selectYear": "Select Year"
+  },
+  "errors": {
+    "shelterInfo": "Unable to get shelter information",
+    "getData": "Unable to get data"
+  },
+  "error": {
+    "title": "Error",
+    "fetchPets": "Unable to fetch pets"
+  },
+  
+  "titles": {
+    "pets": "Pets"
+  },
+  "Event": {
+    "title": "Event Management",
+    "search": {
+      "placeholder": "Search events..."
+    },
+    "buttons": {
+      "create": "Create New Event",
+      "cancel": "Cancel",
+      "update": "Update Event",
+      "createEvent": "Create Event"
+    },
+    "table": {
+      "no": "No.",
+      "eventName": "Event Name",
+      "date": "Date",
+      "description": "Description",
+      "location": "Location",
+      "actions": "Actions",
+      "noEvents": "No events found"
+    },
+    "dialog": {
+      "create": "Create New Event",
+      "edit": "Edit Event",
+      "participants": "Participants",
+      "noParticipants": "No participants found for this event"
+    },
+    "form": {
+      "eventName": {
+        "label": "Event Name",
+        "placeholder": "Enter event name"
+      },
+      "eventDate": {
+        "label": "Event Date",
+        "placeholder": "Select date"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter event description"
+      },
+      "location": {
+        "label": "Location",
+        "placeholder": "Enter event location"
+      }
+    },
+    "messages": {
+      "loading": "Loading...",
+      "deleteConfirm": "Are you sure you want to delete this event?",
+      "errors": {
+        "nameRequired": "Event name is required!",
+        "dateRequired": "Event date is required!",
+        "futureDateRequired": "Event date must be today or a future date!",
+        "locationRequired": "Event location is required!",
+        "descriptionRequired": "Event description is required!",
+        "editOwnShelter": "You can only edit events from your shelter!",
+        "deleteOwnShelter": "You can only delete events from your shelter!",
+        "pastEventEdit": "Cannot edit past events!",
+        "fetchEvents": "Error fetching events. Please try again later.",
+        "fetchParticipants": "Error fetching participants. Please try again later.",
+        "createEvent": "Error creating event. Please try again later.",
+        "updateEvent": "Error updating event. Please try again later.",
+        "deleteEvent": "Error deleting event. Please try again later."
+      },
+      "success": {
+        "eventsLoaded": "Events loaded successfully!",
+        "eventCreated": "Event created successfully!",
+        "eventUpdated": "Event updated successfully!",
+        "eventDeleted": "Event deleted successfully!"
+      }
+    }
+  },
+  "pet": {
+    "createNew": "Create New Pet",
+    "name": "Pet Name",
+    "type": "Type",
+    "breed": "Breed",
+    "gender": "Gender",
+    "age": "Age",
+    "size": "Size",
+    "color": "Color",
+    "description": "Description",
+    "create": "Create Pet"
   }
 }

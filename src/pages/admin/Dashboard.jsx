@@ -2,8 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import { Chart } from 'primereact/chart';
 import { Card } from 'primereact/card';
 import axios from '../../services/axiosClient';
+import { useTranslation } from "react-i18next";
 
 const Dashboard = () => {
+  const { t } = useTranslation();
   const [chartData, setChartData] = useState({});
   const [chartOptions, setChartOptions] = useState({});
   const [totalRevenue, setTotalRevenue] = useState(0);
@@ -21,13 +23,11 @@ const Dashboard = () => {
         const accountResponse = await axios.get('/users');
         const petResponse = await axios.get('/pet');
 
-        // Lọc donations có status là true
         const validDonations = donateResponse.data.filter(donation => donation.status === true);
         const shelters = shelterResponse.data;
         const accounts = accountResponse.data;
         const pets = petResponse.data;
 
-        // Tính tổng số tiền donate (chỉ từ các donation có status true)
         const total = validDonations.reduce((sum, donation) => sum + donation.amount, 0);
         setTotalRevenue(total);
 
@@ -35,11 +35,9 @@ const Dashboard = () => {
         setTotalAccounts(accounts.length);
         setTotalPets(pets.length);
         
-        // Đếm số thú cưng Available
         const availablePetCount = pets.filter(pet => pet.adoptionStatus === 'Available').length;
         setTotalAvailablePets(availablePetCount);
 
-        // Tạo map của shelter để lưu trữ thông tin
         const shelterMap = shelters.reduce((acc, shelter) => {
           acc[shelter.id] = {
             id: shelter.id,
@@ -50,19 +48,16 @@ const Dashboard = () => {
           return acc;
         }, {});
 
-        // Tính tổng donation cho mỗi shelter
         validDonations.forEach(donation => {
           if (shelterMap[donation.shelterId]) {
             shelterMap[donation.shelterId].totalDonation += donation.amount;
           }
         });
 
-        // Chuyển đổi dữ liệu cho biểu đồ
         const shelterData = Object.values(shelterMap);
         const labels = shelterData.map(shelter => `${shelter.name}`);
         const data = shelterData.map(shelter => shelter.totalDonation);
 
-        // Tạo màu ngẫu nhiên
         const getRandomColor = () => {
           const r = Math.floor(Math.random() * 256);
           const g = Math.floor(Math.random() * 256);
@@ -73,7 +68,6 @@ const Dashboard = () => {
         const backgroundColors = data.map(() => getRandomColor());
         const borderColors = backgroundColors;
 
-        // Cập nhật dữ liệu biểu đồ
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
@@ -82,7 +76,7 @@ const Dashboard = () => {
         setChartData({
           labels,
           datasets: [{
-            label: 'Donation Amount',
+            label: t('dashboard.donationAmount'),
             backgroundColor: backgroundColors,
             borderColor: borderColors,
             borderRadius: 10,
@@ -107,7 +101,7 @@ const Dashboard = () => {
               tooltip: {
                 callbacks: {
                   label: function(context) {
-                    return `ID: ${shelterData[context.dataIndex].id} - ${context.formattedValue} VND`;
+                    return `${t('dashboard.id')}: ${shelterData[context.dataIndex].id} - ${context.formattedValue} ${t('dashboard.currency')}`;
                   }
                 }
               }
@@ -121,7 +115,6 @@ const Dashboard = () => {
                   weight: 500
                 },
                 callback: function(value) {
-                  // Rút gọn label nếu quá dài
                   const label = this.getLabelForValue(value);
                   const maxLength = 20;
                   return label.length > maxLength ? label.substr(0, maxLength) + '...' : label;
@@ -145,12 +138,17 @@ const Dashboard = () => {
         });
       } catch (error) {
         console.error('Error fetching data:', error);
-        toast.current.show({ severity: 'error', summary: 'Error', detail: 'Failed to fetch data', life: 3000 });
+        toast.current.show({ 
+          severity: 'error', 
+          summary: t('dashboard.error'), 
+          detail: t('dashboard.fetchError'), 
+          life: 3000 
+        });
       }
     };
 
     fetchData();
-  }, []);
+  }, [t]);
 
   return (
     <div className="p-4 bg-white shadow rounded-lg">
@@ -161,8 +159,8 @@ const Dashboard = () => {
               <i className="pi pi-dollar" />
             </span>
             <div className="flex flex-col gap-1">
-              <span className="text-gray-500 text-sm font-bold">Total Revenue</span>
-              <span className="font-bold text-lg">{totalRevenue.toLocaleString()} VND</span>
+              <span className="text-gray-500 text-sm font-bold">{t('dashboard.totalRevenue')}</span>
+              <span className="font-bold text-lg">{totalRevenue.toLocaleString()} {t('dashboard.currency')}</span>
             </div>
           </div>
         </Card>
@@ -172,7 +170,7 @@ const Dashboard = () => {
               <i className="pi pi-heart-fill" />
             </span>
             <div className="flex flex-col gap-1">
-              <span className="text-gray-500 text-sm font-bold">Total Pets</span>
+              <span className="text-gray-500 text-sm font-bold">{t('dashboard.totalPets')}</span>
               <span className="font-bold text-lg">{totalAvailablePets}</span>
             </div>
           </div>
@@ -183,7 +181,7 @@ const Dashboard = () => {
               <i className="pi pi-home" />
             </span>
             <div className="flex flex-col gap-1">
-              <span className="text-gray-500 text-sm font-bold">Total Shelters</span>
+              <span className="text-gray-500 text-sm font-bold">{t('dashboard.totalShelters')}</span>
               <span className="font-bold text-lg">{totalShelters}</span>
             </div>
           </div>
@@ -194,7 +192,7 @@ const Dashboard = () => {
               <i className="pi pi-users" />
             </span>
             <div className="flex flex-col gap-1">
-              <span className="text-gray-500 text-sm font-bold">Total Accounts</span>
+              <span className="text-gray-500 text-sm font-bold">{t('dashboard.totalAccounts')}</span>
               <span className="font-bold text-lg">{totalAccounts}</span>
             </div>
           </div>
