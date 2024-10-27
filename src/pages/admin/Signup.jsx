@@ -275,17 +275,7 @@ function Signup() {
                 </p>
               </div>
 
-              <div className="text-center">
-                <p>hoặc đăng ký với:</p>
-                <MDBBtn
-                  tag="a"
-                  color="none"
-                  className="mx-3"
-                  style={{ color: "#1266f1" }}
-                >
-                  <MDBIcon fab icon="google" size="sm" />
-                </MDBBtn>
-              </div>
+              
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
