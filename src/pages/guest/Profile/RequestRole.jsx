@@ -1,90 +1,115 @@
-import React, { useState } from "react";
-import axios from "../../../services/axiosClient";
+import React, { useEffect, useState } from "react";
+import axios from "../../../services/axiosClient"; // Adjust the import path as necessary
+
 const RequestRole = () => {
-  const [selectedRole, setSelectedRole] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
-  const userId = localStorage.getItem("nameid"); // Retrieve userId from local storage
+  const [roles] = useState([
+    "Admin",
+    "Shelter",
+    "Donor",
+    "Volunteer",
+    "Adopter",
+  ]); // Define all possible roles
+  const [loading, setLoading] = useState(true);
+  const [currentRoles, setCurrentRoles] = useState([]); // State to manage currently assigned roles
+  const [rolesToSubmit, setRolesToSubmit] = useState([]); // State to manage roles that are selected for submission
+  const userId = localStorage.getItem("nameid"); // Get the user ID from local storage
 
-  // Define roles with their corresponding IDs
-  const roles = [
-    { name: "Admin", id: 1 },
-    { name: "Shelter", id: 2 },
-    { name: "Donor", id: 3 },
-    { name: "Volunteer", id: 4 },
-    { name: "Adopter", id: 5 },
-  ];
-
-  const handleRequestRole = async () => {
-    // Validate if a role is selected
-    if (!selectedRole) {
-      setErrorMessage("Please select a role.");
-      return;
-    }
-
-    const payload = {
-      userId: userId ? parseInt(userId, 10) : null, // Ensure userId is an integer
-      roleId: selectedRole.id, // Use the selected role's ID
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response = await axios.get(`/userrole/role/${userId}/roles`);
+        setCurrentRoles(response.data.roles || []); // Set current roles to those retrieved from the API
+        setRolesToSubmit(response.data.roles || []); // Initialize rolesToSubmit as the currently assigned roles for new selection
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    console.log("Payload to submit:", payload);
+    fetchRoles();
+  }, [userId]);
 
-    try {
-      // POST the payload to the API
-      const response = await axios.post("/userrole/requestrole", payload);
-      alert("Request submitted successfully!");
-      setSelectedRole(null); // Reset the selected role after successful submission
-      setErrorMessage(""); // Clear any previous error messages
-    } catch (error) {
-      console.error("Error submitting request:", error);
-
-      // Handle error responses
-      if (error.response) {
-        console.error("Response data:", error.response.data);
-        if (error.response.data.errors) {
-          setErrorMessage(
-            `Validation errors: ${JSON.stringify(error.response.data.errors)}`
-          );
-        } else if (error.response.data.message) {
-          setErrorMessage(
-            `Failed to submit request: ${error.response.data.message}`
-          );
+  const handleCheckboxChange = (role) => {
+    // Allow selection of roles that are not currently assigned
+    if (!currentRoles.includes(role)) {
+      setRolesToSubmit((prevRoles) => {
+        if (prevRoles.includes(role)) {
+          // Remove role if already selected
+          return prevRoles.filter((r) => r !== role);
         } else {
-          setErrorMessage(
-            "Failed to submit request: An unknown error occurred."
-          );
+          // Add role if not selected
+          return [...prevRoles, role];
         }
-      } else {
-        setErrorMessage("Failed to submit request: No response from server.");
-      }
+      });
     }
   };
 
-  const updateSelectedRole = (role) => {
-    setSelectedRole(role); // Update the selected role
-    setErrorMessage(""); // Clear error message when a role is selected
+  const handleRequestRole = async () => {
+    const payload = {
+      userId: userId,
+      roles: rolesToSubmit,
+    };
+
+    try {
+      await axios.post("/userrole/requestrole", payload);
+      alert("Request submitted successfully!"); // Display success message
+    } catch (error) {
+      console.error("Error submitting request:", error);
+      alert("Failed to submit request."); // Display error message
+    }
   };
 
+  if (loading) {
+    return <div className="text-center mt-5">Loading roles...</div>;
+  }
+
   return (
-    <div className="p-4 bg-white shadow-md rounded">
-      <h2 className="text-xl font-semibold mb-4">Request Role</h2>
-      {roles.map((role) => (
-        <label key={role.name} className="flex items-center mb-2">
-          <input
-            type="radio"
-            checked={selectedRole && selectedRole.id === role.id}
-            onChange={() => updateSelectedRole(role)}
-            className="mr-2"
-          />
-          {role.name}
-        </label>
-      ))}
+    <div className="container mx-auto p-6">
+      {/* Display current roles */}
+      <h2 className="text-2xl font-bold mb-4">Current Roles</h2>
+      <div className="mb-4">
+        {currentRoles.length > 0 ? (
+          currentRoles.map((role) => (
+            <span
+              key={role}
+              className="bg-gray-200 rounded-full px-3 py-1 mr-2"
+            >
+              {role}
+            </span>
+          ))
+        ) : (
+          <p>No current roles assigned.</p>
+        )}
+      </div>
+
+      {/* Display available roles for selection */}
+      <h2 className="text-2xl font-bold mb-4">Change Roles</h2>
+      <div className="flex flex-wrap space-x-4 mb-4">
+        {" "}
+        {/* Flex container for horizontal layout */}
+        {roles.map((role) => (
+          <div key={role} className="flex items-center">
+            <input
+              type="checkbox"
+              id={role}
+              value={role}
+              checked={rolesToSubmit.includes(role)} // Check if the role is selected for submission
+              onChange={() => handleCheckboxChange(role)} // Call the function on change
+              className="mr-2"
+            />
+            <label htmlFor={role} className="text-lg">
+              {role}
+            </label>
+          </div>
+        ))}
+      </div>
       <button
-        onClick={handleRequestRole}
-        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+        onClick={handleRequestRole} // Call the function on button click
+        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
-        Submit Request
+        Save Roles
       </button>
-      {errorMessage && <p className="mt-4 text-red-500">{errorMessage}</p>}
     </div>
   );
 };
