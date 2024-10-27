@@ -5,100 +5,68 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { ApiRequest } from "../services/axiosClient";
 import { useTranslation } from "react-i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Ensure this is imported
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 
 const VNPAYResponseHandler = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [icon, setIcon] = useState(null);
   const [iconColor, setIconColor] = useState(null);
   const [textColor, setTextColor] = useState(null);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
 
   const queryParams = new URLSearchParams(window.location.search);
-
-  const responseCode = queryParams.get("vnp_ResponseCode");
   const txnRef = queryParams.get("vnp_TxnRef");
-  const orderInfo = queryParams.get("vnp_OrderInfo");
-  const bankCode = queryParams.get("vnp_BankCode");
-  const amount = queryParams.get("vnp_Amount");
-  const cardType = queryParams.get("vnp_CardType");
-  const payDate = queryParams.get("vnp_PayDate");
-  const tmnCode = queryParams.get("vnp_TmnCode");
-  const transactionNo = queryParams.get("vnp_TransactionNo");
-  const transactionStatus = queryParams.get("vnp_TransactionStatus");
-  const secureHash = queryParams.get("vnp_SecureHash");
-  const bankTranNo = queryParams.get("vnp_BankTranNo");
 
   useEffect(() => {
     const handleResponse = async () => {
-      if (responseCode === "00") {
-        try {
-          const response = await ApiRequest({
-            params: {
-              vnp_TxnRef: txnRef,
-              vnp_ResponseCode: responseCode,
-              vnp_OrderInfo: orderInfo,
-              vnp_BankCode: bankCode,
-              vnp_BankTranNo: bankTranNo,
-              vnp_Amount: amount,
-              vnp_CardType: cardType,
-              vnp_PayDate: payDate,
-              vnp_TmnCode: tmnCode,
-              vnp_TransactionNo: transactionNo,
-              vnp_TransactionStatus: transactionStatus,
-              vnp_SecureHash: secureHash,
-            },
-          });
+      try {
+        // Gửi yêu cầu để lấy phản hồi từ API
+        const response = await ApiRequest({
+          method: "GET",
+          params: {
+            vnp_TxnRef: txnRef,
+          },
+        });
 
-          if (response.status === "ok") {
-            setMessage(t("thankYou.successMessage"));
-            setIcon(faCircleCheck);
-            setIconColor("text-green-600");
-            setTextColor("text-green-600");
-          } else {
-            setMessage(t("thankYou.failureMessage"));
-            setIcon(faTriangleExclamation);
-            setIconColor("text-yellow-400");
-            setTextColor("text-yellow-400");
-          }
-        } catch (error) {
-          console.error("API request error:", error);
-          setMessage(t("thankYou.apiErrorMessage")); // User-friendly message
+        // Kiểm tra mã phản hồi VNPay
+        if (response.response && response.response.vnPayResponseCode === "00") {
+          setMessage(t("thankYou.successMessage"));
+          setIcon(faCircleCheck);
+          setIconColor("text-green-600");
+          setTextColor("text-green-600");
+          setTimeout(() => {
+            navigate("/"); // Chuyển hướng về trang chính
+          }, 3000); // Đợi 3 giây trước khi chuyển hướng
+        } else {
+          // Xử lý nếu mã phản hồi không phải là "00"
+          setMessage(t("thankYou.failureMessage"));
           setIcon(faTriangleExclamation);
-          setIconColor("text-red-600");
-          setTextColor("text-red-600");
+          setIconColor("text-yellow-400");
+          setTextColor("text-yellow-400");
         }
-      } else {
-        setMessage(t("thankYou.failureMessage"));
+      } catch (error) {
+        console.error("API request error:", error);
+        setMessage(t("thankYou.apiErrorMessage"));
         setIcon(faTriangleExclamation);
-        setIconColor("text-yellow-400");
-        setTextColor("text-yellow-400");
+        setIconColor("text-red-600");
+        setTextColor("text-red-600");
       }
-      setLoading(false); // Set loading to false after processing
+      setLoading(false);
     };
 
     handleResponse();
-  }, [
-    responseCode,
-    txnRef,
-    orderInfo,
-    bankCode,
-    amount,
-    cardType,
-    payDate,
-    tmnCode,
-    transactionNo,
-    transactionStatus,
-    secureHash,
-    bankTranNo,
-    t,
-  ]);
+  }, [txnRef, t, navigate]);
 
   return (
     <div className={`m-4 ${!message && "hidden"}`}>
       {loading ? (
-        <p>Loading...</p>
+        <div className="flex justify-center items-center">
+          <div className="loader"></div> {/* Add spinner CSS for .loader */}
+          <p className="ml-2">Loading...</p>
+        </div>
       ) : (
         <div className="text-gray-400 text-center bg-gray-900/70 p-2 m-4 rounded-xl shadow-md md:max-w-md md:m-auto mb-6">
           <p className="text-lg font-bold">{t("thankYou.title")}</p>
