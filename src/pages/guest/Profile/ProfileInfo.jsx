@@ -5,6 +5,7 @@ const ProfileInfo = ({
   user,
   onChangePassword,
   onUpdateInfo,
+  onRequestMemberPermission, // Thêm hàm cho nút mới
   formatNumber,
 }) => {
   const { t } = useTranslation();
@@ -57,9 +58,7 @@ const ProfileInfo = ({
       </h4>
       <h4 className="text-lg font-semibold">
         {t("profile.wallet")}:
-        <span className="font-normal">
-          {formatNumber(user?.wallet)} VND
-        </span>
+        <span className="font-normal">{formatNumber(user?.wallet)} VND</span>
       </h4>
       <div className="mt-4 flex space-x-4">
         <button
@@ -73,6 +72,12 @@ const ProfileInfo = ({
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
         >
           {t("profile.updateInfo")}
+        </button>
+        <button
+          onClick={onRequestMemberPermission} // Gọi hàm khi nhấn nút
+          className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+        >
+          {t("profile.requestMemberPermission")}
         </button>
       </div>
     </div>
