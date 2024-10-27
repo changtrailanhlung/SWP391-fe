@@ -120,29 +120,44 @@ const Shelter = () => {
 
   const handleAdd = async () => {
     if (!validateForm()) return;
-
+  
     try {
-      const response = await axios.post('/shelter/create_shelter', formData, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      
-      fetchShelters();
-      handleCloseModal();
-      toast.current.show({
-        severity: "success",
-        summary: "Success",
-        detail: "Shelter created successfully",
-        life: 3000,
-      });
+      const formDataObj = new FormData();
+      formDataObj.append('Name', formData.name);
+      formDataObj.append('Location', formData.location);
+      formDataObj.append('PhoneNumber', formData.phoneNumber);
+      formDataObj.append('Capacity', formData.capacity);
+      formDataObj.append('Email', formData.email);
+      formDataObj.append('BankAccount', formData.bankAccount);
+      formDataObj.append('Website', formData.website);
+      formDataObj.append('DonationAmount', formData.donationAmount);
+  
+      const response = await axios.post('/shelter/create_shelter', 
+        formDataObj,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+  
+      if (response.data) {
+        await fetchShelters();
+        handleCloseModal();
+        toast.current.show({
+          severity: "success",
+          summary: "Success",
+          detail: "Shelter created successfully",
+          life: 3000,
+        });
+      }
     } catch (error) {
-      console.error('Error creating shelter:', error);
+      console.error('Error creating shelter:', error.response?.data || error.message);
       toast.current.show({
         severity: "error",
         summary: "Error",
-        detail: "Failed to create shelter",
+        detail: error.response?.data?.message || "Failed to create shelter",
         life: 3000,
       });
     }
@@ -150,29 +165,44 @@ const Shelter = () => {
 
   const handleUpdate = async () => {
     if (!validateForm()) return;
-
+  
     try {
-      await axios.put(`/shelter/update/${formData.id}`, formData, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      
-      fetchShelters();
-      handleCloseModal();
-      toast.current.show({
-        severity: "success",
-        summary: "Success",
-        detail: "Shelter updated successfully",
-        life: 3000,
-      });
+      const formDataObj = new FormData();
+      formDataObj.append('Name', formData.name);
+      formDataObj.append('Location', formData.location);
+      formDataObj.append('PhoneNumber', formData.phoneNumber);
+      formDataObj.append('Capacity', formData.capacity);
+      formDataObj.append('Email', formData.email);
+      formDataObj.append('BankAccount', formData.bankAccount);
+      formDataObj.append('Website', formData.website);
+      formDataObj.append('DonationAmount', formData.donationAmount);
+  
+      const response = await axios.put(`/shelter/update/${formData.id}`,
+        formDataObj,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+  
+      if (response.data) {
+        await fetchShelters();
+        handleCloseModal();
+        toast.current.show({
+          severity: "success",
+          summary: "Success",
+          detail: "Shelter updated successfully",
+          life: 3000,
+        });
+      }
     } catch (error) {
-      console.error('Error updating shelter:', error);
+      console.error('Error updating shelter:', error.response?.data || error.message);
       toast.current.show({
         severity: "error",
         summary: "Error",
-        detail: "Failed to update shelter",
+        detail: error.response?.data?.message || "Failed to update shelter",
         life: 3000,
       });
     }

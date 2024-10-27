@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Chart } from 'primereact/chart';
-import { Card } from 'primereact/card'; // Import Card for styling
-import axios from '../../services/axiosClient'; // Import dịch vụ API của bạn
+import { Card } from 'primereact/card';
+import axios from '../../services/axiosClient';
 
 const Dashboard = () => {
   const [chartData, setChartData] = useState({});
   const [chartOptions, setChartOptions] = useState({});
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [totalPets, setTotalPets] = useState(0);
-  const [totalAvailablePets, setTotalAvailablePets] = useState(0); // New state for available pets
+  const [totalAvailablePets, setTotalAvailablePets] = useState(0);
   const [totalShelters, setTotalShelters] = useState(0);
   const [totalAccounts, setTotalAccounts] = useState(0);
   const toast = useRef(null);
@@ -21,53 +21,48 @@ const Dashboard = () => {
         const accountResponse = await axios.get('/users');
         const petResponse = await axios.get('/pet');
 
-        const donations = donateResponse.data;
+        // Lọc donations có status là true
+        const validDonations = donateResponse.data.filter(donation => donation.status === true);
         const shelters = shelterResponse.data;
         const accounts = accountResponse.data;
         const pets = petResponse.data;
 
-        // Tính tổng số tiền donate
-        const total = donations.reduce((sum, donation) => sum + donation.amount, 0);
+        // Tính tổng số tiền donate (chỉ từ các donation có status true)
+        const total = validDonations.reduce((sum, donation) => sum + donation.amount, 0);
         setTotalRevenue(total);
 
-        // Tính tổng số lượng shelter
-        const totalShelterCount = shelters.length;
-        setTotalShelters(totalShelterCount);
-
-        // Tính tổng số lượng account
-        const totalAccountCount = accounts.length;
-        setTotalAccounts(totalAccountCount);
-
-        // Tính tổng số lượng pet
-        const totalPetCount = pets.length;
-        setTotalPets(totalPetCount);
-
+        setTotalShelters(shelters.length);
+        setTotalAccounts(accounts.length);
+        setTotalPets(pets.length);
+        
         // Đếm số thú cưng Available
         const availablePetCount = pets.filter(pet => pet.adoptionStatus === 'Available').length;
         setTotalAvailablePets(availablePetCount);
 
-        // Xử lý dữ liệu donate và shelter để tạo biểu đồ
-        const shelterNames = shelters.reduce((acc, shelter) => {
-          acc[shelter.id] = shelter.name;
+        // Tạo map của shelter để lưu trữ thông tin
+        const shelterMap = shelters.reduce((acc, shelter) => {
+          acc[shelter.id] = {
+            id: shelter.id,
+            name: shelter.name,
+            local: shelter.location,
+            totalDonation: 0
+          };
           return acc;
         }, {});
 
-        const groupedDonations = shelters.reduce((acc, shelter) => {
-        acc[shelter.name] = 0; // Khởi tạo giá trị donation là 0 cho tất cả các shelter
-        return acc;
-      }, {});
+        // Tính tổng donation cho mỗi shelter
+        validDonations.forEach(donation => {
+          if (shelterMap[donation.shelterId]) {
+            shelterMap[donation.shelterId].totalDonation += donation.amount;
+          }
+        });
 
-      donations.forEach(donation => {
-        const shelterName = shelterNames[donation.shelterId];
-        if (groupedDonations[shelterName] !== undefined) {
-          groupedDonations[shelterName] += donation.amount;
-        }
-      });
+        // Chuyển đổi dữ liệu cho biểu đồ
+        const shelterData = Object.values(shelterMap);
+        const labels = shelterData.map(shelter => `${shelter.name}`);
+        const data = shelterData.map(shelter => shelter.totalDonation);
 
-        const labels = Object.keys(groupedDonations);
-        const data = Object.values(groupedDonations);
-
-        // Hàm tạo màu RGB ngẫu nhiên
+        // Tạo màu ngẫu nhiên
         const getRandomColor = () => {
           const r = Math.floor(Math.random() * 256);
           const g = Math.floor(Math.random() * 256);
@@ -75,11 +70,10 @@ const Dashboard = () => {
           return `rgb(${r}, ${g}, ${b})`;
         };
 
-        // Tạo danh sách các màu ngẫu nhiên
         const backgroundColors = data.map(() => getRandomColor());
         const borderColors = backgroundColors;
 
-        // Tạo dữ liệu và tùy chọn biểu đồ
+        // Cập nhật dữ liệu biểu đồ
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
@@ -103,11 +97,18 @@ const Dashboard = () => {
             legend: {
               display: true,
               labels: {
-                fontColor: textColor,
-                boxWidth: 0, // Set width of color box to 0 to hide it
+                color: textColor,
+                boxWidth: 0,
                 font: {
-                  size: 16, // Phóng to chữ
-                  weight: 'bold' // In đậm chữ
+                  size: 16,
+                  weight: 'bold'
+                }
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return `ID: ${shelterData[context.dataIndex].id} - ${context.formattedValue} VND`;
+                  }
                 }
               }
             }
@@ -118,6 +119,12 @@ const Dashboard = () => {
                 color: textColorSecondary,
                 font: {
                   weight: 500
+                },
+                callback: function(value) {
+                  // Rút gọn label nếu quá dài
+                  const label = this.getLabelForValue(value);
+                  const maxLength = 20;
+                  return label.length > maxLength ? label.substr(0, maxLength) + '...' : label;
                 }
               },
               grid: {

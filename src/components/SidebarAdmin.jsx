@@ -40,6 +40,7 @@ const SidebarAdmin = () => {
         { name: "dashboard", icon: <MDBIcon icon="chart-line" /> },
         { name: "users", icon: <MDBIcon icon="users" /> },
         { name: "shelter", icon: <MDBIcon icon="home" /> },
+        { name: "roles", icon: <MDBIcon icon="user-tag" /> },
       ],
     },
   ];
