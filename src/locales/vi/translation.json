@@ -28,6 +28,7 @@
   "logout": "Đăng xuất",
   "userinformation": "Thông tin người dùng",
   "no": "Số thứ tự",
+  "notification": "Thông báo",
   "profile": {
     "title": "Hồ sơ người dùng",
     "username": "Tên người dùng",
@@ -63,7 +64,8 @@
   "tabprofile": {
     "tab1": "Thông tin người dùng",
     "tab2": "Lịch sử quyên góp",
-    "tab3": "Form đăng kí nhận nuôi pet"
+    "tab3": "Form đăng kí nhận nuôi pet",
+    "tab4": "Lịch sử đăng kí tham gia Event"
   },
   "donationHistory": {
     "title": "Lịch sử quyên góp",
