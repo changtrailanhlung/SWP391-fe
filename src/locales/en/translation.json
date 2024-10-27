@@ -16,6 +16,9 @@
   },
 
   "common": {
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "basicInformation": "Basic Information",
     "type": "Type",
     "breed": "Breed",
     "age": "Age",
@@ -152,6 +155,13 @@
   },
 
   "table": {
+    "adopterName": "Adopter Name",
+    "idFront": "ID Front",
+    "idBack": "ID Back",
+    "socialAccount": "Social Account",
+    "incomeAmount": "Income Amount",
+    "status": "Status",
+    "action": "Action",
     "no": "No.",
     "image": "Image",
     "username": "Username",
@@ -525,7 +535,42 @@
     "color": "Color",
     "description": "Description",
     "create": "Create Pet"
+  },
+  "adoptionForms": {
+    "title": "Adoption Forms",
+    "userDetails": "User Details",
+    "petDetails": "Pet Details",
+    "formDeleteSuccess": "Form deleted successfully",
+    "confirmDelete": "Are you sure you want to delete this form?",
+    "deleteConfirmation": "Delete Confirmation"
+  },
+  "status": {
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "rejected": "Rejected"
+  },
+  "user": {
+    "username": "Username",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location"
+  },
+  "tooltip":{
+    "confirm":"Confirm",
+    "reject":"Reject",
+    "AdditionalInformation":"Additional Information",
+    "MedicalHistory":"Medical History",
+    "disease":"Disease",
+    "vaccine":"Vaccine",
+    "Nomedicalhistoryavailable":"No medical history available",
+    "Description":"Description",
+    "no":"No.",
+    "AdopteName":"AdopteName",
+    "IDFront" : "ID Front",
+    "IDBack":"ID Back",
+    "socialAccount":"Social Account",
+    "incomeAmount":"Income Amount"
+
   }
-  
  
 }

@@ -17,7 +17,10 @@
     "notAvailable": "Không có",
     "back": "Quay lại",
     "success": "Thành công",
-    "error": "Lỗi"
+    "error": "Lỗi",
+    "delete": "Xóa",
+    "cancel": "Hủy",
+    "basicInformation": "Thông tin cơ bản"
   },
 
   "buttons": {
@@ -41,6 +44,14 @@
   },
 
   "table": {
+    
+    "adopterName": "Người nhận nuôi",
+    "idFront": "CMND Mặt trước",
+    "idBack": "CMND Mặt sau",
+    "socialAccount": "Tài khoản MXH",
+    "incomeAmount": "Thu nhập",
+    "status": "Trạng thái",
+    "action": "Thao tác",
     "no": "STT",
     "image": "Hình ảnh",
     "username": "Tên người dùng",
@@ -79,7 +90,10 @@
     "adoption-status": "Tình trạng nhận nuôi",
     "description": "Mô tả",
     "years": "tuổi",
-    "adopt": "Nhận nuôi"
+    "adopt": "Nhận nuôi",
+    "createNew": "Tạo Thú Cưng Mới",
+    "name": "Tên thú cưng",
+    "create": "Tạo thú cưng"
   },
 
   "pagination": {
@@ -96,7 +110,7 @@
     "phone": "Điện thoại",
     "location": "Địa điểm",
     "noData": "Không có dữ liệu",
-    "donate": "Tổng số tiền đã quyên góp",
+    "donate": "Tổng tiền quyên góp",
     "changePassword": "Đổi mật khẩu",
     "updateInfo": "Cập nhật thông tin",
     "oldPassword": "Mật Khẩu Cũ",
@@ -519,18 +533,43 @@
       }
     }
   },
-  "pet": {
-    "createNew": "Tạo Thú Cưng Mới",
-    "name": "Tên thú cưng",
-    "type": "Loại",
-    "breed": "Giống",
-    "gender": "Giới tính",
-    "age": "Tuổi",
-    "size": "Kích thước",
-    "color": "Màu sắc",
-    "description": "Mô tả",
-    "create": "Tạo thú cưng"
-  }
   
+  
+  "adoptionForms": {
+    "title": "Đơn xin nhận nuôi",
+    "userDetails": "Thông tin người dùng",
+    "petDetails": "Thông tin thú cưng",
+    "formDeleteSuccess": "Xóa đơn thành công",
+    "confirmDelete": "Bạn có chắc chắn muốn xóa đơn này không?",
+    "deleteConfirmation": "Xác nhận xóa"
+  },
+  "status": {
+    "pending": "Đang chờ",
+    "confirmed": "Đã xác nhận",
+    "rejected": "Đã từ chối"
+  },
+  "user": {
+    "username": "Tên người dùng",
+    "email": "Email",
+    "phone": "Số điện thoại",
+    "location": "Địa chỉ"
+  },
+  "tooltip":{
+    "confirm":"xác nhận đơn",
+    "reject":"Từ Chối",
+    "AdditionalInformation":"Thông tin bổ sung",
+    "MedicalHistory":"thông tin y tế",
+    "disease":"Bệnh",
+    "vaccine":"Vaccine",
+    "Nomedicalhistoryavailable":"Không có thông tin y tế",
+    "Description":"Mô tả",
+    "no":"STT",
+    "AdopteName":"Người nhận nuôi",
+    "IDFront" : "CCCD mặt trước",
+    "IDBack":"CCCD mặt sau",
+    "socialAccount":"Tài khoản MXH",
+    "incomeAmount":"Thu nhập"
+
+  }
   
 }
