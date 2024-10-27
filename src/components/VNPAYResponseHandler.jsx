@@ -1,24 +1,20 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ApiRequest } from "../services/axiosClient"; // Đường dẫn đến tệp chứa hàm ApiRequest
 import {
   faCircleCheck,
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
-import { ApiRequest } from "../services/axiosClient";
 import { useTranslation } from "react-i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
 
-const VNPAYResponseHandler = () => {
-  const { t } = useTranslation();
+const PaymentResponse = ({ txnRef }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [message, setMessage] = useState("");
   const [icon, setIcon] = useState(null);
-  const [iconColor, setIconColor] = useState(null);
-  const [textColor, setTextColor] = useState(null);
+  const [iconColor, setIconColor] = useState("");
+  const [textColor, setTextColor] = useState("");
   const [loading, setLoading] = useState(true);
-
-  const queryParams = new URLSearchParams(window.location.search);
-  const txnRef = queryParams.get("vnp_TxnRef");
 
   useEffect(() => {
     const handleResponse = async () => {
@@ -28,11 +24,45 @@ const VNPAYResponseHandler = () => {
           method: "GET",
           params: {
             vnp_TxnRef: txnRef,
+            // Các tham số khác nếu cần
           },
         });
 
+        console.log("API Response:", response); // Log toàn bộ phản hồi
+
+        // Kiểm tra xem phản hồi có tồn tại không
+        if (response && response.response) {
+          // In ra các tham số
+          console.log("vnp_Amount:", response.response.vnp_Amount);
+          console.log("vnp_BankCode:", response.response.vnp_BankCode);
+          console.log("vnp_BankTranNo:", response.response.vnp_BankTranNo);
+          console.log("vnp_CardType:", response.response.vnp_CardType);
+          console.log("vnp_OrderInfo:", response.response.vnp_OrderInfo);
+          console.log("vnp_PayDate:", response.response.vnp_PayDate);
+          console.log("vnp_ResponseCode:", response.response.vnPayResponseCode);
+          console.log("vnp_TmnCode:", response.response.vnp_TmnCode);
+          console.log(
+            "vnp_TransactionNo:",
+            response.response.vnp_TransactionNo
+          );
+          console.log(
+            "vnp_TransactionStatus:",
+            response.response.vnp_TransactionStatus
+          );
+          console.log("vnp_TxnRef:", response.response.vnp_TxnRef);
+          console.log("vnp_SecureHash:", response.response.vnp_SecureHash);
+        } else {
+          console.error("Invalid response structure", response);
+          setMessage(t("thankYou.apiErrorMessage"));
+          setIcon(faTriangleExclamation);
+          setIconColor("text-red-600");
+          setTextColor("text-red-600");
+          setLoading(false);
+          return;
+        }
+
         // Kiểm tra mã phản hồi VNPay
-        if (response.response && response.response.vnPayResponseCode === "00") {
+        if (response.response.vnPayResponseCode === "00") {
           setMessage(t("thankYou.successMessage"));
           setIcon(faCircleCheck);
           setIconColor("text-green-600");
@@ -61,29 +91,17 @@ const VNPAYResponseHandler = () => {
   }, [txnRef, t, navigate]);
 
   return (
-    <div className={`m-4 ${!message && "hidden"}`}>
+    <div className={`text-center ${textColor}`}>
       {loading ? (
-        <div className="flex justify-center items-center">
-          <div className="loader"></div> {/* Add spinner CSS for .loader */}
-          <p className="ml-2">Loading...</p>
-        </div>
+        <p>Loading...</p>
       ) : (
-        <div className="text-gray-400 text-center bg-gray-900/70 p-2 m-4 rounded-xl shadow-md md:max-w-md md:m-auto mb-6">
-          <p className="text-lg font-bold">{t("thankYou.title")}</p>
-          {icon && (
-            <FontAwesomeIcon
-              icon={icon}
-              className={`text-5xl mt-3 ${iconColor}`}
-            />
-          )}
-          <p
-            className={`${textColor} text-xl mt-3`}
-            dangerouslySetInnerHTML={{ __html: message }}
-          />
-        </div>
+        <>
+          <i className={icon}></i>
+          <p>{message}</p>
+        </>
       )}
     </div>
   );
 };
 
-export default VNPAYResponseHandler;
+export default PaymentResponse;
