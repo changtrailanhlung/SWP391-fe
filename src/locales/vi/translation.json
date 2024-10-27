@@ -7,27 +7,88 @@
   "registrationform": "Đăng ký nhận nuôi",
   "donate": "Quyên góp",
   "login": "Đăng nhập",
+  "logout": "Đăng xuất",
   "lg1": "Cùng chúng tôi ",
   "lg2": "tạo cơ hội thứ hai cho thú cưng",
   "lg3": "Hãy giúp chúng tôi mang lại cuộc sống mới cho những thú cưng bị bỏ rơi. Với sự ủng hộ của bạn, chúng tôi có thể cung cấp nơi ở an toàn, chăm sóc y tế, và tình yêu thương cho những người bạn bốn chân này. Mỗi sự đóng góp và hành động nhận nuôi đều làm thay đổi cuộc đời một thú cưng.",
-  "type": "Loại",
-  "breed": "Giống",
-  "age": "Tuổi",
-  "gender": "Giới tính",
-  "size": "Kích thước",
-  "color": "Màu sắc",
-  "status": "Trạng thái",
-  "adoption-status": "Tình trạng nhận nuôi",
-  "description": "Mô tả",
-  "years": "tuổi",
-  "adopt": "Nhận nuôi",
-  "previous": "Trước",
-  "next": "Sau",
-  "page": "Trang",
-  "of": "của",
-  "logout": "Đăng xuất",
-  "userinformation": "Thông tin người dùng",
-  "no": "Số thứ tự",
+
+  "common": {
+    "userAccounts": "Quản lý tài khoản",
+    "notAvailable": "Không có",
+    "back": "Quay lại",
+    "success": "Thành công",
+    "error": "Lỗi"
+  },
+
+  "buttons": {
+    "createUser": "Tạo tài khoản",
+    "cancel": "Hủy",
+    "update": "Cập nhật",
+    "save": "Lưu",
+    "backToPets": "Trở về Danh sách Thú cưng",
+    "editPet": "Chỉnh sửa Thú cưng",
+    "saveChanges": "Lưu thay đổi",
+    "editHealthStatus": "Chỉnh sửa Tình trạng Sức khỏe",
+    "addDisease": "Thêm Bệnh",
+    "addVaccine": "Thêm Vaccine",
+    "viewDetails": "Xem Chi Tiết",
+    "approve": "Phê Duyệt",
+    "reject": "Từ Chối",
+    "yes": "Có",
+    "no": "Không",
+    "viewMore": "Xem thêm",
+    "addNewPet": "Thêm thú cưng mới"
+  },
+
+  "table": {
+    "no": "STT",
+    "image": "Hình ảnh",
+    "username": "Tên người dùng",
+    "email": "Email",
+    "phone": "Số điện thoại",
+    "location": "Địa chỉ",
+    "roles": "Vai trò",
+    "actions": "Thao tác",
+    "password": "Mật Khẩu",
+    "emptyMessage": "Không tìm thấy yêu cầu nào",
+    "columns": {
+      "user": "Người Dùng",
+      "requestedRole": "Vai Trò Yêu Cầu",
+      "requestDate": "Ngày Yêu Cầu",
+      "actions": "Thao Tác"
+    },
+    "headers": {
+      "no": "STT",
+      "image": "Hình ảnh",
+      "name": "Tên",
+      "type": "Loại",
+      "gender": "Giới tính",
+      "adoptionStatus": "Trạng thái nhận nuôi",
+      "actions": "Thao tác"
+    }
+  },
+
+  "pet": {
+    "type": "Loại",
+    "breed": "Giống",
+    "age": "Tuổi",
+    "gender": "Giới tính",
+    "size": "Kích thước",
+    "color": "Màu sắc",
+    "status": "Trạng thái",
+    "adoption-status": "Tình trạng nhận nuôi",
+    "description": "Mô tả",
+    "years": "tuổi",
+    "adopt": "Nhận nuôi"
+  },
+
+  "pagination": {
+    "previous": "Trước",
+    "next": "Sau",
+    "page": "Trang",
+    "of": "của"
+  },
+
   "profile": {
     "title": "Hồ sơ người dùng",
     "username": "Tên người dùng",
@@ -44,6 +105,7 @@
     "passwordChangeSuccess": "Đổi mật khẩu thành công!",
     "passwordChangeError": "Lỗi khi đổi mật khẩu. Vui lòng thử lại."
   },
+
   "updateInfo": {
     "title": "Cập Nhật Thông Tin",
     "username": "Tên người dùng",
@@ -54,17 +116,20 @@
     "profileUpdateError": "Lỗi khi cập nhật hồ sơ. Vui lòng thử lại.",
     "image": "Hình ảnh"
   },
+
   "donates": {
     "title": "Thông tin Shelter",
     "location": "Địa điểm",
     "phone": "Điện thoại",
     "donate": "Quyên góp"
   },
+
   "tabprofile": {
     "tab1": "Thông tin người dùng",
     "tab2": "Lịch sử quyên góp",
     "tab3": "Form đăng kí nhận nuôi pet"
   },
+
   "donationHistory": {
     "title": "Lịch sử quyên góp",
     "noData": "Không có quyên góp nào.",
@@ -72,6 +137,7 @@
     "date": "Ngày",
     "shelterId": "Quyên góp cho Shelter"
   },
+
   "HistoryForm": {
     "title": "Lịch sử nhận nuôi thú cưng",
     "status": {
@@ -80,10 +146,391 @@
       "pending": "Đang chờ xử lý"
     }
   },
+
   "donation": {
     "formTitle": "Biểu mẫu quyên góp",
     "amount": "Số tiền quyên góp",
     "submit": "Gửi",
     "successMessage": "Cảm ơn bạn đã quyên góp!"
+  },
+
+  "sidebar": {
+    "main": "Trang chính",
+    "adminPanel": "Admin Panel",
+    "menu": "Menu",
+    "welcome": "Xin chào",
+    "dashboard": "Thống kê",
+    "users": "Người dùng",
+    "shelter": "Trại",
+    "roles": "Đơn cấp quyền",
+    "logout": "Đăng xuất",
+    
+    
+    "shelterId": "Mã Số Trại",
+   "shelterPanel": "Shelter Panel",
+    "pets": "Thú Cưng",
+    "adoptionForm": "Đơn Nhận Nuôi",
+    "events": "Sự Kiện"
+    
+  },
+  
+
+  "dashboard": {
+    "totalRevenue": "Tổng ủng hộ",
+    "totalPets": "Tổng số thú cưng",
+    "totalShelters": "Tổng số Trại",
+    "totalAccounts": "Tổng số tài khoản",
+    "donationAmount": "Số tiền quyên góp",
+    "currency": "VNĐ",
+    "id": "Mã số",
+    "error": "Lỗi",
+    "fetchError": "Không thể tải dữ liệu"
+  },
+
+  "dialog": {
+    "Cancel": "Hủy",
+    "createUser": "Tạo người dùng mới",
+    "updateUser": "Cập nhật người dùng",
+    "deleteUser": "Xóa người dùng",
+    "userDetails": "Chi Tiết Người Dùng",
+    "userInfo": {
+      "title": "Thông Tin Người Dùng",
+      "username": "Tên đăng nhập",
+      "email": "Email",
+      "phone": "Số điện thoại",
+      "location": "Địa chỉ"
+    },
+    "roleInfo": {
+      "title": "Thông Tin Vai Trò",
+      "currentRoles": "Vai Trò Hiện Tại",
+      "requestedRole": "Vai Trò Yêu Cầu",
+      "requestDate": "Ngày Yêu Cầu"
+    }
+  },
+
+  "roles": {
+    "admin": "Quản trị viên",
+    "shelterStaff": "Nhân viên trại",
+    "donor": "Nhà tài trợ",
+    "otherRoles": "Vai trò khác",
+    "volunteer": "Tình nguyện viên",
+    "adopter": "Người nhận nuôi",
+    "chooseroles": "Chọn vai trò",
+    "Shelter": "Trại"
+  },
+
+  "validation": {
+    "usernameRequired": "Vui lòng nhập tên người dùng",
+    "emailRequired": "Vui lòng nhập email",
+    "emailInvalid": "Email không hợp lệ",
+    "locationRequired": "Vui lòng nhập địa chỉ",
+    "phoneRequired": "Vui lòng nhập số điện thoại",
+    "roleRequired": "Vui lòng chọn ít nhất một vai trò",
+    "shelterRequired": "Vui lòng chọn trại cho nhân viên",
+    "invalidUserData": "Dữ liệu người dùng không hợp lệ",
+    "required": "{{field}} là bắt buộc",
+    "imageRequired": "Hình ảnh là bắt buộc"
+  },
+
+  "messages": {
+    "createSuccess": "Tạo người dùng thành công",
+    "updateSuccess": "Cập nhật thành công",
+    "deleteSuccess": "Xóa thành công",
+    "error": "Đã xảy ra lỗi"
+  },
+
+  "shelter": {
+    "title1": "Thông tin Shelter",
+    "name": "Tên Shelter",
+    "address": "Địa chỉ",
+    "shelterPanel":"Trang Trại",
+    "phone": "Số điện thoại",
+    "email": "Email",
+    "capacity": "Diện tích (Ha)",
+    "title": "Quản lý Trại cứu hộ",
+    "addNew": "Thêm trại mới",
+    "noShelters": "Không tìm thấy trại nào",
+    "columns": {
+      "no": "STT",
+      "name": "Tên",
+      "location": "Địa điểm",
+      "phone": "Số điện thoại",
+      "email": "Email",
+      "capacity": "Diện tích (ha)",
+      "donations": "Tổng quyên góp",
+      "actions": "Thao tác"
+    },
+    "modal": {
+      "add": "Thêm trại mới",
+      "update": "Cập nhật thông tin",
+      "fields": {
+        "name": {
+          "label": "Tên trại*",
+          "error": "Vui lòng nhập tên trại",
+          "lengthError": "Tên phải có ít nhất 2 ký tự"
+        },
+        "location": {
+          "label": "Địa điểm*",
+          "error": "Vui lòng nhập địa điểm"
+        },
+        "phone": {
+          "label": "Số điện thoại*",
+          "error": "Vui lòng nhập số điện thoại",
+          "formatError": "Số điện thoại phải có 10 chữ số"
+        },
+        "email": {
+          "label": "Email*",
+          "error": "Vui lòng nhập email",
+          "formatError": "Email không hợp lệ"
+        },
+        "capacity": {
+          "label": "Diện tích (ha)*",
+          "error": "Vui lòng nhập diện tích",
+          "formatError": "Diện tích phải lớn hơn 0"
+        },
+        "bankAccount": {
+          "label": "Tài khoản ngân hàng*",
+          "error": "Vui lòng nhập tài khoản ngân hàng"
+        },
+        "website": {
+          "label": "Website"
+        }
+      },
+      "buttons": {
+        "cancel": "Hủy",
+        "save": "Lưu",
+        "update": "Cập nhật"
+      }
+    },
+    "details": {
+      "title": "Chi tiết trại và quyên góp",
+      "info": {
+        "title": "Thông tin trại",
+        "name": "Tên",
+        "location": "Địa điểm",
+        "phone": "Số điện thoại",
+        "email": "Email",
+        "capacity": "Diện tích",
+        "bankAccount": "Tài khoản ngân hàng",
+        "website": "Website",
+        "totalDonations": "Tổng quyên góp",
+        "na": "Không có"
+      },
+      "donations": {
+        "pending": "Quyên góp chờ duyệt",
+        "accepted": "Quyên góp đã duyệt",
+        "noPending": "Không có quyên góp chờ duyệt",
+        "noAccepted": "Không có quyên góp đã duyệt",
+        "columns": {
+          "id": "ID",
+          "amount": "Số tiền",
+          "date": "Ngày",
+          "donorId": "người quyên góp",
+          "status": "Trạng thái"
+        },
+        "status": {
+          "accepted": "Đã duyệt"
+        },
+        "actions": {
+          "accept": "Duyệt",
+          "close": "Đóng"
+        }
+      }
+    },
+    "toast": {
+      "success": {
+        "title": "Thành công",
+        "create": "Tạo trại thành công",
+        "update": "Cập nhật thành công",
+        "delete": "Xóa trại thành công",
+        "acceptDonation": "Duyệt quyên góp thành công"
+      },
+      "error": {
+        "title": "Lỗi",
+        "fetch": "Không thể tải danh sách trại",
+        "create": "Không thể tạo trại mới",
+        "update": "Không thể cập nhật trại",
+        "delete": "Không thể xóa trại",
+        "fetchDonations": "Không thể tải danh sách quyên góp",
+        "acceptDonation": "Không thể duyệt quyên góp"
+      }
+    }
+  },"confirmDialog": {
+    "approve": {
+      "title": "Xác Nhận Phê Duyệt",
+      "message": "Bạn có chắc chắn muốn phê duyệt yêu cầu vai trò này?"
+    },
+    "reject": {
+      "title": "Xác Nhận Từ Chối",
+      "message": "Bạn có chắc chắn muốn từ chối yêu cầu vai trò này?"
+    }
+  },
+
+  "toast": {
+    "error": {
+      "fetchData": "Không thể tải dữ liệu. Vui lòng thử lại sau.",
+      "approveRequest": "Không thể phê duyệt yêu cầu",
+      "rejectRequest": "Không thể từ chối yêu cầu"
+    },
+    "success": {
+      "approveRequest": "Phê duyệt yêu cầu vai trò thành công",
+      "rejectRequest": "Từ chối yêu cầu vai trò thành công"
+    }
+  },
+
+  "headers": {
+    "editPetDetails": "Chỉnh sửa Thông tin Thú cưng",
+    "petDetails": "Thông tin của {{name}}",
+    "healthStatus": "Tình trạng Sức khỏe",
+    "updateHealthStatus": "Cập nhật Tình trạng Sức khỏe"
+  },
+
+  "placeholders": {
+    "enterPetName": "Nhập tên thú cưng",
+    "selectPetType": "Chọn loại thú cưng",
+    "enterBreed": "Nhập giống",
+    "enterAge": "Nhập tuổi",
+    "enterSize": "Nhập kích thước",
+    "enterColor": "Nhập màu sắc",
+    "selectGender": "Chọn giới tính",
+    "selectAdoptionStatus": "Chọn trạng thái nhận nuôi",
+    "enterDescription": "Nhập mô tả"
+  },
+
+  "gender": {
+    "male": "Đực",
+    "female": "Cái"
+  },
+
+  "petType": {
+    "dog": "Chó",
+    "cat": "Mèo"
+  },
+
+  "adoptionStatus": {
+    "available": "Có sẵn",
+    "adopted": "Đã được nhận nuôi"
+  },
+
+  "labels": {
+    "petName": "Tên Thú cưng",
+    "petType": "Loại Thú cưng", 
+    "breed": "Giống",
+    "gender": "Giới tính",
+    "age": "Tuổi",
+    "size": "Kích thước",
+    "color": "Màu sắc",
+    "adoptionStatus": "Trạng thái Nhận nuôi",
+    "description": "Mô tả",
+    "petImage": "Hình ảnh Thú cưng",
+    "id": "Mã số",
+    "type": "Loại",
+    "disease": "Bệnh",
+    "vaccine": "Vaccine"
+  },
+  "stats": {
+    "totalRevenue": "Tổng doanh thu",
+    "availablePets": "Thú cưng có sẵn",
+    "adoptedPets": "Thú cưng đã nhận nuôi",
+    "totalEvents": "Tổng số sự kiện"
+  },
+  "chart": {
+    "donationAmount": "Số tiền quyên góp",
+    "selectYear": "Chọn năm"
+  },
+  "errors": {
+    "shelterInfo": "Không thể lấy thông tin shelter",
+    "getData": "Không thể lấy dữ liệu"
+  },"error": {
+    "title": "Lỗi",
+    "fetchPets": "Không thể tải danh sách thú cưng"
+  },
+  
+  "titles": {
+    "pets": "Thú cưng"
+  },
+  "Event": {
+    "title": "Quản Lý Sự Kiện",
+    "search": {
+      "placeholder": "Tìm kiếm sự kiện..."
+    },
+    "buttons": {
+      "create": "Tạo Sự Kiện Mới",
+      "cancel": "Hủy",
+      "update": "Cập Nhật Sự Kiện",
+      "createEvent": "Tạo Sự Kiện"
+    },
+    "table": {
+      "no": "STT",
+      "eventName": "Tên Sự Kiện",
+      "date": "Ngày",
+      "description": "Mô Tả",
+      "location": "Địa Điểm",
+      "actions": "Thao Tác",
+      "noEvents": "Không tìm thấy sự kiện nào"
+    },
+    "dialog": {
+      "create": "Tạo Sự Kiện Mới",
+      "edit": "Chỉnh Sửa Sự Kiện",
+      "participants": "Người Tham Gia",
+      "noParticipants": "Không có người tham gia cho sự kiện này"
+    },
+    "form": {
+      "eventName": {
+        "label": "Tên Sự Kiện",
+        "placeholder": "Nhập tên sự kiện"
+      },
+      "eventDate": {
+        "label": "Ngày Sự Kiện",
+        "placeholder": "Chọn ngày"
+      },
+      "description": {
+        "label": "Mô Tả",
+        "placeholder": "Nhập mô tả sự kiện"
+      },
+      "location": {
+        "label": "Địa Điểm",
+        "placeholder": "Nhập địa điểm"
+      }
+    },
+    "messages": {
+      "loading": "Đang tải...",
+      "deleteConfirm": "Bạn có chắc chắn muốn xóa sự kiện này?",
+      "errors": {
+        "nameRequired": "Tên sự kiện là bắt buộc!",
+        "dateRequired": "Ngày sự kiện là bắt buộc!",
+        "futureDateRequired": "Ngày sự kiện phải là ngày hiện tại hoặc trong tương lai!",
+        "locationRequired": "Địa điểm là bắt buộc!",
+        "descriptionRequired": "Mô tả là bắt buộc!",
+        "editOwnShelter": "Bạn chỉ có thể chỉnh sửa sự kiện từ nơi trú ẩn của mình!",
+        "deleteOwnShelter": "Bạn chỉ có thể xóa sự kiện từ nơi trú ẩn của mình!",
+        "pastEventEdit": "Không thể chỉnh sửa sự kiện đã qua!",
+        "fetchEvents": "Lỗi khi tải sự kiện. Vui lòng thử lại sau.",
+        "fetchParticipants": "Lỗi khi tải danh sách người tham gia. Vui lòng thử lại sau.",
+        "createEvent": "Lỗi khi tạo sự kiện. Vui lòng thử lại sau.",
+        "updateEvent": "Lỗi khi cập nhật sự kiện. Vui lòng thử lại sau.",
+        "deleteEvent": "Lỗi khi xóa sự kiện. Vui lòng thử lại sau."
+      },
+      "success": {
+        "eventsLoaded": "Tải sự kiện thành công!",
+        "eventCreated": "Tạo sự kiện thành công!",
+        "eventUpdated": "Cập nhật sự kiện thành công!",
+        "eventDeleted": "Xóa sự kiện thành công!"
+      }
+    }
+  },
+  "pet": {
+    "createNew": "Tạo Thú Cưng Mới",
+    "name": "Tên thú cưng",
+    "type": "Loại",
+    "breed": "Giống",
+    "gender": "Giới tính",
+    "age": "Tuổi",
+    "size": "Kích thước",
+    "color": "Màu sắc",
+    "description": "Mô tả",
+    "create": "Tạo thú cưng"
   }
+  
+  
 }
