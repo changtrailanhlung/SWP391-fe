@@ -1,15 +1,12 @@
-// SidebarShelter.jsx
 import React, { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { MDBIcon } from "mdb-react-ui-kit";
-import { useTranslation } from "react-i18next";
 
 const SidebarShelter = () => {
   const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState(true);
   const [username, setUsername] = useState("");
   const [shelterID, setShelterID] = useState("");
-  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -46,18 +43,25 @@ const SidebarShelter = () => {
               onClick={handleCloseSideBar}
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-black text-slate-900"
             >
-              <MDBIcon icon="home" /> <span>{t('sidebar.shelterPanel')}</span>
+              <MDBIcon icon="home" /> <span>Shelter Panel</span>
             </Link>
             <button
               type="button"
               onClick={() => setActiveMenu(!activeMenu)}
               className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden"
-              title={t('sidebar.menu')}
+              title="Menu"
             >
               <MDBIcon icon="times" />
             </button>
           </div>
-          
+          <div className="mt-10">
+            <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
+              Welcome: {username}
+            </p>
+            <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
+              Shelter ID: {shelterID}
+            </p>
+          </div>
           <div className="mt-10">
             <NavLink
               to="/shelter/dashboard"
@@ -67,7 +71,7 @@ const SidebarShelter = () => {
               }
             >
               <MDBIcon icon="tachometer-alt" />
-              <span className="capitalize ml-3">{t('sidebar.dashboard')}</span>
+              <span className="capitalize ml-3">Dashboard</span>
             </NavLink>
           </div>
           <NavLink
@@ -78,7 +82,7 @@ const SidebarShelter = () => {
             }
           >
             <MDBIcon icon="paw" />
-            <span className="capitalize ml-3">{t('sidebar.pets')}</span>
+            <span className="capitalize ml-3">Pets</span>
           </NavLink>
           <NavLink
             to="/shelter/Adoptions"
@@ -88,7 +92,7 @@ const SidebarShelter = () => {
             }
           >
             <MDBIcon icon="paw" />
-            <span className="capitalize ml-3">{t('sidebar.adoptionForm')}</span>
+            <span className="capitalize ml-3">Adoption Form</span>
           </NavLink>
           <NavLink
             to="/shelter/event"
@@ -96,8 +100,8 @@ const SidebarShelter = () => {
               isActive ? `${normalLink} font-bold` : normalLink
             }
           >
-            <MDBIcon fas icon="calendar-alt" />
-            <span className="capitalize ml-3">{t('sidebar.events')}</span>
+            <MDBIcon fas icon="calendar-alt" /> {/* Icon cho event */}
+            <span className="capitalize">Events</span>
           </NavLink>
 
           <div className="mt-15">
@@ -106,7 +110,7 @@ const SidebarShelter = () => {
               className={`${normalLink} text-Grey-600 hover:text-red-800`}
             >
               <MDBIcon icon="sign-out-alt" />
-              <span className="capitalize ml-3">{t('sidebar.logout')}</span>
+              <span className="capitalize ml-3">Logout</span>
             </button>
           </div>
         </>

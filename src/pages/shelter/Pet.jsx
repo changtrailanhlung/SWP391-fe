@@ -5,7 +5,6 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
-import { useTranslation } from "react-i18next";
 
 const Pet = () => {
   const [pets, setPets] = useState([]);
@@ -13,7 +12,6 @@ const Pet = () => {
   const toast = React.useRef(null);
   const shelterID = localStorage.getItem("shelterID");
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     fetchPets();
@@ -35,8 +33,8 @@ const Pet = () => {
       console.error("Error fetching pets:", error);
       toast.current.show({
         severity: "error",
-        summary: t('error.title'),
-        detail: t('error.fetchPets'),
+        summary: "Error",
+        detail: "Unable to fetch pets",
         life: 3000,
       });
       setLoading(false);
@@ -56,26 +54,24 @@ const Pet = () => {
   const viewMoreTemplate = (rowData) => {
     return (
       <Button
-        label={t('buttons.viewMore')}
+        label="View More"
         className="p-button-sm p-button-info"
         onClick={() => navigate(`/shelter/pet/${rowData.petID}`)}
       />
     );
   };
-
   const sequentialID = (rowData, { rowIndex }) => {
     return rowIndex + 1;
   };
-
   return (
     <div className="container mx-auto p-4">
       <Toast ref={toast} />
       <Button
-        label={t('buttons.addNewPet')}
+        label="Add New Pet"
         className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-300"
         onClick={() => navigate("/shelter/pets/create")}
       />
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">{t('titles.pets')}</h2>
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">Pets</h2>
       <DataTable
         value={pets}
         loading={loading}
@@ -85,16 +81,16 @@ const Pet = () => {
       >
         <Column
           field="sequentialID"
-          header={t('table.headers.no')}
+          header="No."
           body={sequentialID}
           sortable
         />
-        <Column header={t('table.headers.image')} body={imageBodyTemplate} />
-        <Column field="name" header={t('table.headers.name')} sortable />
-        <Column field="type" header={t('table.headers.type')} sortable />
-        <Column field="gender" header={t('table.headers.gender')} sortable />
-        <Column field="adoptionStatus" header={t('table.headers.adoptionStatus')} sortable />
-        <Column header={t('table.headers.actions')} body={viewMoreTemplate} />
+        <Column header="Image" body={imageBodyTemplate} />
+        <Column field="name" header="Name" sortable />
+        <Column field="type" header="Type" sortable />
+        <Column field="gender" header="Gender" sortable />
+        <Column field="adoptionStatus" header="Adoption Status" sortable />
+        <Column header="Actions" body={viewMoreTemplate} />
       </DataTable>
     </div>
   );

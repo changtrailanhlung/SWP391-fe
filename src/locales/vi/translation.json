@@ -44,7 +44,6 @@
     "passwordChangeSuccess": "Đổi mật khẩu thành công!",
     "passwordChangeError": "Lỗi khi đổi mật khẩu. Vui lòng thử lại."
   },
-
   "updateInfo": {
     "title": "Cập Nhật Thông Tin",
     "username": "Tên người dùng",
@@ -55,21 +54,18 @@
     "profileUpdateError": "Lỗi khi cập nhật hồ sơ. Vui lòng thử lại.",
     "image": "Hình ảnh"
   },
-
   "donates": {
     "title": "Thông tin Shelter",
     "location": "Địa điểm",
     "phone": "Điện thoại",
     "donate": "Quyên góp"
   },
-
   "tabprofile": {
     "tab1": "Thông tin người dùng",
     "tab2": "Lịch sử quyên góp",
     "tab3": "Form đăng kí nhận nuôi pet",
     "tab4": "Lịch sử đăng kí tham gia Event"
   },
-
   "donationHistory": {
     "title": "Lịch sử quyên góp",
     "noData": "Không có quyên góp nào.",
@@ -77,7 +73,6 @@
     "date": "Ngày",
     "shelterId": "Quyên góp cho Shelter"
   },
-
   "HistoryForm": {
     "title": "Lịch sử nhận nuôi thú cưng",
     "status": {
@@ -86,7 +81,6 @@
       "pending": "Đang chờ xử lý"
     }
   },
-
   "donation": {
     "formTitle": "Biểu mẫu quyên góp",
     "amount": "Số tiền quyên góp",
