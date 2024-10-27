@@ -28,7 +28,10 @@
   "logout": "Logout",
   "userinformation": "User Information",
   "no": "No",
+<<<<<<< HEAD
   "notification": "Notification",
+=======
+>>>>>>> parent of a49031c (update vn en json)
   "profile": {
     "title": "User Profile",
     "username": "Username",
@@ -88,4 +91,8 @@
     "submit": "Submit",
     "successMessage": "Thank you for your donation!"
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of a49031c (update vn en json)

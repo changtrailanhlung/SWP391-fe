@@ -28,7 +28,10 @@
   "logout": "Đăng xuất",
   "userinformation": "Thông tin người dùng",
   "no": "Số thứ tự",
+<<<<<<< HEAD
   "notification": "Thông báo",
+=======
+>>>>>>> parent of a49031c (update vn en json)
   "profile": {
     "title": "Hồ sơ người dùng",
     "username": "Tên người dùng",
@@ -88,4 +91,8 @@
     "submit": "Gửi",
     "successMessage": "Cảm ơn bạn đã quyên góp!"
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> parent of a49031c (update vn en json)
