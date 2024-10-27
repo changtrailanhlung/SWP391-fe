@@ -2,12 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import { Chart } from "primereact/chart";
 import { Card } from "primereact/card";
 import { Dropdown } from "primereact/dropdown";
-import { useTranslation } from "react-i18next";
 import axios from "../../services/axiosClient";
 
 const Dashboard = () => {
   // Khởi tạo các state cần thiết
-  const { t, i18n } = useTranslation();
   const [chartData, setChartData] = useState({}); // Dữ liệu biểu đồ
   const [chartOptions, setChartOptions] = useState({}); // Tùy chọn biểu đồ
   const [totalRevenue, setTotalRevenue] = useState(0); // Tổng doanh thu
@@ -22,6 +20,7 @@ const Dashboard = () => {
   const [years, setYears] = useState([]); // Danh sách các năm có dữ liệu
 
   useEffect(() => {
+    // Hàm lấy thông tin chi tiết của shelter
     const fetchShelterInfo = async () => {
       try {
         const response = await axios.get(`/shelter/${shelterID}`);
@@ -31,7 +30,7 @@ const Dashboard = () => {
         toast.current.show({
           severity: "error",
           summary: "Lỗi",
-          detail: t('errors.shelterInfo'),
+          detail: "Không thể lấy thông tin shelter",
           life: 3000,
         });
       }
@@ -131,7 +130,7 @@ const Dashboard = () => {
           labels,
           datasets: [
             {
-              label: t('chart.donationAmount'),
+              label: "Số tiền quyên góp",
               backgroundColor: backgroundColors,
               borderColor: borderColors,
               borderRadius: 10,
@@ -186,7 +185,7 @@ const Dashboard = () => {
         toast.current.show({
           severity: "error",
           summary: "Lỗi",
-          detail: t('errors.getData'),
+          detail: "Không thể lấy dữ liệu",
           life: 3000,
         });
       }
@@ -197,33 +196,36 @@ const Dashboard = () => {
 
   return (
     <div className="p-4 bg-white shadow rounded-lg">
+      {/* Phần hiển thị thông tin shelter */}
       {shelterInfo && (
         <Card className="mb-4">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div className="flex flex-col">
-              <span className="text-gray-500 text-sm font-bold">{t('shelter.name')}</span>
+              <span className="text-gray-500 text-sm font-bold">Tên Shelter</span>
               <span className="font-bold text-lg">{shelterInfo.name}</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-gray-500 text-sm font-bold">{t('shelter.address')}</span>
+              <span className="text-gray-500 text-sm font-bold">Địa chỉ</span>
               <span className="font-bold text-lg">{shelterInfo.location}</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-gray-500 text-sm font-bold">{t('shelter.phone')}</span>
+              <span className="text-gray-500 text-sm font-bold">Số điện thoại</span>
               <span className="font-bold text-lg">{shelterInfo.phoneNumber}</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-gray-500 text-sm font-bold">{t('shelter.email')}</span>
+              <span className="text-gray-500 text-sm font-bold">Email</span>
               <span className="font-bold text-lg">{shelterInfo.email}</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-gray-500 text-sm font-bold">{t('shelter.capacity')}</span>
+              <span className="text-gray-500 text-sm font-bold">Diện tích(Ha)</span>
               <span className="font-bold text-lg">{shelterInfo.capacity}</span>
             </div>
+            
           </div>
         </Card>
       )}
 
+      {/* Phần hiển thị các thống kê */}
       <div className="flex flex-wrap gap-2 mb-4">
         <Card className="flex-1">
           <div className="flex items-center gap-2">
@@ -231,7 +233,7 @@ const Dashboard = () => {
               <i className="pi pi-dollar" />
             </span>
             <div className="flex flex-col gap-1">
-              <span className="text-gray-500 text-sm font-bold">{t('stats.totalRevenue')}</span>
+              <span className="text-gray-500 text-sm font-bold">Tổng doanh thu</span>
               <span className="font-bold text-lg">{totalRevenue.toLocaleString()} VND</span>
             </div>
           </div>
@@ -242,7 +244,7 @@ const Dashboard = () => {
               <i className="pi pi-heart-fill" />
             </span>
             <div className="flex flex-col gap-1">
-              <span className="text-gray-500 text-sm font-bold">{t('stats.availablePets')}</span>
+              <span className="text-gray-500 text-sm font-bold">Thú cưng có sẵn</span>
               <span className="font-bold text-lg">{totalAvailablePets}</span>
             </div>
           </div>
@@ -253,7 +255,7 @@ const Dashboard = () => {
               <i className="pi pi-check-circle" />
             </span>
             <div className="flex flex-col gap-1">
-              <span className="text-gray-500 text-sm font-bold">{t('stats.adoptedPets')}</span>
+              <span className="text-gray-500 text-sm font-bold">Thú cưng đã nhận nuôi</span>
               <span className="font-bold text-lg">{totalAdoptedPets}</span>
             </div>
           </div>
@@ -264,19 +266,20 @@ const Dashboard = () => {
               <i className="pi pi-calendar" />
             </span>
             <div className="flex flex-col gap-1">
-              <span className="text-gray-500 text-sm font-bold">{t('stats.totalEvents')}</span>
+              <span className="text-gray-500 text-sm font-bold">Tổng số sự kiện</span>
               <span className="font-bold text-lg">{totalEvents}</span>
             </div>
           </div>
         </Card>
       </div>
 
+      {/* Phần chọn năm và hiển thị biểu đồ */}
       <div className="flex justify-end mb-4">
         <Dropdown
           value={year}
           options={years.map((yr) => ({ label: yr, value: yr }))}
           onChange={(e) => setYear(e.value)}
-          placeholder={t('chart.selectYear')}
+          placeholder="Chọn năm"
           className="w-40 bg-white border border-gray-300 text-black font-bold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           itemTemplate={(option) => (
             <div className="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white cursor-pointer rounded-md">

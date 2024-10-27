@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../services/axiosClient";
-import { useTranslation } from "react-i18next";
 import { Card } from "primereact/card";
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
@@ -13,7 +12,6 @@ import { FileUpload } from "primereact/fileupload";
 import { Dialog } from "primereact/dialog";
 
 const PetDetail = () => {
-  const { t, i18n } = useTranslation();
   const [pet, setPet] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -246,20 +244,20 @@ const PetDetail = () => {
     .filter(Boolean)
     .join(", ");
 
-    const genderOptions = [
-      { label: t('gender.male'), value: "Male" },
-      { label: t('gender.female'), value: "Female" },
-    ];
-  
-    const typeOptions = [
-      { label: t('petType.dog'), value: "dog" },
-      { label: t('petType.cat'), value: "cat" },
-    ];
-  
-    const adoptionStatusOptions = [
-      { label: t('adoptionStatus.available'), value: "Available" },
-      { label: t('adoptionStatus.adopted'), value: "Adopted" },
-    ];
+  const genderOptions = [
+    { label: "Male", value: "Male" },
+    { label: "Female", value: "Female" },
+  ];
+
+  const typeOptions = [
+    { label: "Dog", value: "dog" },
+    { label: "Cat", value: "cat" },
+  ];
+
+  const adoptionStatusOptions = [
+    { label: "Available", value: "Available" },
+    { label: "Adopted", value: "Adopted" },
+  ];
   const handleAddDisease = () => {
     setDiseases([...diseases, ""]);
   };
@@ -620,19 +618,19 @@ const PetDetail = () => {
         header={
           <div className="text-2xl font-bold text-gray-800 p-4">
             <i className="pi pi-heart-fill text-blue-500 mr-2"></i>
-            {t('headers.updateHealthStatus')}
+            Update Health Status
           </div>
         }
         footer={
           <div className="flex justify-end gap-4 p-4 border-t">
             <Button
-              label={t('buttons.cancel')}
+              label="Cancel"
               icon="pi pi-times"
               onClick={handleCloseDialog}
               className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"
             />
             <Button
-              label={t('buttons.saveChanges')}
+              label="Save Changes"
               icon="pi pi-check"
               onClick={handleStatusSubmit}
               loading={statusLoading}
@@ -649,10 +647,10 @@ const PetDetail = () => {
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold text-gray-800">
                 <i className="pi pi-exclamation-circle text-blue-500 mr-2"></i>
-                {t('labels.disease')}
+                Diseases
               </h3>
               <Button
-                label={t('buttons.addDisease')}
+                label="Add Disease"
                 icon="pi pi-plus"
                 onClick={handleAddDisease}
                 className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"
@@ -663,12 +661,15 @@ const PetDetail = () => {
                 <div key={`disease-${index}`} className="flex gap-2">
                   <div className="flex-grow">
                     <label className="block text-gray-700 text-sm font-medium mb-2">
-                      {t('labels.disease')} {index + 1}
+                      Disease {index + 1}
                     </label>
                     <div className="p-inputgroup">
                       <InputText
                         value={disease}
-                        onChange={(e) => handleDiseaseChange(index, e.target.value)}
+                        onChange={(e) =>
+                          handleDiseaseChange(index, e.target.value)
+                        }
+                        placeholder="Enter disease name"
                         className="w-full h-12 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                       />
                       {diseases.length > 1 && (
@@ -690,10 +691,10 @@ const PetDetail = () => {
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold text-gray-800">
                 <i className="pi pi-check-circle text-blue-500 mr-2"></i>
-                {t('labels.vaccine')}
+                Vaccines
               </h3>
               <Button
-                label={t('buttons.addVaccine')}
+                label="Add Vaccine"
                 icon="pi pi-plus"
                 onClick={handleAddVaccine}
                 className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"
@@ -704,12 +705,15 @@ const PetDetail = () => {
                 <div key={`vaccine-${index}`} className="flex gap-2">
                   <div className="flex-grow">
                     <label className="block text-gray-700 text-sm font-medium mb-2">
-                      {t('labels.vaccine')} {index + 1}
+                      Vaccine {index + 1}
                     </label>
                     <div className="p-inputgroup">
                       <InputText
                         value={vaccine}
-                        onChange={(e) => handleVaccineChange(index, e.target.value)}
+                        onChange={(e) =>
+                          handleVaccineChange(index, e.target.value)
+                        }
+                        placeholder="Enter vaccine name"
                         className="w-full h-12 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                       />
                       {vaccines.length > 1 && (
@@ -736,14 +740,14 @@ const PetDetail = () => {
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
         <div className="flex justify-between items-center mb-6">
           <Button
-            label={t('buttons.backToPets')}
+            label="Back to Pets"
             icon="pi pi-arrow-left"
             onClick={() => navigate("/shelter/pets")}
             className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"
           />
           {!isEditing && (
             <Button
-              label={t('buttons.editPet')}
+              label="Edit Pet"
               icon="pi pi-pencil"
               onClick={handleEdit}
               className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"
@@ -755,53 +759,68 @@ const PetDetail = () => {
       {isEditing ? (
         <div className="bg-white rounded-lg shadow-lg p-6">
           <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">
-            {t('headers.editPetDetails')}
+            Edit Pet Details
           </h2>
           <form onSubmit={handleSubmit} className="flex flex-col gap-8">
             {/* Pet Name */}
             <div className="form-group">
-              <label htmlFor="name" className="block text-gray-700 text-sm font-medium mb-2">
+              <label
+                htmlFor="name"
+                className="block text-gray-700 text-sm font-medium mb-2"
+              >
                 <i className="pi pi-tag text-blue-500 mr-2"></i>
-                {t('labels.petName')}
+                Pet Name
               </label>
               <InputText
                 id="name"
                 value={editForm.Name}
-                onChange={(e) => setEditForm((prev) => ({ ...prev, Name: e.target.value }))}
-                placeholder={t('placeholders.enterPetName')}
+                onChange={(e) =>
+                  setEditForm((prev) => ({ ...prev, Name: e.target.value }))
+                }
                 className="w-full h-12 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 px-4"
+                placeholder="Enter pet name"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-8">
               {/* Pet Type */}
               <div className="form-group">
-                <label htmlFor="type" className="block text-gray-700 text-sm font-medium mb-2">
+                <label
+                  htmlFor="type"
+                  className="block text-gray-700 text-sm font-medium mb-2"
+                >
                   <i className="pi pi-list text-blue-500 mr-2"></i>
-                  {t('labels.petType')}
+                  Pet Type
                 </label>
                 <Dropdown
                   id="type"
                   value={editForm.Type}
                   options={typeOptions}
-                  onChange={(e) => setEditForm((prev) => ({ ...prev, Type: e.value }))}
-                  placeholder={t('placeholders.selectPetType')}
+                  onChange={(e) =>
+                    setEditForm((prev) => ({ ...prev, Type: e.value }))
+                  }
                   className="w-full"
+                  placeholder="Select pet type"
                 />
               </div>
 
               {/* Breed */}
               <div className="form-group">
-                <label htmlFor="breed" className="block text-gray-700 text-sm font-medium mb-2">
+                <label
+                  htmlFor="breed"
+                  className="block text-gray-700 text-sm font-medium mb-2"
+                >
                   <i className="pi pi-bookmark text-blue-500 mr-2"></i>
-                  {t('labels.breed')}
+                  Breed
                 </label>
                 <InputText
                   id="breed"
                   value={editForm.Breed}
-                  onChange={(e) => setEditForm((prev) => ({ ...prev, Breed: e.target.value }))}
-                  placeholder={t('placeholders.enterBreed')}
+                  onChange={(e) =>
+                    setEditForm((prev) => ({ ...prev, Breed: e.target.value }))
+                  }
                   className="w-full h-12 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 px-4"
+                  placeholder="Enter breed"
                 />
               </div>
             </div>
@@ -809,32 +828,42 @@ const PetDetail = () => {
             <div className="grid grid-cols-2 gap-8">
               {/* Gender */}
               <div className="form-group">
-                <label htmlFor="gender" className="block text-gray-700 text-sm font-medium mb-2">
+                <label
+                  htmlFor="gender"
+                  className="block text-gray-700 text-sm font-medium mb-2"
+                >
                   <i className="pi pi-user text-blue-500 mr-2"></i>
-                  {t('labels.gender')}
+                  Gender
                 </label>
                 <Dropdown
                   id="gender"
                   value={editForm.Gender}
                   options={genderOptions}
-                  onChange={(e) => setEditForm((prev) => ({ ...prev, Gender: e.value }))}
-                  placeholder={t('placeholders.selectGender')}
+                  onChange={(e) =>
+                    setEditForm((prev) => ({ ...prev, Gender: e.value }))
+                  }
                   className="w-full"
+                  placeholder="Select gender"
                 />
               </div>
 
               {/* Age */}
               <div className="form-group">
-                <label htmlFor="age" className="block text-gray-700 text-sm font-medium mb-2">
+                <label
+                  htmlFor="age"
+                  className="block text-gray-700 text-sm font-medium mb-2"
+                >
                   <i className="pi pi-calendar text-blue-500 mr-2"></i>
-                  {t('labels.age')}
+                  Age
                 </label>
                 <InputNumber
                   id="age"
                   value={editForm.Age}
-                  onValueChange={(e) => setEditForm((prev) => ({ ...prev, Age: e.value }))}
-                  placeholder={t('placeholders.enterAge')}
+                  onValueChange={(e) =>
+                    setEditForm((prev) => ({ ...prev, Age: e.value }))
+                  }
                   className="w-full h-12"
+                  placeholder="Enter age"
                 />
               </div>
             </div>
@@ -842,64 +871,86 @@ const PetDetail = () => {
             <div className="grid grid-cols-2 gap-8">
               {/* Size */}
               <div className="form-group">
-                <label htmlFor="size" className="block text-gray-700 text-sm font-medium mb-2">
+                <label
+                  htmlFor="size"
+                  className="block text-gray-700 text-sm font-medium mb-2"
+                >
                   <i className="pi pi-chart-bar text-blue-500 mr-2"></i>
-                  {t('labels.size')}
+                  Size
                 </label>
                 <InputText
                   id="size"
                   value={editForm.Size}
-                  onChange={(e) => setEditForm((prev) => ({ ...prev, Size: e.target.value }))}
-                  placeholder={t('placeholders.enterSize')}
+                  onChange={(e) =>
+                    setEditForm((prev) => ({ ...prev, Size: e.target.value }))
+                  }
                   className="w-full h-12 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 px-4"
+                  placeholder="Enter pet size"
                 />
               </div>
-
               {/* Color */}
               <div className="form-group">
-                <label htmlFor="color" className="block text-gray-700 text-sm font-medium mb-2">
+                <label
+                  htmlFor="color"
+                  className="block text-gray-700 text-sm font-medium mb-2"
+                >
                   <i className="pi pi-palette text-blue-500 mr-2"></i>
-                  {t('labels.color')}
+                  Color
                 </label>
                 <InputText
                   id="color"
                   value={editForm.Color}
-                  onChange={(e) => setEditForm((prev) => ({ ...prev, Color: e.target.value }))}
-                  placeholder={t('placeholders.enterColor')}
+                  onChange={(e) =>
+                    setEditForm((prev) => ({ ...prev, Color: e.target.value }))
+                  }
                   className="w-full h-12 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 px-4"
+                  placeholder="Enter color"
                 />
               </div>
             </div>
 
             {/* Adoption Status */}
             <div className="form-group">
-              <label htmlFor="status" className="block text-gray-700 text-sm font-medium mb-2">
+              <label
+                htmlFor="status"
+                className="block text-gray-700 text-sm font-medium mb-2"
+              >
                 <i className="pi pi-heart text-blue-500 mr-2"></i>
-                {t('labels.adoptionStatus')}
+                Adoption Status
               </label>
               <Dropdown
                 id="status"
                 value={editForm.AdoptionStatus}
                 options={adoptionStatusOptions}
-                onChange={(e) => setEditForm((prev) => ({ ...prev, AdoptionStatus: e.value }))}
-                placeholder={t('placeholders.selectAdoptionStatus')}
+                onChange={(e) =>
+                  setEditForm((prev) => ({ ...prev, AdoptionStatus: e.value }))
+                }
                 className="w-full"
+                placeholder="Select adoption status"
               />
             </div>
 
             {/* Description */}
             <div className="form-group">
-              <label htmlFor="description" className="block text-gray-700 text-sm font-medium mb-2">
+              <label
+                htmlFor="description"
+                className="block text-gray-700 text-sm font-medium mb-2"
+              >
                 <i className="pi pi-align-left text-blue-500 mr-2"></i>
-                {t('labels.description')}
+                Description
               </label>
               <InputTextarea
                 id="description"
                 value={editForm.Description}
-                onChange={(e) => setEditForm((prev) => ({ ...prev, Description: e.target.value }))}
-                placeholder={t('placeholders.enterDescription')}
+                onChange={(e) =>
+                  setEditForm((prev) => ({
+                    ...prev,
+                    Description: e.target.value,
+                  }))
+                }
                 rows={3}
                 className="w-full border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 p-4"
+                placeholder="Enter pet description"
               />
             </div>
 
@@ -907,7 +958,7 @@ const PetDetail = () => {
             <div className="form-group">
               <label className="block text-gray-700 text-sm font-medium mb-2">
                 <i className="pi pi-image text-blue-500 mr-2"></i>
-                {t('labels.petImage')}
+                Pet Image
               </label>
               <FileUpload
                 mode="basic"
@@ -916,7 +967,7 @@ const PetDetail = () => {
                 maxFileSize={1000000}
                 onSelect={handleImageUpload}
                 className="w-full"
-                chooseLabel={t('labels.petImage')}
+                chooseLabel="Choose Image"
               />
             </div>
 
@@ -924,14 +975,14 @@ const PetDetail = () => {
             <div className="flex justify-end gap-4 mt-4">
               <Button
                 type="button"
-                label={t('buttons.cancel')}
+                label="Cancel"
                 icon="pi pi-times"
                 onClick={handleCancel}
                 className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"
               />
               <Button
                 type="submit"
-                label={t('buttons.saveChanges')}
+                label="Save Changes"
                 icon="pi pi-check"
                 className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"
               />
@@ -941,7 +992,7 @@ const PetDetail = () => {
       ) : (
         <>
           <h2 className="text-3xl font-bold mb-6 text-gray-800">
-            {t('headers.petDetails', { name: pet.name })}
+            {pet.name} Details
           </h2>
           <Card>
             <div className="grid grid-cols-2 gap-4">
@@ -952,40 +1003,40 @@ const PetDetail = () => {
               />
               <div>
                 <p>
-                  <strong>{t('labels.id')}:</strong> {pet.petID}
+                  <strong>ID:</strong> {pet.petID}
                 </p>
                 <p>
-                  <strong>{t('labels.type')}:</strong> {pet.type}
+                  <strong>Type:</strong> {pet.type}
                 </p>
                 <p>
-                  <strong>{t('labels.breed')}:</strong> {pet.breed || t('common.notAvailable')}
+                  <strong>Breed:</strong> {pet.breed || "N/A"}
                 </p>
                 <p>
-                  <strong>{t('labels.gender')}:</strong> {pet.gender || t('common.notAvailable')}
+                  <strong>Gender:</strong> {pet.gender || "N/A"}
                 </p>
                 <p>
-                  <strong>{t('labels.age')}:</strong> {pet.age || t('common.notAvailable')}
+                  <strong>Age:</strong> {pet.age || "N/A"}
                 </p>
                 <p>
-                  <strong>{t('labels.size')}:</strong> {pet.size || t('common.notAvailable')}
+                  <strong>Size:</strong> {pet.size || "N/A"}
                 </p>
                 <p>
-                  <strong>{t('labels.color')}:</strong> {pet.color || t('common.notAvailable')}
+                  <strong>Color:</strong> {pet.color || "N/A"}
                 </p>
                 <p>
-                  <strong>{t('labels.adoptionStatus')}:</strong> {pet.adoptionStatus}
+                  <strong>Adoption Status:</strong> {pet.adoptionStatus}
                 </p>
                 <p>
-                  <strong>{t('labels.description')}:</strong> {pet.description || t('common.notAvailable')}
+                  <strong>Description:</strong> {pet.description || "N/A"}
                 </p>
               </div>
             </div>
           </Card>
           <h3 className="text-2xl font-bold mt-6 mb-4 text-gray-800">
-            {t('headers.healthStatus')}
+            Health Status
           </h3>
           <Button
-            label={t('buttons.editHealthStatus')}
+            label="Edit Health Status"
             icon="pi pi-plus"
             onClick={() => setIsStatusDialogVisible(true)}
             className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"
@@ -994,12 +1045,12 @@ const PetDetail = () => {
             <div className="grid grid-cols-1 gap-4">
               {combinedDiseases && (
                 <p>
-                  <strong>{t('labels.disease')}:</strong> {combinedDiseases}
+                  <strong>Disease:</strong> {combinedDiseases}
                 </p>
               )}
               {combinedVaccines && (
                 <p>
-                  <strong>{t('labels.vaccine')}:</strong> {combinedVaccines}
+                  <strong>Vaccine:</strong> {combinedVaccines}
                 </p>
               )}
             </div>
@@ -1010,4 +1061,5 @@ const PetDetail = () => {
     </div>
   );
 };
+
 export default PetDetail;
