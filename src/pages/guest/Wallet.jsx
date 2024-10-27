@@ -2,19 +2,20 @@ import React, { useState } from "react";
 import { post } from "../../services/axiosClient";
 
 const Wallet = () => {
-  const [amount, setAmount] = useState(""); // Giá trị mặc định là rỗng
+  const [amount, setAmount] = useState(""); // Default amount
 
   const handleDonate = async () => {
     const fullName = localStorage.getItem("username");
+    const userId = localStorage.getItem("nameid"); // Retrieve userId from localStorage
 
-    if (!fullName) {
-      console.error("Full name is missing from storage.");
+    if (!fullName || !userId) {
+      console.error("User information is missing from storage.");
       return;
     }
 
     const numericAmount = amount ? Number(amount) : 0;
 
-    // Kiểm tra xem số tiền có hợp lệ không
+    // Check if the entered amount is valid
     if (numericAmount <= 0) {
       alert("Vui lòng nhập số tiền hợp lệ.");
       return;
@@ -22,17 +23,18 @@ const Wallet = () => {
 
     const data = {
       fullName,
+      userId, // Add userId to the data object
       amount: numericAmount,
-      description: "", // Mô tả sẽ là chuỗi trống
+      description: "", // Description is an empty string
     };
 
     try {
       const response = await post("/donate/vnpay", data);
       console.log("Donation successful:", response);
 
-      // Giả sử response chứa URL thanh toán
-      const paymentUrl = response; // Gán trực tiếp nếu response chứa URL
-      window.location.href = paymentUrl; // Chuyển hướng đến URL thanh toán
+      // Assume response contains the payment URL
+      const paymentUrl = response; // Assign directly if response contains the URL
+      window.location.href = paymentUrl; // Redirect to the payment URL
     } catch (error) {
       console.error("Error during donation:", error);
     }
@@ -47,7 +49,7 @@ const Wallet = () => {
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          min="0" // Đảm bảo số tiền không âm
+          min="0" // Ensure the amount is non-negative
           className="mt-1 block w-full p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           placeholder="Nhập số tiền"
         />
