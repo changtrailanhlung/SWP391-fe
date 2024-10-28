@@ -372,7 +372,7 @@ const Roles = () => {
 
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-gray-800">
-          {t("pageTitle")}
+        {t("sidebar.roles")}
         </h2>
       </div>
 
