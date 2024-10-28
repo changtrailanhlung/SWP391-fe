@@ -5,11 +5,13 @@ import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
 import { MultiSelect } from "primereact/multiselect";
 import { FileUpload } from "primereact/fileupload";
+import { useTranslation } from "react-i18next";
 import axios from "../../services/axiosClient"; // Import your API utility
 
 import { Dropdown } from "primereact/dropdown";
 
 const UserAccounts = () => {
+  const { t, i18n } = useTranslation();
   const [users, setUsers] = useState([]);
   const [updateVisible, setUpdateVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -42,15 +44,15 @@ const UserAccounts = () => {
     });
   };
   const updateRoleOptions = [
-    { label: "Admin", value: "admin" },
-    { label: "Shelter Staff", value: "shelterStaff" },
-    { label: "Other Roles", value: "otherRoles" },
+    { label: t('roles.admin'), value: "admin" },
+    { label: t('roles.shelterStaff'), value: "shelterStaff" },
+    { label: t('roles.otherRoles'), value: "otherRoles" },
   ];
 
   const otherRoleOptions = [
-    { label: "Donor", value: 3 },
-    { label: "Volunteer", value: 4 },
-    { label: "Adopter", value: 5 },
+    { label: t('roles.donor'), value: 3 },
+    { label: t('roles.volunteer'), value: 4 },
+    { label: t('roles.adopter'), value: 5 },
   ];
 
   const handleUpdateRoleTypeChange = (e) => {
@@ -210,11 +212,11 @@ const UserAccounts = () => {
   const toast = useRef(null);
 
   const roles = [
-    { label: "Admin", value: 1 },
-    { label: "ShelterStaff", value: 2 },
-    { label: "Donor", value: 3 },
-    { label: "Volunteer", value: 4 },
-    { label: "Adopter", value: 5 },
+    { label: t('roles.admin'), value: 1 },
+    { label: t('roles.shelterStaff'), value: 2 },
+    { label: t('roles.donor'), value: 3 },
+    { label: t('roles.volunteer'), value: 4 },
+    { label: t('roles.adopter'), value: 5 },
   ];
 
   useEffect(() => {
@@ -315,31 +317,28 @@ const UserAccounts = () => {
   
   const findFormErrors = (user) => {
     const newErrors = {};
-
-    // Check if user object exists before destructuring
     if (user) {
       const { username, email, location, phone, roleIds, shelterId } = user;
 
-      // Perform validations
       if (!username || username === "")
-        newErrors.username = "Username là bắt buộc";
-      if (!email || email === "") newErrors.email = "Email là bắt buộc";
+        newErrors.username = t('validation.usernameRequired');
+      if (!email || email === "") 
+        newErrors.email = t('validation.emailRequired');
       else if (!/\S+@\S+\.\S+/.test(email))
-        newErrors.email = "Email không hợp lệ";
+        newErrors.email = t('validation.emailInvalid');
       if (!location || location === "")
-        newErrors.location = "Địa chỉ là bắt buộc";
-      if (!phone || phone === "") newErrors.phone = "Số điện thoại là bắt buộc";
+        newErrors.location = t('validation.locationRequired');
+      if (!phone || phone === "") 
+        newErrors.phone = t('validation.phoneRequired');
       if (!roleIds || roleIds.length === 0)
-        newErrors.roleIds = "Phải chọn ít nhất một vai trò";
+        newErrors.roleIds = t('validation.roleRequired');
 
-      // Check shelterId only if roleIds includes 2 (Shelter Staff)
       if (roleIds && roleIds.includes(2) && (!shelterId || shelterId === "")) {
-        newErrors.shelterId = "ShelterId là bắt buộc cho Shelter Staff";
+        newErrors.shelterId = t('validation.shelterRequired');
       }
     } else {
-      newErrors.general = "Dữ liệu người dùng không hợp lệ";
+      newErrors.general = t('validation.invalidUserData');
     }
-
     return newErrors;
   };
 
@@ -438,7 +437,7 @@ const UserAccounts = () => {
   return (
     <div className="container mx-auto p-4">
       <Toast ref={toast} />
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">User Accounts</h2>
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">{t('common.userAccounts')}</h2>
       <Button
         label=" Create User"
         icon="pi pi-plus"
@@ -457,47 +456,47 @@ const UserAccounts = () => {
           tableStyle={{ minWidth: "50rem" }} // Minimum width for responsiveness
         >
           <Column
-            header="No."
+            header={t('table.no')}
             body={(rowData, { rowIndex }) => rowIndex + 1}
             className="border border-gray-300 p-2"
             headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
           />
           <Column
-            header="Image"
+            header={t('table.image')}
             body={imageBodyTemplate}
             className="border border-gray-300 p-2"
             headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
           />
           <Column
             field="username"
-            header="Username"
+            header={t('table.username')}
             sortable
             className="border border-gray-300 p-2"
             headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
           />
           <Column
             field="email"
-            header="Email"
+            header={t('table.email')}
             sortable
             className="border border-gray-300 p-2"
             headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
           />
           <Column
             field="phone"
-            header="Phone"
+            header={t('table.phone')}
             sortable
             className="border border-gray-300 p-2"
             headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
           />
           <Column
             field="location"
-            header="Location"
+            header={t('table.location')}
             sortable
             className="border border-gray-300 p-2"
             headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
           />
           <Column
-            header="Roles"
+            header={t('table.roles')}
             body={roleBodyTemplate}
             className="border border-gray-300 p-2"
             headerClassName="bg-gray-200 text-gray-800 border border-gray-300 p-2"
@@ -515,11 +514,11 @@ const UserAccounts = () => {
       {visible && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center ">
           <div className="bg-white p-6 rounded-lg w-4/5 max-h-[80vh] overflow-y-auto ">
-            <h3 className="text-2xl font-bold mb-4">Tạo người dùng mới</h3>
+            <h3 className="text-2xl font-bold mb-4">{t('dialog.createUser')}</h3>
             <div className="space-y-4">
               <div className="p-field">
                 <label htmlFor="username" className="block text-lg font-medium">
-                  Tên người dùng
+                {t('table.username')}
                 </label>
                 <div className="relative">
                   <i className="pi pi-user absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -539,7 +538,7 @@ const UserAccounts = () => {
               </div>
               <div className="p-field">
                 <label htmlFor="email" className="block text-lg font-medium">
-                  Email
+                {t('table.email')}
                 </label>
                 <div className="relative">
                   <i className="pi pi-envelope absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -559,7 +558,7 @@ const UserAccounts = () => {
               </div>
               <div className="p-field">
                 <label htmlFor="password" className="block text-lg font-medium">
-                  Mật khẩu
+                {t('table.password')}
                 </label>
                 <div className="relative">
                   <i className="pi pi-lock absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -579,7 +578,7 @@ const UserAccounts = () => {
               </div>
               <div className="p-field">
                 <label htmlFor="phone" className="block text-lg font-medium">
-                  Số điện thoại
+                {t('table.phone')}
                 </label>
                 <div className="relative">
                   <i className="pi pi-phone absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -599,7 +598,7 @@ const UserAccounts = () => {
               </div>
               <div className="p-field">
                 <label htmlFor="location" className="block text-lg font-medium">
-                  Địa chỉ
+                {t('table.location')}
                 </label>
                 <div className="relative">
                   <i className="pi pi-map-marker absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -619,7 +618,7 @@ const UserAccounts = () => {
               </div>
               <div className="p-field">
                 <label htmlFor="avatar" className="block text-lg font-medium">
-                  Ảnh đại diện
+                {t('table.image')}
                 </label>
                 <div className="relative">
                   <i className="pi pi-image absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -636,7 +635,7 @@ const UserAccounts = () => {
               </div>
               <div className="p-field">
                 <label htmlFor="role" className="block text-lg font-medium">
-                  Vai trò
+                {t('table.roles')}
                 </label>
                 <div className="flex flex-col space-y-2">
                   <div>
@@ -652,7 +651,7 @@ const UserAccounts = () => {
                       onChange={handleCreateRoleChange}
                       className="mr-2"
                     />
-                    <label htmlFor="adminRole">Admin</label>
+                    <label htmlFor="adminRole">{t('roles.admin')}</label>
                   </div>
                   <div>
                     <input
@@ -667,7 +666,7 @@ const UserAccounts = () => {
                       onChange={handleRoleChange}
                       className="mr-2"
                     />
-                    <label htmlFor="staffRole">Shelter Staff</label>
+                    <label htmlFor="staffRole">{t('roles.shelterStaff')}</label>
                   </div>
                   <div>
                     <input
@@ -683,7 +682,7 @@ const UserAccounts = () => {
                       className="mr-2"
                     />
                     <label htmlFor="otherRoles">
-                      Khác (Donor, Volunteer, Adopter)
+                    {t('roles.otherRoles')}
                     </label>
                   </div>
                 </div>
@@ -694,13 +693,13 @@ const UserAccounts = () => {
                     <MultiSelect
                       value={newUser.roleIds}
                       options={[
-                        { label: "Donor", value: 3 },
-                        { label: "Volunteer", value: 4 },
-                        { label: "Adopter", value: 5 },
+                        { label: t('roles.donor'), value: 3 },
+                        { label: t('roles.volunteer'), value: 4 },
+                        { label:t('roles.adopter'), value: 5 },
                       ]}
                       onChange={handleMultiSelectChange}
                       optionLabel="label"
-                      placeholder="Chọn vai trò"
+                      placeholder={t('roles.chooseroles')}
                       maxSelectedLabels={3}
                       className="p-inputtext p-component pl-12 text-base py-2 w-full border-2 border-gray-300 rounded-lg h-12 text-gray-700"
                       panelClassName="bg-white shadow-lg rounded-md mt-2"
@@ -718,7 +717,7 @@ const UserAccounts = () => {
                     htmlFor="shelter"
                     className="block text-lg font-medium"
                   >
-                    Shelter
+                    {t('roles.Shelter')}
                   </label>
                   <div className="relative ">
                     <i className="pi pi-home absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -727,7 +726,7 @@ const UserAccounts = () => {
                       value={newUser.shelterId}
                       options={shelters}
                       onChange={handleShelterChange}
-                      placeholder="Chọn shelter"
+                      placeholder={t('roles.Shelter')}
                       className="p-inputtext p-component pl-12 text-base py-2 w-full border-2 border-gray-300 rounded-lg h-12 text-gray-700"
                       panelClassName="bg-white shadow-lg rounded-md mt-2"
                       itemClassName="px-4 py-2 text-black-700 hover:bg-gray-100"
@@ -740,7 +739,7 @@ const UserAccounts = () => {
               )}
               <div className="flex justify-end space-x-2 mt-4">
                 <Button
-                  label="Hủy"
+                  label={t('dialog.Cancel')}
                   icon="pi pi-times"
                   className="bg-red-400 text-white font-bold py-2 px-4 rounded"
                   onClick={() => {
@@ -749,7 +748,7 @@ const UserAccounts = () => {
                   }}
                 />
                 <Button
-                  label="Tạo"
+                  label={t('dialog.createUser')}
                   icon="pi pi-check"
                   className="bg-blue-400 text-white font-bold py-2 px-4 rounded"
                   onClick={handleCreateUser}
@@ -762,12 +761,12 @@ const UserAccounts = () => {
       {updateVisible && selectedUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg w-4/5 max-h-[80vh] overflow-y-auto">
-            <h3 className="text-2xl font-bold mb-4">Cập nhật người dùng</h3>
+            <h3 className="text-2xl font-bold mb-4">{t('dialog.updateUser')}</h3>
             <div className="space-y-4">
               {/* Username field */}
               <div className="p-field">
                 <label htmlFor="username" className="block text-lg font-medium">
-                  Tên người dùng
+                {t('table.username')}
                 </label>
                 <div className="relative">
                   <i className="pi pi-user absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -821,7 +820,7 @@ const UserAccounts = () => {
               {/* Phone field */}
               <div className="p-field">
                 <label htmlFor="phone" className="block text-lg font-medium">
-                  Số điện thoại
+                {t('table.phone')}
                 </label>
                 <div className="relative">
                   <i className="pi pi-phone absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -848,7 +847,7 @@ const UserAccounts = () => {
               {/* Location field */}
               <div className="p-field">
                 <label htmlFor="location" className="block text-lg font-medium">
-                  Địa chỉ
+                {t('table.location')}
                 </label>
                 <div className="relative">
                   <i className="pi pi-map-marker absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -875,7 +874,7 @@ const UserAccounts = () => {
               {/* Image field */}
               <div className="p-field">
                 <label htmlFor="avatar" className="block text-lg font-medium">
-                  Ảnh đại diện
+                {t('table.image')}
                 </label>
                 <div className="relative">
                   <i className="pi pi-image absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -896,7 +895,7 @@ const UserAccounts = () => {
               {/* Role field */}
               <div className="p-field">
                 <label htmlFor="roleType" className="block text-lg font-medium">
-                  Loại vai trò
+                {t('table.roles')}
                 </label>
                 <div className="relative">
                   <i className="pi pi-list absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -904,7 +903,7 @@ const UserAccounts = () => {
                     value={updateRoleType}
                     options={updateRoleOptions}
                     onChange={handleUpdateRoleTypeChange}
-                    placeholder="Chọn loại vai trò"
+                    placeholder={t('roles.chooseroles')}
                     className="p-inputtext p-component pl-12 text-base py-2 w-full border-2 border-gray-300 rounded-lg h-12 text-gray-700"
                     panelClassName="bg-white shadow-lg rounded-md mt-2"
                     itemClassName="px-4 py-2 text-gray-700 hover:bg-gray-100"
@@ -918,7 +917,7 @@ const UserAccounts = () => {
                     htmlFor="otherRoles"
                     className="block text-lg font-medium"
                   >
-                    Các vai trò khác
+                    {t('roles.otherRoles')}
                   </label>
                   <div className="relative">
                     <i className="pi pi-users absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -927,7 +926,7 @@ const UserAccounts = () => {
                       options={otherRoleOptions}
                       onChange={handleOtherRolesChange}
                       optionLabel="label"
-                      placeholder="Chọn vai trò khác"
+                      placeholder={t('roles.chooseroles')}
                       maxSelectedLabels={3}
                       className="p-inputtext p-component pl-12 text-base py-2 w-full border-2 border-gray-300 rounded-lg h-12 text-gray-700"
                       panelClassName="bg-white shadow-lg rounded-md mt-2"
@@ -944,7 +943,7 @@ const UserAccounts = () => {
                     htmlFor="shelter"
                     className="block text-lg font-medium"
                   >
-                    Shelter
+                    {t('roles.Shelter')}
                   </label>
                   <div className="relative">
                     <i className="pi pi-home absolute left-3 top-3 text-gray-500 text-2xl" />
@@ -955,7 +954,7 @@ const UserAccounts = () => {
                       onChange={(e) =>
                         setSelectedUser({ ...selectedUser, shelterId: e.value })
                       }
-                      placeholder="Chọn shelter"
+                      placeholder={t('roles.Shelter')}
                       className="p-inputtext p-component pl-12 text-base py-2 w-full border-2 border-gray-300 rounded-lg h-12 text-gray-700"
                       panelClassName="bg-white shadow-lg rounded-md mt-2"
                       itemClassName="px-4 py-2 text-black-700 hover:bg-gray-100"
@@ -970,7 +969,7 @@ const UserAccounts = () => {
               {/* Action buttons */}
               <div className="flex justify-end space-x-2 mt-4">
                 <Button
-                  label="Hủy"
+                  label={t('dialog.Cancel')}
                   icon="pi pi-times"
                   className="bg-red-400 text-white font-bold py-2 px-4 rounded"
                   onClick={() => {
@@ -979,7 +978,7 @@ const UserAccounts = () => {
                   }}
                 />
                 <Button
-                  label="Cập nhật"
+                  label={t('dialog.updateUser')}
                   icon="pi pi-check"
                   className="bg-blue-400 text-white font-bold py-2 px-4 rounded"
                   onClick={handleUpdateUser}

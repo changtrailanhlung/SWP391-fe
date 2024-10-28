@@ -6,15 +6,19 @@ import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Card } from "primereact/card";
+import { useTranslation } from "react-i18next";
 import axios from "../../services/axiosClient";
 
 const Roles = () => {
+  const { t } = useTranslation();
   const [pendingRequests, setPendingRequests] = useState([]);
   const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
+  const [error, setError] = useState(null);
   const toast = useRef(null);
+  const mounted = useRef(false);
 
   // Define button styles similar to Shelter component
   const buttonBaseStyle =
@@ -23,67 +27,94 @@ const Roles = () => {
   const successButtonStyle = `${buttonBaseStyle} bg-green-500 hover:bg-green-600 text-white`;
   const dangerButtonStyle = `${buttonBaseStyle} bg-red-500 hover:bg-red-600 text-white`;
   const infoButtonStyle = `${buttonBaseStyle} bg-cyan-500 hover:bg-cyan-600 text-white`;
+  const cancelButtonStyle = `${buttonBaseStyle} bg-gray-500 hover:bg-gray-600 text-white`;
 
   useEffect(() => {
+    mounted.current = true;
     fetchPendingRequests();
+    return () => {
+      mounted.current = false;
+    };
   }, []);
 
   const fetchPendingRequests = async () => {
+    if (!mounted.current) return;
+    
     try {
       setLoading(true);
+      setError(null);
+      
       const response = await axios.get("/userrole/pendingrequests");
       const requests = response.data;
-
-      // Fetch all users to get their roles
-      const usersResponse = await axios.get("/users");
-      const users = usersResponse.data;
-      
-      // Create a map of user details including their roles
-      const userDetailsMap = {};
-      users.forEach(user => {
-        userDetailsMap[user.id] = {
-          username: user.username,
-          email: user.email,
-          phone: user.phone,
-          location: user.location,
-          currentRoles: user.roles // The roles array from the API
-        };
-      });
-
-      setUserDetails(userDetailsMap);
+  
+      if (!mounted.current) return;
+  
+      if (!requests || !Array.isArray(requests)) {
+        setPendingRequests([]);
+        setUserDetails({});
+        return;
+      }
+  
+      if (requests.length > 0) {
+        const usersResponse = await axios.get("/users");
+        const users = usersResponse.data;
+        
+        if (!mounted.current) return;
+  
+        const userDetailsMap = {};
+        users.forEach(user => {
+          userDetailsMap[user.id] = {
+            username: user.username,
+            email: user.email,
+            phone: user.phone,
+            location: user.location,
+            currentRoles: user.roles
+          };
+        });
+  
+        setUserDetails(userDetailsMap);
+      } else {
+        setUserDetails({});
+      }
+  
       setPendingRequests(requests);
     } catch (error) {
+      if (!mounted.current) return;
+      
       console.error("Error fetching data:", error);
-      toast.current.show({
-        severity: "error",
-        summary: "Error",
-        detail: "Failed to fetch data",
-        life: 3000,
-      });
+      setError(error);
+      
+      if (error.response?.status !== 404) {
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: t("toast.error.fetchData"),
+          life: 3000,
+        });
+      }
+      
+      setPendingRequests([]);
+      setUserDetails({});
     } finally {
-      setLoading(false);
+      if (mounted.current) {
+        setLoading(false);
+      }
     }
   };
 
   const getRoleName = (roleId) => {
     const roleMap = {
-      1: "Admin",
-      2: "Shelter Staff",
-      3: "Donor",
-      4: "Volunteer",
-      5: "Adopter",
+      1: t("roles.admin"),
+      2: t("roles.shelterStaff"),
+      3: t("roles.donor"),
+      4: t("roles.volunteer"),
+      5: t("roles.adopter"),
     };
     return roleMap[roleId] || ` ${roleId}`;
   };
 
   const formatDate = (value) => {
-    return new Date(value).toLocaleDateString("en-US", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    return new Date(value).toLocaleDateString();
   };
 
   const actionBodyTemplate = (rowData) => {
@@ -93,19 +124,19 @@ const Roles = () => {
           icon="pi pi-eye"
           className={infoButtonStyle}
           onClick={() => viewDetails(rowData)}
-          tooltip="View Details"
+          tooltip={t("buttons.viewDetails")}
         />
         <Button
           icon="pi pi-check"
           className={successButtonStyle}
           onClick={() => confirmApprove(rowData)}
-          tooltip="Approve"
+          tooltip={t("buttons.approve")}
         />
         <Button
           icon="pi pi-times"
           className={dangerButtonStyle}
           onClick={() => confirmReject(rowData)}
-          tooltip="Reject"
+          tooltip={t("buttons.reject")}
         />
       </div>
     );
@@ -118,63 +149,149 @@ const Roles = () => {
 
   const confirmApprove = (request) => {
     confirmDialog({
-      message: "Are you sure you want to approve this role request?",
-      header: "Approve Confirmation",
+      message: t("confirmDialog.approve.message"),
+      header: t("confirmDialog.approve.title"),
       icon: "pi pi-info-circle",
-      acceptClassName: successButtonStyle,
       accept: () => handleApprove(request),
+      reject: () => {},
+      acceptLabel: t("buttons.yes"),
+      rejectLabel: t("buttons.no"),
+      acceptIcon: "pi pi-check",
+      rejectIcon: "pi pi-times",
+      acceptClassName: `${successButtonStyle} w-24`,
+      rejectClassName: `${cancelButtonStyle} w-24`,
+      className: "custom-confirm-dialog",
+      style: { width: '400px' },
+      contentClassName: "p-4",
+      position: 'center',
+      footer: (options) => {
+        return (
+          <div className="flex justify-end gap-2 mt-4">
+            <Button
+              label={t("buttons.no")}
+              icon="pi pi-times"
+              onClick={options.reject}
+              className={`${cancelButtonStyle} w-24`}
+            />
+            <Button
+              label={t("buttons.yes")}
+              icon="pi pi-check"
+              onClick={options.accept}
+              className={`${successButtonStyle} w-24`}
+            />
+          </div>
+        );
+      }
     });
   };
 
   const confirmReject = (request) => {
     confirmDialog({
-      message: "Are you sure you want to reject this role request?",
-      header: "Reject Confirmation",
+      message: t("confirmDialog.reject.message"),
+      header: t("confirmDialog.reject.title"),
       icon: "pi pi-exclamation-triangle",
-      acceptClassName: dangerButtonStyle,
       accept: () => handleReject(request),
+      reject: () => {},
+      acceptLabel: t("buttons.yes"),
+      rejectLabel: t("buttons.no"),
+      acceptIcon: "pi pi-check",
+      rejectIcon: "pi pi-times",
+      acceptClassName: `${dangerButtonStyle} w-24`,
+      rejectClassName: `${cancelButtonStyle} w-24`,
+      className: "custom-confirm-dialog",
+      style: { width: '400px' },
+      contentClassName: "p-4",
+      position: 'center',
+      footer: (options) => {
+        return (
+          <div className="flex justify-end gap-2 mt-4">
+            <Button
+              label={t("buttons.no")}
+              icon="pi pi-times"
+              onClick={options.reject}
+              className={`${cancelButtonStyle} w-24`}
+            />
+            <Button
+              label={t("buttons.yes")}
+              icon="pi pi-check"
+              onClick={options.accept}
+              className={`${dangerButtonStyle} w-24`}
+            />
+          </div>
+        );
+      }
     });
   };
 
   const handleApprove = async (request) => {
     try {
-      await axios.post(`/userrole/approve/${request.userId}/${request.roleId}`);
-      toast.current.show({
+      setLoading(true);
+      await axios.put(`/userrole/acceptrole/${request.userId}/${request.roleId}`);
+      
+      if (!mounted.current) return;
+
+      toast.current?.show({
         severity: "success",
         summary: "Success",
-        detail: "Request approved successfully",
+        detail: t("toast.success.approveRequest"),
         life: 3000,
       });
+      
+      setPendingRequests(prev => prev.filter(req => 
+        !(req.userId === request.userId && req.roleId === request.roleId)
+      ));
+      
       await fetchPendingRequests();
     } catch (error) {
+      if (!mounted.current) return;
+      
       console.error("Error approving request:", error);
-      toast.current.show({
+      toast.current?.show({
         severity: "error",
         summary: "Error",
-        detail: error.response?.data?.message || "Failed to approve request",
+        detail: t("toast.error.approveRequest"),
         life: 3000,
       });
+    } finally {
+      if (mounted.current) {
+        setLoading(false);
+      }
     }
   };
 
   const handleReject = async (request) => {
     try {
-      await axios.post(`/userrole/reject/${request.userId}/${request.roleId}`);
-      toast.current.show({
+      setLoading(true);
+      await axios.delete(`/userrole/${request.userId}/${request.roleId}`);
+      
+      if (!mounted.current) return;
+
+      toast.current?.show({
         severity: "success",
         summary: "Success",
-        detail: "Request rejected successfully",
+        detail: t("toast.success.rejectRequest"),
         life: 3000,
       });
+      
+      setPendingRequests(prev => prev.filter(req => 
+        !(req.userId === request.userId && req.roleId === request.roleId)
+      ));
+      
       await fetchPendingRequests();
     } catch (error) {
+      if (!mounted.current) return;
+      
       console.error("Error rejecting request:", error);
-      toast.current.show({
+      toast.current?.show({
         severity: "error",
         summary: "Error",
-        detail: error.response?.data?.message || "Failed to reject request",
+        detail: t("toast.error.rejectRequest"),
         life: 3000,
       });
+    } finally {
+      if (mounted.current) {
+        setLoading(false);
+      }
     }
   };
 
@@ -187,23 +304,23 @@ const Roles = () => {
           <div className="flex flex-column gap-4">
             <div className="flex items-center gap-2">
               <i className="pi pi-user text-xl text-primary"></i>
-              <span className="font-bold">User Information</span>
+              <span className="font-bold">{t("dialog.userInfo.title")}</span>
             </div>
             <div className="flex flex-column gap-3">
               <div className="flex justify-between">
-                <span className="font-semibold">Username:</span>
+                <span className="font-semibold">{t("dialog.userInfo.username")}:</span>
                 <span>{user.username}</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-semibold">Email:</span>
+                <span className="font-semibold">{t("dialog.userInfo.email")}:</span>
                 <span>{user.email}</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-semibold">Phone:</span>
+                <span className="font-semibold">{t("dialog.userInfo.phone")}:</span>
                 <span>{user.phone || "N/A"}</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-semibold">Location:</span>
+                <span className="font-semibold">{t("dialog.userInfo.location")}:</span>
                 <span>{user.location || "N/A"}</span>
               </div>
             </div>
@@ -214,11 +331,11 @@ const Roles = () => {
           <div className="flex flex-column gap-4">
             <div className="flex items-center gap-2">
               <i className="pi pi-id-card text-xl text-primary"></i>
-              <span className="font-bold">Role Information</span>
+              <span className="font-bold">{t("dialog.roleInfo.title")}</span>
             </div>
             <div className="flex flex-column gap-3">
               <div className="flex justify-between">
-                <span className="font-semibold">Current Roles:</span>
+                <span className="font-semibold">{t("dialog.roleInfo.currentRoles")}:</span>
                 <span>
                   {user.currentRoles
                     ?.map((role) => getRoleName(role))
@@ -226,7 +343,7 @@ const Roles = () => {
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="font-semibold">Requested Role:</span>
+                <span className="font-semibold">{t("dialog.roleInfo.requestedRole")}:</span>
                 <span>
                   {selectedRequest
                     ? getRoleName(selectedRequest.roleId)
@@ -234,7 +351,7 @@ const Roles = () => {
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="font-semibold">Request Date:</span>
+                <span className="font-semibold">{t("dialog.roleInfo.requestDate")}:</span>
                 <span>
                   {selectedRequest
                     ? formatDate(selectedRequest.createdDate)
@@ -247,7 +364,7 @@ const Roles = () => {
       </div>
     );
   };
-
+  
   return (
     <div className="container mx-auto p-8 bg-gray-50">
       <Toast ref={toast} />
@@ -255,7 +372,7 @@ const Roles = () => {
 
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-gray-800">
-          Role Requests Management
+        {t("sidebar.roles")}
         </h2>
       </div>
 
@@ -266,13 +383,13 @@ const Roles = () => {
           paginator
           rows={10}
           className="p-datatable-custom"
-          emptyMessage="No pending requests found."
+          emptyMessage={t("table.emptyMessage")}
           rowHover
           stripedRows
         >
           <Column
             field="userId"
-            header="User"
+            header={t("table.columns.user")}
             body={(rowData) =>
               userDetails[rowData.userId]?.username || rowData.userId
             }
@@ -280,19 +397,19 @@ const Roles = () => {
           />
           <Column
             field="roleId"
-            header="Requested Role"
+            header={t("table.columns.requestedRole")}
             body={(rowData) => getRoleName(rowData.roleId)}
             sortable
           />
           <Column
             field="createdDate"
-            header="Request Date"
+            header={t("table.columns.requestDate")}
             body={(rowData) => formatDate(rowData.createdDate)}
             sortable
           />
           <Column
             body={actionBodyTemplate}
-            header="Actions"
+            header={t("table.columns.actions")}
             exportable={false}
             style={{ minWidth: "12rem" }}
           />
@@ -300,7 +417,7 @@ const Roles = () => {
       </div>
 
       <Dialog
-        header="User Details"
+        header={t("dialog.userDetails")}
         visible={showDialog}
         style={{ width: "80vw" }}
         onHide={() => setShowDialog(false)}

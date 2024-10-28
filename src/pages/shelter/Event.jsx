@@ -9,9 +9,11 @@ import { Calendar } from "primereact/calendar";
 import { Dialog } from "primereact/dialog";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useTranslation } from "react-i18next";
 import QuillToolbar from "../../components/QuillToolbar";
 
 const Event = () => {
+  const { t, i18n } = useTranslation();
   const currentShelterId = localStorage.getItem("shelterID") || 0;
   const [events, setEvents] = useState([]);
   const [shelters, setShelters] = useState({});
@@ -57,7 +59,7 @@ const Event = () => {
       }
     } catch (error) {
       console.error("Error fetching participants:", error);
-      toast.error("Error fetching participants. Please try again later.");
+      toast.error(t("Event.messages.errors.fetchParticipants"));
     }
   };
 
@@ -73,10 +75,10 @@ const Event = () => {
         }));
       setEvents(eventData);
       setFilteredEvents(eventData);
-      toast.success("Events loaded successfully!");
+      toast.success(t("Event.messages.success.eventsLoaded"));
     } catch (error) {
       console.error("Error fetching events:", error);
-      toast.error("Error fetching events. Please try again later.");
+      toast.error(t("Event.messages.errors.fetchEvents"));
     } finally {
       setLoading(false);
     }
@@ -98,33 +100,30 @@ const Event = () => {
 
   const validateEventForm = () => {
     if (!newEvent.name.trim()) {
-      toast.error("Event name is required!");
+      toast.error(t("Event.messages.errors.nameRequired"));
       return false;
     }
     if (!newEvent.date) {
-      toast.error("Event date is required!");
+      toast.error(t("Event.messages.errors.dateRequired"));
       return false;
     }
     if (!validateEventDate(newEvent.date)) {
-      toast.error("Event date must be today or a future date!");
+      toast.error(t("Event.messages.errors.futureDateRequired"));
       return false;
     }
     if (!newEvent.location.trim()) {
-      toast.error("Event location is required!");
+      toast.error(t("Event.messages.errors.locationRequired"));
       return false;
     }
     if (!newEvent.description.trim()) {
-      toast.error("Event description is required!");
+      toast.error(t("Event.messages.errors.descriptionRequired"));
       return false;
     }
     return true;
   };
-
   const createEvent = async () => {
     try {
-      if (!validateEventForm()) {
-        return;
-      }
+      if (!validateEventForm()) return;
 
       const eventData = {
         ...newEvent,
@@ -132,35 +131,34 @@ const Event = () => {
       };
 
       await axios.post("/events", eventData);
-      toast.success("Event created successfully!");
+      toast.success(t("Event.messages.success.eventCreated"));
       fetchEvents();
       resetNewEvent();
       setShowDialog(false);
     } catch (error) {
       console.error("Error creating event:", error);
-      toast.error("Error creating event. Please try again later.");
+      toast.error(t("Event.messages.errors.createEvent"));
     }
   };
+
 
   const updateEvent = async () => {
     try {
       if (parseInt(newEvent.shelterId) !== parseInt(currentShelterId)) {
-        toast.error("You can only edit events from your shelter!");
+        toast.error(t("Event.messages.errors.editOwnShelter"));
         return;
       }
 
-      if (!validateEventForm()) {
-        return;
-      }
+      if (!validateEventForm()) return;
 
       await axios.put(`/events/${selectedEventId}`, newEvent);
-      toast.success("Event updated successfully!");
+      toast.success(t("Event.messages.success.eventUpdated"));
       fetchEvents();
       resetNewEvent();
       setShowDialog(false);
     } catch (error) {
       console.error("Error updating event:", error);
-      toast.error("Error updating event. Please try again later.");
+      toast.error(t("Event.messages.errors.updateEvent"));
     }
   };
 
@@ -168,16 +166,16 @@ const Event = () => {
     try {
       const eventToDelete = events.find((event) => event.id === id);
       if (parseInt(eventToDelete.shelterId) !== parseInt(currentShelterId)) {
-        toast.error("You can only delete events from your shelter!");
+        toast.error(t("Event.messages.errors.deleteOwnShelter"));
         return;
       }
 
       await axios.delete(`/events/${id}`);
-      toast.success("Event deleted successfully!");
+      toast.success(t("Event.messages.success.eventDeleted"));
       fetchEvents();
     } catch (error) {
       console.error("Error deleting event:", error);
-      toast.error("Error deleting event. Please try again later.");
+      toast.error(t("Event.messages.errors.deleteEvent"));
     }
   };
 
@@ -240,7 +238,7 @@ const Event = () => {
   // Participants Dialog Component
   const ParticipantsDialog = () => (
     <Dialog
-      header={`Participants - ${selectedEventName}`}
+      header={`${t("Event.dialog.participants")} - ${selectedEventName}`}
       visible={showParticipantsDialog}
       onHide={() => setShowParticipantsDialog(false)}
       className="w-full max-w-4xl mx-auto"
@@ -251,7 +249,7 @@ const Event = () => {
           <div className="text-center py-8">
             <i className="pi pi-users text-4xl text-gray-400 mb-4"></i>
             <p className="text-gray-500">
-              No participants found for this event.
+            {t("Event.dialog.noParticipants")}
             </p>
           </div>
         ) : (
@@ -300,18 +298,19 @@ const Event = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-2xl font-semibold text-gray-600">Loading...</div>
+        <div className="text-2xl font-semibold text-gray-600">
+          {t("Event.messages.loading")}
+        </div>
       </div>
     );
   }
-
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">
-            Event Management
+            {t("Event.title")}
           </h1>
 
           {/* Search Bar */}
@@ -320,14 +319,14 @@ const Event = () => {
             <InputText
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search events..."
+              placeholder={t("Event.search.placeholder")}
               className="w-full h-14 pl-10 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             />
           </div>
 
           {/* Create Button */}
           <Button
-            label="Create New Event"
+            label={t("Event.buttons.create")}
             icon="pi pi-plus"
             onClick={() => {
               resetNewEvent();
@@ -339,90 +338,79 @@ const Event = () => {
 
         {/* Events Table */}
         <div className="bg-white rounded-lg shadow-lg p-6">
-          {filteredEvents.length === 0 ? (
-            <div className="text-center py-8">
-              <i className="pi pi-calendar text-4xl text-gray-400 mb-4"></i>
-              <p className="text-gray-500">No events found.</p>
-            </div>
-          ) : (
-            <DataTable
-              value={filteredEvents}
-              paginator
-              rows={10}
-              className="p-datatable-rounded"
-              emptyMessage="No events found"
-            >
-              <Column
-                body={(rowData, options) => options.rowIndex + 1}
-                header="No."
-                style={{ width: "5%" }}
-              />
-              <Column
-                field="name"
-                header="Event Name"
-                style={{ width: "20%" }}
-              />
-              <Column
-                field="date"
-                header="Date"
-                body={(rowData) => new Date(rowData.date).toLocaleString()}
-                style={{ width: "15%" }}
-              />
-              <Column
-                field="description"
-                header="Description"
-                body={(rowData) => (
-                  <div
-                    dangerouslySetInnerHTML={{ __html: rowData.description }}
-                    className="max-h-20 overflow-y-auto"
+          <DataTable
+            value={filteredEvents}
+            paginator
+            rows={10}
+            emptyMessage={t("Event.table.noEvents")}
+            className="p-datatable-rounded"
+          >
+            <Column
+              body={(rowData, options) => options.rowIndex + 1}
+              header={t("Event.table.no")}
+              style={{ width: "5%" }}
+            />
+            <Column
+              field="name"
+              header={t("Event.table.eventName")}
+              style={{ width: "20%" }}
+            />
+            <Column
+              field="date"
+              header={t("Event.table.date")}
+              body={(rowData) => new Date(rowData.date).toLocaleString()}
+              style={{ width: "15%" }}
+            />
+            <Column
+              field="description"
+              header={t("Event.table.description")}
+              body={(rowData) => (
+                <div
+                  dangerouslySetInnerHTML={{ __html: rowData.description }}
+                  className="max-h-20 overflow-y-auto"
+                />
+              )}
+              style={{ width: "25%" }}
+            />
+            <Column
+              field="location"
+              header={t("Event.table.location")}
+              style={{ width: "15%" }}
+            />
+            <Column
+              header={t("Event.table.actions")}
+              body={(rowData) => (
+                <div className="flex gap-2">
+                  <Button
+                    icon="pi pi-users"
+                    onClick={() => handleViewParticipants(rowData)}
+                    className="p-button-rounded p-button-success p-button-outlined"
+                    tooltip={t("Event.dialog.participants")}
                   />
-                )}
-                style={{ width: "25%" }}
-              />
-              <Column
-                field="location"
-                header="Location"
-                style={{ width: "15%" }}
-              />
-              <Column
-                header="Actions"
-                body={(rowData) => (
-                  <div className="flex gap-2">
-                    <Button
-                      icon="pi pi-users"
-                      onClick={() => handleViewParticipants(rowData)}
-                      className="p-button-rounded p-button-success p-button-outlined"
-                      tooltip="View Participants"
-                    />
-                    <Button
-                      icon="pi pi-pencil"
-                      onClick={() => handleEditClick(rowData)}
-                      className="p-button-rounded p-button-info p-button-outlined"
-                    />
-                    <Button
-                      icon="pi pi-trash"
-                      onClick={() => {
-                        if (
-                          window.confirm(
-                            "Are you sure you want to delete this event?"
-                          )
-                        ) {
-                          deleteEvent(rowData.id);
-                        }
-                      }}
-                      className="p-button-rounded p-button-danger p-button-outlined"
-                    />
-                  </div>
-                )}
-                style={{ width: "20%" }}
-              />
-            </DataTable>
-          )}
+                  <Button
+                    icon="pi pi-pencil"
+                    onClick={() => handleEditClick(rowData)}
+                    className="p-button-rounded p-button-info p-button-outlined"
+                  />
+                  <Button
+                    icon="pi pi-trash"
+                    onClick={() => {
+                      if (window.confirm(t("Event.messages.deleteConfirm"))) {
+                        deleteEvent(rowData.id);
+                      }
+                    }}
+                    className="p-button-rounded p-button-danger p-button-outlined"
+                  />
+                </div>
+              )}
+              style={{ width: "20%" }}
+            />
+          </DataTable>
         </div>
 
         {/* Create/Edit Event Dialog */}
         <Dialog
-          header={isEditing ? "Edit Event" : "Create New Event"}
+          header={isEditing ? t("Event.dialog.edit") : t("Event.dialog.create")}
           visible={showDialog}
           onHide={() => setShowDialog(false)}
           className="w-full max-w-4xl mx-auto"
@@ -432,42 +420,34 @@ const Event = () => {
           <div className="flex flex-col gap-8">
             {/* Event Name */}
             <div className="form-group">
-              <label
-                htmlFor="name"
-                className="block text-gray-700 text-sm font-medium mb-2"
-              >
+              <label className="block text-gray-700 text-sm font-medium mb-2">
                 <i className="pi pi-calendar text-blue-500 mr-2"></i>
-                Event Name
+                {t("Event.form.eventName.label")}
               </label>
               <InputText
-                id="name"
                 value={newEvent.name}
                 onChange={(e) =>
                   setNewEvent({ ...newEvent, name: e.target.value })
                 }
+                placeholder={t("Event.form.eventName.placeholder")}
                 className="w-full h-12 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 px-4"
-                placeholder="Enter event name"
               />
             </div>
 
             {/* Event Date */}
             <div className="form-group">
-              <label
-                htmlFor="date"
-                className="block text-gray-700 text-sm font-medium mb-2"
-              >
+              <label className="block text-gray-700 text-sm font-medium mb-2">
                 <i className="pi pi-calendar text-blue-500 mr-2"></i>
-                Event Date
+                {t("Event.form.eventDate.label")}
               </label>
               <Calendar
-                id="date"
                 value={newEvent.date}
                 onChange={(e) => setNewEvent({ ...newEvent, date: e.value })}
                 showIcon
                 className="w-full"
                 minDate={new Date()}
+                placeholder={t("Event.form.eventDate.placeholder")}
                 inputClassName="h-12 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                placeholder="Select date"
               />
             </div>
 
@@ -475,7 +455,7 @@ const Event = () => {
             <div className="form-group">
               <label className="block text-gray-700 text-sm font-medium mb-2">
                 <i className="pi pi-align-left text-blue-500 mr-2"></i>
-                Description
+                {t("Event.form.description.label")}
               </label>
               <div className="border border-gray-300 rounded-lg overflow-hidden">
                 <QuillToolbar />
@@ -486,41 +466,37 @@ const Event = () => {
                   }
                   className="h-48"
                   theme="snow"
-                  placeholder="Enter event description"
+                  placeholder={t("Event.form.description.placeholder")}
                 />
               </div>
             </div>
 
             {/* Location */}
             <div className="form-group">
-              <label
-                htmlFor="location"
-                className="block text-gray-700 text-sm font-medium mb-2"
-              >
+              <label className="block text-gray-700 text-sm font-medium mb-2">
                 <i className="pi pi-map-marker text-blue-500 mr-2"></i>
-                Location
+                {t("Event.form.location.label")}
               </label>
               <InputText
-                id="location"
                 value={newEvent.location}
                 onChange={(e) =>
                   setNewEvent({ ...newEvent, location: e.target.value })
                 }
+                placeholder={t("Event.form.location.placeholder")}
                 className="w-full h-12 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 px-4"
-                placeholder="Enter event location"
               />
             </div>
 
             {/* Action Buttons */}
             <div className="flex justify-end gap-4 mt-4">
               <Button
-                label="Cancel"
+                label={t("Event.buttons.cancel")}
                 icon="pi pi-times"
                 onClick={() => setShowDialog(false)}
                 className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"
               />
               <Button
-                label={isEditing ? "Update Event" : "Create Event"}
+                label={isEditing ? t("Event.buttons.update") : t("Event.buttons.createEvent")}
                 icon={isEditing ? "pi pi-check" : "pi pi-plus"}
                 onClick={isEditing ? updateEvent : createEvent}
                 className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"

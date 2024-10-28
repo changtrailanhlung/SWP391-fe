@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import axios from "../../services/axiosClient";
 import { Toast } from "primereact/toast";
 import { FileUpload } from "primereact/fileupload";
@@ -10,6 +11,7 @@ import { InputNumber } from "primereact/inputnumber";
 import { InputTextarea } from "primereact/inputtextarea";
 
 const CreatePet = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const initialPetState = {
     shelterID: "",
@@ -31,8 +33,8 @@ const CreatePet = () => {
   const toast = useRef(null);
   const [isAgeFocused, setIsAgeFocused] = useState(false);
 
-  const petTypes = ["Dog", "Cat"];
-  const genderOptions = ["Male", "Female"];
+  const petTypes = [t('petType.dog'), t('petType.cat')];
+  const genderOptions = [t('gender.male'), t('gender.female')];
   
 
   useEffect(() => {
@@ -66,24 +68,24 @@ const CreatePet = () => {
   const validateForm = () => {
     const newErrors = {};
     const requiredFields = {
-      name: "Tên",
-      type: "Loại",
-      breed: "Giống",
-      gender: "Giới tính",
-      age: "Tuổi",
-      size: "Kích thước",
-      color: "Màu sắc",
-      description: "Mô tả",
+      name: t('pet.name'),
+      type: t('pet.type'),
+      breed: t('pet.breed'),
+      gender: t('pet.gender'),
+      age: t('pet.age'),
+      size: t('pet.size'),
+      color: t('pet.color'),
+      description: t('pet.description'),
     };
 
     Object.entries(requiredFields).forEach(([field, label]) => {
       if (!newPet[field]) {
-        newErrors[field] = `${label} là bắt buộc`;
+        newErrors[field] = t('validation.required', { field: label });
       }
     });
 
     if (!newPet.image) {
-      newErrors.image = "Hình ảnh là bắt buộc";
+      newErrors.image = t('validation.imageRequired');
     }
 
     return newErrors;
@@ -146,8 +148,7 @@ const CreatePet = () => {
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
       <Toast ref={toast} />
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-bold text-gray-800">Tạo Thú Cưng Mới</h2>
-        
+        <h2 className="text-3xl font-bold text-gray-800">{t('pet.createNew')}</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -173,7 +174,7 @@ const CreatePet = () => {
                 }}
               >
                 <i className="pi pi-id-card text-blue-500"></i>
-                Tên thú cưng
+                {t('pet.name')}
               </label>
             </span>
             {errors.name && <small className="text-red-500">{errors.name}</small>}
@@ -200,7 +201,7 @@ const CreatePet = () => {
                 }}
               >
                 <i className="pi pi-heart text-blue-500"></i>
-                Loại
+                {t('pet.type')}
               </label>
             </span>
             {errors.type && <small className="text-red-500">{errors.type}</small>}
@@ -227,7 +228,7 @@ const CreatePet = () => {
                 }}
               >
                 <i className="pi pi-user text-blue-500"></i>
-                Giới tính
+                {t('pet.gender')}
               </label>
             </span>
             {errors.gender && <small className="text-red-500">{errors.gender}</small>}
@@ -254,7 +255,7 @@ const CreatePet = () => {
                 }}
               >
                 <i className="pi pi-rulers text-blue-500"></i>
-                Kích thước
+                {t('pet.size')}
               </label>
             </span>
             {errors.size && <small className="text-red-500">{errors.size}</small>}
@@ -283,7 +284,7 @@ const CreatePet = () => {
                 }}
               >
                 <i className="pi pi-tag text-blue-500"></i>
-                Giống
+                {t('pet.breed')}
               </label>
             </span>
             {errors.breed && <small className="text-red-500">{errors.breed}</small>}
@@ -314,7 +315,7 @@ const CreatePet = () => {
                 }}
               >
                 <i className="pi pi-calendar text-blue-500"></i>
-                Tuổi
+                {t('pet.age')}
               </label>
             </span>
             {errors.age && <small className="text-red-500">{errors.age}</small>}
@@ -341,7 +342,7 @@ const CreatePet = () => {
                 }}
               >
                 <i className="pi pi-palette text-blue-500"></i>
-                Màu sắc
+                {t('pet.color')}
               </label>
             </span>
             {errors.color && <small className="text-red-500">{errors.color}</small>}
@@ -372,7 +373,7 @@ const CreatePet = () => {
               }}
             >
               <i className="pi pi-align-left text-blue-500"></i>
-              Mô tả
+              {t('pet.description')}
             </label>
           </span>
           {errors.description && <small className="text-red-500">{errors.description}</small>}
@@ -405,21 +406,21 @@ const CreatePet = () => {
 
         {/* Buttons */}
         <div className="flex justify-end mt-8 gap-4">
-          <Button
-            label="Quay lại"
-            icon="pi pi-arrow-left"
-            severity="secondary"
-            outlined
-            className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-300"
-            onClick={() => navigate("/shelter/pets")}
-          />
-          <Button
-            label="Tạo thú cưng"
-            icon="pi pi-check"
-            severity="success"
-            className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-300"
-            onClick={handleSubmit}
-          />
+        <Button
+              label={t('common.back')}
+              icon="pi pi-arrow-left"
+              severity="secondary"
+              outlined
+              className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-300"
+              onClick={() => navigate("/shelter/pets")}
+            />
+            <Button
+              label={t('pet.create')}
+              icon="pi pi-check"
+              severity="success"
+              className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-300"
+              onClick={handleSubmit}
+            />
         </div>
       </div>
     </div>
