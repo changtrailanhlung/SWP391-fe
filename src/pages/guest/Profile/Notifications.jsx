@@ -51,12 +51,12 @@ const Notifications = () => {
         paginator
         rows={10}
       >
-        {/* <Column
+        <Column
           field="title"
           header="Title"
           sortable
           style={{ width: "30%" }}
-        /> */}
+        />
         <Column field="message" header="Message" sortable />
         <Column
           field="date"
