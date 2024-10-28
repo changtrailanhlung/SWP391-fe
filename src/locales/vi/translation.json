@@ -583,5 +583,6 @@
     "IDBack": "CCCD mặt sau",
     "socialAccount": "Tài khoản MXH",
     "incomeAmount": "Thu nhập"
-  }
+  },
+  "accessDenied": "Bạn không có quyền truy cập!"
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import axios from "../../services/axiosClient"; // Adjust the import path as necessary
 import { useTranslation } from "react-i18next"; // Import useTranslation
+import { toast } from "react-toastify";
 
 const Donates = () => {
   const { t } = useTranslation(); // Initialize translation
@@ -52,11 +53,21 @@ const Donates = () => {
   // Function to handle navigation to the donation form
   const handleDonate = (shelterId) => {
     const donorId = localStorage.getItem("nameid"); // Get donorId from local storage
+    const userRole = localStorage.getItem("role"); // Get user role from local storage
+
     if (!donorId) {
-      // If donorId doesn't exist, redirect to login
       navigate("/admin/login"); // Navigate to the login page
       return;
     }
+
+    const rolesArray = userRole ? userRole.split(",") : [];
+
+    // Check if userRole includes "Donor"
+    if (!rolesArray.includes("Donor")) {
+      toast.error(t("accessDenied")); // Show access denied message
+      return;
+    }
+
     navigate(`/donate/${shelterId}`); // Navigate to the DonationForm page with the shelter ID
   };
 

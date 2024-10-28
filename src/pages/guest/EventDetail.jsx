@@ -8,6 +8,7 @@ const EventDetail = () => {
   const navigate = useNavigate();
   const [event, setEvent] = useState(null);
   const [userId, setUserId] = useState(localStorage.getItem("nameid")); // Retrieve user ID from localStorage
+  const [userRole, setUserRole] = useState(localStorage.getItem("role")); // Retrieve user role
   const [isRegistered, setIsRegistered] = useState(false);
 
   useEffect(() => {
@@ -17,8 +18,8 @@ const EventDetail = () => {
         setEvent(response.data); // Store the event details
         checkUserRegistration(); // Check if the user is registered
       } catch (error) {
-        // console.error("Error fetching event details:", error);
-        // toast.error("Failed to fetch event details.");
+        console.error("Error fetching event details:", error);
+        toast.error("Failed to fetch event details.");
       }
     };
 
@@ -27,13 +28,18 @@ const EventDetail = () => {
 
   const checkUserRegistration = async () => {
     if (!userId) return; // Exit if userId is not available
-
+    // Here, you can add logic to check if the user is registered for the event
   };
 
   const handleJoinEvent = async () => {
     if (!userId) {
       toast.error("You need to log in to join the event.");
       navigate("/admin/login");
+      return;
+    }
+
+    if (!userRole || !userRole.split(",").includes("Volunteer")) {
+      toast.error("Only volunteers can register for this event.");
       return;
     }
 

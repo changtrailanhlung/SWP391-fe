@@ -575,5 +575,6 @@
     "IDBack": "ID Back",
     "socialAccount": "Social Account",
     "incomeAmount": "Income Amount"
-  }
+  },
+  "accessDenied": "You do not have access!"
 }
