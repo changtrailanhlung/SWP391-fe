@@ -29,12 +29,18 @@ const Pets = () => {
     return !!localStorage.getItem("token");
   };
 
+  const getUserRole = () => {
+    return localStorage.getItem("role") || ""; // Retrieve user role
+  };
+
   const handleAdopt = (petID) => {
     if (!isLoggedIn()) {
       toast.error("Bạn phải login để sử dụng tính năng này");
       setTimeout(() => {
         navigate("/admin/login");
       }, 500); // Delay for redirection after toast
+    } else if (!getUserRole().split(",").includes("Adopter")) {
+      toast.error("Bạn không có quyền để nhận nuôi thú cưng");
     } else {
       navigate("/registration-form", { state: { petID } }); // Pass the petId in state
     }
