@@ -1,6 +1,12 @@
 {
   "home": "Home",
-  "event": "Event",
+  "events": "Event",
+  "event": {
+    "location": "Location",
+    "date": "Date",
+    "name": "Name Event",
+    "description": "Description"
+  },
   "about": "About Us",
   "contact": "Contact",
   "pets": "Pets",
