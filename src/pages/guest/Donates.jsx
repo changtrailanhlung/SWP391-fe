@@ -54,14 +54,20 @@ const Donates = () => {
   const handleDonate = (shelterId) => {
     const donorId = localStorage.getItem("nameid"); // Get donorId from local storage
     const userRole = localStorage.getItem("role"); // Get user role from local storage
+
     if (!donorId) {
       navigate("/admin/login"); // Navigate to the login page
       return;
     }
-    if (userRole !== "Donor") {
+
+    const rolesArray = userRole ? userRole.split(",") : [];
+
+    // Check if userRole includes "Donor"
+    if (!rolesArray.includes("Donor")) {
       toast.error(t("accessDenied")); // Show access denied message
       return;
     }
+
     navigate(`/donate/${shelterId}`); // Navigate to the DonationForm page with the shelter ID
   };
 
