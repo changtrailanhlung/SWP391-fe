@@ -111,7 +111,7 @@ function Navbar() {
                 <div
                   onMouseEnter={() => setIsDropdownOpen(true)} // Keep dropdown open when hovered
                   onMouseLeave={() => setIsDropdownOpen(false)} // Close dropdown when mouse leaves
-                  className="absolute right-0 mt-2 bg-white border border-gray-300 rounded shadow-lg"
+                  className="absolute right-0 mt-64 ml-24 bg-white border border-gray-300 rounded shadow-lg w-48"
                 >
                   <Link
                     to="/user-info" // Adjust the route as necessary
