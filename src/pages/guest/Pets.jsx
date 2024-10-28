@@ -78,25 +78,25 @@ const Pets = () => {
               />
               <h2 className="text-xl font-semibold">{pet.name}</h2>
               <p>
-                {t("type")}: {pet.type}
+                {t("pet.type")}: {pet.type}
               </p>
               <p>
-                {t("breed")}: {pet.breed}
+                {t("pet.breed")}: {pet.breed}
               </p>
               <p>
-                {t("age")}: {pet.age} {t("years")}
+                {t("pet.age")}: {pet.age} {t("years")}
               </p>
               <p>
-                {t("gender")}: {pet.gender}
+                {t("pet.gender")}: {pet.gender}
               </p>
               <p>
-                {t("size")}: {pet.size}
+                {t("pet.size")}: {pet.size}
               </p>
               <p>
-                {t("color")}: {pet.color}
+                {t("pet.color")}: {pet.color}
               </p>
               <p>
-                {t("description")}: {pet.description}
+                {t("pet.description")}: {pet.description}
               </p>
 
               <button
