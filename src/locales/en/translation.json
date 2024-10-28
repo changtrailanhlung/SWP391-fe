@@ -124,7 +124,13 @@
     "shelterPanel": "Shelter Panel",
     "pets": "Pets",
     "adoptionForm": "Adoption Form",
-    "events": "Events"
+    "events": "Events",
+    "event": {
+      "location": "Location",
+      "date": "Date",
+      "name": "Name",
+      "description": "Description"
+    }
   },
 
   "dashboard": {

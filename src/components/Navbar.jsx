@@ -70,7 +70,7 @@ function Navbar() {
               className="text-black no-underline hover:underline"
               to="/event"
             >
-              {t("event")}
+              {t("events")}
             </Link>
           </li>
           <li>
@@ -180,7 +180,7 @@ function Navbar() {
               <Link to="/">{t("home")}</Link>
             </li>
             <li>
-              <Link to="/event">{t("event")}</Link>
+              <Link to="/event">{t("events")}</Link>
             </li>
             <li>
               <Link to="/pets">{t("pets")}</Link>

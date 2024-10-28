@@ -1,6 +1,12 @@
 {
   "home": "Trang chủ",
-  "event": "Sự kiện",
+  "events": "Sự kiện",
+  "event": {
+    "location": "Địa điểm",
+    "date": "Ngày",
+    "name": "Tên sự kiện",
+    "description": "Mô tả"
+  },
   "about": "Về chúng tôi",
   "contact": "Liên hệ",
   "pets": "Vật nuôi",
