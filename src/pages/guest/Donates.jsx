@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import axios from "../../services/axiosClient"; // Adjust the import path as necessary
 import { useTranslation } from "react-i18next"; // Import useTranslation
+import { toast } from "react-toastify";
 
 const Donates = () => {
   const { t } = useTranslation(); // Initialize translation
@@ -58,7 +59,7 @@ const Donates = () => {
       return;
     }
     if (userRole !== "Donor") {
-      alert(t("donates.accessDenied")); // Show access denied message
+      toast.error(t("accessDenied")); // Show access denied message
       return;
     }
     navigate(`/donate/${shelterId}`); // Navigate to the DonationForm page with the shelter ID

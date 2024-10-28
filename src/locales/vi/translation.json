@@ -87,5 +87,6 @@
     "amount": "Số tiền quyên góp",
     "submit": "Gửi",
     "successMessage": "Cảm ơn bạn đã quyên góp!"
-  }
+  },
+  "accessDenied": "Bạn không có quyền truy cập!"
 }

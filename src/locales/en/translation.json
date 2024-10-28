@@ -87,5 +87,6 @@
     "amount": "Donation Amount",
     "submit": "Submit",
     "successMessage": "Thank you for your donation!"
-  }
+  },
+  "accessDenied": "You do not have access!"
 }
