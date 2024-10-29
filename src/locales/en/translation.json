@@ -611,5 +611,27 @@
     "socialAccount": "Social Account",
     "incomeAmount": "Income Amount"
   },
-  "accessDenied": "You do not have access!"
+  "accessDenied": "You do not have access!",
+  "loading": {
+    "roles": "Loading roles..."
+  },
+  "currentRoles": {
+    "title": "Current Roles",
+    "none": "No current roles assigned."
+  },
+  "changeRoles": {
+    "title": "Change Roles",
+    "none": "All roles are currently assigned or pending requests."
+  },
+  "saveRoles": "Save Roles",
+  "pendingRequests": {
+    "title": "Pending Role Requests",
+    "role": "Role",
+    "date": "Request Date",
+    "none": "No pending role requests."
+  },
+  "requestRole": {
+    "success": "Request for role {{role}} submitted successfully!",
+    "error": "Failed to submit request for role {{role}}."
+  }
 }

@@ -614,5 +614,27 @@
     "socialAccount": "Tài khoản MXH",
     "incomeAmount": "Thu nhập"
   },
-  "accessDenied": "Bạn không có quyền truy cập!"
+  "accessDenied": "Bạn không có quyền truy cập!",
+  "loading": {
+    "roles": "Đang tải vai trò..."
+  },
+  "currentRoles": {
+    "title": "Vai trò hiện tại",
+    "none": "Chưa có vai trò nào được giao."
+  },
+  "changeRoles": {
+    "title": "Thay đổi vai trò",
+    "none": "Tất cả các vai trò hiện tại đã được giao hoặc đang chờ xử lý."
+  },
+  "saveRoles": "Lưu vai trò",
+  "pendingRequests": {
+    "title": "Yêu cầu vai trò đang chờ",
+    "role": "Vai trò",
+    "date": "Ngày yêu cầu",
+    "none": "Không có yêu cầu vai trò nào đang chờ."
+  },
+  "requestRole": {
+    "success": "Yêu cầu vai trò {{role}} đã được gửi thành công!",
+    "error": "Gửi yêu cầu cho vai trò {{role}} thất bại."
+  }
 }

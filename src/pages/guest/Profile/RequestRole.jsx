@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "../../../services/axiosClient"; // Adjust the import path as necessary
 import { DataTable } from "primereact/datatable"; // Import PrimeReact DataTable
 import { Column } from "primereact/column"; // Import PrimeReact Column
+import { useTranslation } from "react-i18next"; // Import useTranslation
 
 const RequestRole = () => {
+  const { t } = useTranslation(); // Initialize translation
   const [roles] = useState([
     "Admin",
     "ShelterStaff",
@@ -75,16 +77,16 @@ const RequestRole = () => {
 
       try {
         await axios.post("/userrole/requestrole", payload); // Send the POST request
-        alert(`Request for role ${role} submitted successfully!`); // Display success message
+        alert(t("requestRole.success", { role })); // Display success message using translation
       } catch (error) {
         console.error("Error submitting request:", error);
-        alert(`Failed to submit request for role ${role}.`); // Display error message
+        alert(t("requestRole.error", { role })); // Display error message using translation
       }
     }
   };
 
   if (loading) {
-    return <div className="text-center mt-5">Loading roles...</div>;
+    return <div className="text-center mt-5">{t("loading.roles")}</div>;
   }
 
   // Check if there are any roles available for selection
@@ -97,7 +99,7 @@ const RequestRole = () => {
   return (
     <div className="container mx-auto p-6">
       {/* Display current roles */}
-      <h2 className="text-2xl font-bold mb-4">Current Roles</h2>
+      <h2 className="text-2xl font-bold mb-4">{t("currentRoles.title")}</h2>
       <div className="mb-4">
         {currentRoles.length > 0 ? (
           currentRoles.map((role) => (
@@ -109,15 +111,14 @@ const RequestRole = () => {
             </span>
           ))
         ) : (
-          <p>No current roles assigned.</p>
+          <p>{t("currentRoles.none")}</p>
         )}
       </div>
 
       {/* Display available roles for selection */}
-      <h2 className="text-2xl font-bold mb-4">Change Roles</h2>
+      <h2 className="text-2xl font-bold mb-4">{t("changeRoles.title")}</h2>
       {availableRoles.length > 0 ? (
         <div className="flex flex-wrap space-x-4 mb-4">
-          {" "}
           {/* Flex container for horizontal layout */}
           {availableRoles.map((role) => (
             <div key={role} className="flex items-center">
@@ -136,33 +137,35 @@ const RequestRole = () => {
           ))}
         </div>
       ) : (
-        <p>All roles are currently assigned or pending requests.</p>
+        <p>{t("changeRoles.none")}</p>
       )}
 
       <button
         onClick={handleRequestRole} // Call the function on button click
         className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
-        Save Roles
+        {t("saveRoles")} {/* Use translation for button text */}
       </button>
 
       {/* Display pending requests */}
-      <h3 className="text-lg font-semibold mt-6">Pending Role Requests</h3>
+      <h3 className="text-lg font-semibold mt-6">
+        {t("pendingRequests.title")}
+      </h3>
       {pendingRequests.length > 0 ? (
         <DataTable value={pendingRequests} className="mt-3">
           <Column
             field="roleId"
-            header="Role"
+            header={t("pendingRequests.role")}
             body={(rowData) => roles[rowData.roleId - 1]}
           />
           <Column
             field="createdDate"
-            header="Request Date"
+            header={t("pendingRequests.date")}
             body={(rowData) => new Date(rowData.createdDate).toLocaleString()}
           />
         </DataTable>
       ) : (
-        <p>No pending role requests.</p>
+        <p>{t("pendingRequests.none")}</p>
       )}
     </div>
   );
