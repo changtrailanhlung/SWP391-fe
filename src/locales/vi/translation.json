@@ -185,8 +185,8 @@
    "shelterPanel": "Shelter Panel",
     "pets": "Thú Cưng",
     "adoptionForm": "Đơn Nhận Nuôi",
-    "events": "Sự Kiện"
-    
+    "events": "Sự Kiện",
+    "feedback": "Phản hồi"
   },
   
 
@@ -571,6 +571,25 @@
     "socialAccount":"Tài khoản MXH",
     "incomeAmount":"Thu nhập"
 
+  },
+  "a":{
+    "titles": {
+      "feedback": "Phản hồi"
+    },
+    "table": {
+      "headers": {
+        "no": "STT",
+        "user": "Người dùng",
+        "feedback": "Phản hồi",
+        "date": "Ngày"
+      }
+    },
+    "error": {
+      "title": "Lỗi",
+      "fetchUsers": "Không thể lấy danh sách người dùng",
+      "fetchFeedback": "Không thể lấy danh sách phản hồi"
+    }
   }
+  
   
 }

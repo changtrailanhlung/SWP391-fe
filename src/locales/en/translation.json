@@ -123,7 +123,8 @@
     "shelterPanel": "Shelter Panel",
     "pets": "Pets",
     "adoptionForm": "Adoption Form",
-    "events": "Events"
+    "events": "Events",
+    "feedback": "Feedback"
   },
 
   "dashboard": {
@@ -575,6 +576,24 @@
     "socialAccount":"Social Account",
     "incomeAmount":"Income Amount"
 
+  },
+  "a":{
+    "titles": {
+      "feedback": "Feedback"
+    },
+    "table": {
+      "headers": {
+        "no": "No.",
+        "user": "User",
+        "feedback": "Feedback",
+        "date": "Date"
+      }
+    },
+    "error": {
+      "title": "Error",
+      "fetchUsers": "Failed to fetch users",
+      "fetchFeedback": "Failed to fetch feedback"
+    }
   }
  
 }
