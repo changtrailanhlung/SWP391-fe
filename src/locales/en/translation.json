@@ -12,7 +12,8 @@
     "feedbackPlaceholder": "Enter your feedback here...",
     "submitFeedback": "Submit Feedback",
     "successMessage": "Your feedback has been submitted successfully!",
-    "errorMessage": "There was an error submitting your feedback. Please try again."
+    "errorMessage": "There was an error submitting your feedback. Please try again.",
+    "loading": "..."
   },
   "about": "About Us",
   "contact": "Contact",
