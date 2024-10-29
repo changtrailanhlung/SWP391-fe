@@ -472,6 +472,16 @@
     "disease": "Bệnh",
     "vaccine": "Vaccine"
   },
+  "registration_form": {
+    "title": "Mẫu Đăng Ký",
+    "social_account": "Tài Khoản Xã Hội",
+    "income_amount": "Số Tiền Thu Nhập",
+    "identification_image_front": "Hình Ảnh Nhận Dạng (Mặt Trước)",
+    "identification_image_back": "Hình Ảnh Nhận Dạng (Mặt Sau)",
+    "submit": "Gửi",
+    "success": "Đăng ký thành công!",
+    "error": "Đăng ký không thành công, vui lòng thử lại."
+  },
   "stats": {
     "totalRevenue": "Tổng doanh thu",
     "availablePets": "Thú cưng có sẵn",

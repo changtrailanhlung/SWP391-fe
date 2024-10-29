@@ -454,7 +454,16 @@
     "dog": "Dog",
     "cat": "Cat"
   },
-
+  "registration_form": {
+    "title": "Registration Form",
+    "social_account": "Social Account",
+    "income_amount": "Income Amount",
+    "identification_image_front": "Identification Image (Front)",
+    "identification_image_back": "Identification Image (Back)",
+    "submit": "Submit",
+    "success": "Registration successful!",
+    "error": "Registration failed, please try again."
+  },
   "adoptionStatus": {
     "available": "Available",
     "adopted": "Adopted"
