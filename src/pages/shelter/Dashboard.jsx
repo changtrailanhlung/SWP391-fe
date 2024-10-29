@@ -28,12 +28,14 @@ const Dashboard = () => {
         setShelterInfo(response.data);
       } catch (error) {
         console.error("Lỗi khi lấy thông tin shelter:", error);
-        toast.current.show({
-          severity: "error",
-          summary: "Lỗi",
-          detail: t('errors.shelterInfo'),
-          life: 3000,
-        });
+        if (toast.current) {
+          toast.current.show({
+            severity: "error",
+            summary: "Lỗi",
+            detail: t('errors.shelterInfo'),
+            life: 3000,
+          });
+        }
       }
     };
 
@@ -183,12 +185,14 @@ const Dashboard = () => {
         });
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu:", error);
-        toast.current.show({
-          severity: "error",
-          summary: "Lỗi",
-          detail: t('errors.getData'),
-          life: 3000,
-        });
+        if (toast.current) {
+          toast.current.show({
+            severity: "error",
+            summary: "Lỗi",
+            detail: t('errors.getData'),
+            life: 3000,
+          });
+        }
       }
     };
 

@@ -128,6 +128,7 @@ const Event = () => {
       const eventData = {
         ...newEvent,
         shelterId: currentShelterId,
+        date: subtractSevenHours(newEvent.date),
       };
 
       await axios.post("/events", eventData);
@@ -141,7 +142,6 @@ const Event = () => {
     }
   };
 
-
   const updateEvent = async () => {
     try {
       if (parseInt(newEvent.shelterId) !== parseInt(currentShelterId)) {
@@ -150,8 +150,11 @@ const Event = () => {
       }
 
       if (!validateEventForm()) return;
-
-      await axios.put(`/events/${selectedEventId}`, newEvent);
+      const eventData = {
+        ...newEvent,
+        date: subtractSevenHours(newEvent.date), // Trừ 7 tiếng trước khi gửi lên server
+      };
+      await axios.put(`/events/${selectedEventId}`, eventData);
       toast.success(t("Event.messages.success.eventUpdated"));
       fetchEvents();
       resetNewEvent();
@@ -235,6 +238,19 @@ const Event = () => {
     setFilteredEvents(filtered);
   }, [searchTerm, events]);
 
+  const addSevenHours = (date) => {
+    if (!date) return null;
+    const newDate = new Date(date);
+    newDate.setHours(newDate.getHours() + 7);
+    return newDate;
+  };
+
+  const subtractSevenHours = (date) => {
+    if (!date) return null;
+    const newDate = new Date(date);
+    newDate.setHours(newDate.getHours() + 7);
+    return newDate;
+  };
   // Participants Dialog Component
   const ParticipantsDialog = () => (
     <Dialog
@@ -248,9 +264,7 @@ const Event = () => {
         {selectedEventParticipants.length === 0 ? (
           <div className="text-center py-8">
             <i className="pi pi-users text-4xl text-gray-400 mb-4"></i>
-            <p className="text-gray-500">
-            {t("Event.dialog.noParticipants")}
-            </p>
+            <p className="text-gray-500">{t("Event.dialog.noParticipants")}</p>
           </div>
         ) : (
           <DataTable
@@ -358,7 +372,16 @@ const Event = () => {
             <Column
               field="date"
               header={t("Event.table.date")}
-              body={(rowData) => new Date(rowData.date).toLocaleString()}
+              body={(rowData) => {
+                const eventDate = new Date(rowData.date);
+                return eventDate.toLocaleString(i18n.language, {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                });
+              }}
               style={{ width: "15%" }}
             />
             <Column
@@ -444,10 +467,16 @@ const Event = () => {
                 value={newEvent.date}
                 onChange={(e) => setNewEvent({ ...newEvent, date: e.value })}
                 showIcon
+                showTime
+                hourFormat="24"
                 className="w-full"
                 minDate={new Date()}
                 placeholder={t("Event.form.eventDate.placeholder")}
                 inputClassName="h-12 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                timeOnly={false}
+                stepMinute={15}
+                dateFormat="dd/mm/yy"
+                touchUI={window.innerWidth < 768}
               />
             </div>
 
@@ -496,7 +525,11 @@ const Event = () => {
                 className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"
               />
               <Button
-                label={isEditing ? t("Event.buttons.update") : t("Event.buttons.createEvent")}
+                label={
+                  isEditing
+                    ? t("Event.buttons.update")
+                    : t("Event.buttons.createEvent")
+                }
                 icon={isEditing ? "pi pi-check" : "pi pi-plus"}
                 onClick={isEditing ? updateEvent : createEvent}
                 className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300"
