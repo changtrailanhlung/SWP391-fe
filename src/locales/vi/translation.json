@@ -636,5 +636,12 @@
   "requestRole": {
     "success": "Yêu cầu vai trò {{role}} đã được gửi thành công!",
     "error": "Gửi yêu cầu cho vai trò {{role}} thất bại."
+  },
+  "notifications": {
+    "title": "Thông báo",
+    "emptyMessage": "Không có thông báo nào.",
+    "titleHeader": "Tiêu đề",
+    "messageHeader": "Nội dung",
+    "dateHeader": "Ngày"
   }
 }

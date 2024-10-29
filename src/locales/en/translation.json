@@ -633,5 +633,12 @@
   "requestRole": {
     "success": "Request for role {{role}} submitted successfully!",
     "error": "Failed to submit request for role {{role}}."
+  },
+  "notifications": {
+    "title": "Notifications",
+    "emptyMessage": "No notifications available.",
+    "titleHeader": "Title",
+    "messageHeader": "Message",
+    "dateHeader": "Date"
   }
 }
