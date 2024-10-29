@@ -8,6 +8,7 @@ import Signup from "../pages/admin/Signup";
 import UserAccounts from "../pages/admin/UserAccounts";
 import Shelter from "../pages/admin/Shelter";
 import Roles from "../pages/admin/Roles";
+import Feedback from '../pages/admin/Feedback';
 import PrivateRoute from "./PrivateRoute"; 
 
 const AdminRoutes = () => {
@@ -32,6 +33,10 @@ const AdminRoutes = () => {
           path="roles"
           element={<PrivateRoute element={<Roles />} allowedRoles={['Admin']} />}
         />
+        <Route
+        path="feedback"
+        element={<PrivateRoute element={<Feedback />} allowedRoles={['Admin']} />}
+      />
         <Route path="*" element={<Navigate to="dashboard" replace />} />
       </Route>
     </Routes>

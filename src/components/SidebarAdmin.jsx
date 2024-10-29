@@ -56,6 +56,11 @@ const SidebarAdmin = () => {
           icon: <MDBIcon icon="user-tag" />,
           label: t("sidebar.roles"),
         },
+        {
+          name: 'feedback',
+          icon: <MDBIcon icon="comments" />,
+          label: t('sidebar.feedback'),
+        },
       ],
     },
   ];

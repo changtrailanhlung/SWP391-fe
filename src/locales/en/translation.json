@@ -22,16 +22,17 @@
   "registrationform": "Registration Form",
   "donate": "Donate",
   "login": "Login",
+  "signup":"Sign up",
   "logout": "Logout",
   "userinformation": "User Information",
   "no": "No",
   "notification": "Notification",
   "walletinput": "Deposit money into wallet",
-  "landing": {
+
     "lg1": "Join us in",
     "lg2": "creating second chances for pets",
-    "lg3": "Help us bring new life to abandoned pets. With your support, we can provide safe shelter, medical care, and love for these four-legged friends. Every contribution and adoption changes the life of a pet."
-  },
+    "lg3": "Help us bring new life to abandoned pets. With your support, we can provide safe shelter, medical care, and love for these four-legged friends. Every contribution and adoption changes the life of a pet.",
+  
 
   "common": {
     "delete": "Delete",
@@ -140,13 +141,18 @@
     "pets": "Pets",
     "adoptionForm": "Adoption Form",
     "events": "Events",
+
     "event": {
       "location": "Location",
       "date": "Date",
       "name": "Name",
-      "description": "Description"
-    }
-  },
+      "description": "Description",
+    
+
+    "feedback": "Feedback"
+
+  }
+},
 
   "dashboard": {
     "totalRevenue": "Total Donation",
@@ -581,21 +587,41 @@
     "phone": "Phone",
     "location": "Location"
   },
-  "tooltip": {
-    "confirm": "Confirm",
-    "reject": "Reject",
-    "AdditionalInformation": "Additional Information",
-    "MedicalHistory": "Medical History",
-    "disease": "Disease",
-    "vaccine": "Vaccine",
-    "Nomedicalhistoryavailable": "No medical history available",
-    "Description": "Description",
-    "no": "No.",
-    "AdopteName": "AdopteName",
-    "IDFront": "ID Front",
-    "IDBack": "ID Back",
-    "socialAccount": "Social Account",
-    "incomeAmount": "Income Amount"
+
+  "tooltip":{
+    "confirm":"Confirm",
+    "reject":"Reject",
+    "AdditionalInformation":"Additional Information",
+    "MedicalHistory":"Medical History",
+    "disease":"Disease",
+    "vaccine":"Vaccine",
+    "Nomedicalhistoryavailable":"No medical history available",
+    "Description":"Description",
+    "no":"No.",
+    "AdopteName":"AdopteName",
+    "IDFront" : "ID Front",
+    "IDBack":"ID Back",
+    "socialAccount":"Social Account",
+    "incomeAmount":"Income Amount"
+
   },
-  "accessDenied": "You do not have access!"
+  "a":{
+    "titles": {
+      "feedback": "Feedback"
+    },
+    "table": {
+      "headers": {
+        "no": "No.",
+        "user": "User",
+        "feedback": "Feedback",
+        "date": "Date"
+      }
+    },
+    "error": {
+      "title": "Error",
+      "fetchUsers": "Failed to fetch users",
+      "fetchFeedback": "Failed to fetch feedback"
+    }
+  }
+ 
 }

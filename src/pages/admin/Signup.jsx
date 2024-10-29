@@ -159,7 +159,7 @@ function Signup() {
                   margin: "0 0 20px 0",
                 }}
               >
-                Đăng ký
+                {t("signup")}
               </h2>
 
               <form onSubmit={handleSubmit}>
@@ -259,7 +259,7 @@ function Signup() {
                   size="md"
                   disabled={loading}
                 >
-                  {loading ? "Đang đăng ký..." : "Đăng ký"}
+                  {loading ? "Đang đăng ký..." : t("signup")}
                 </MDBBtn>
               </form>
 
