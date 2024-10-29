@@ -152,7 +152,7 @@
     "confirmPassword": "Xác thực mật khẩu mới",
     "passwordsDoNotMatch": "Mật khẩu không khớp!"
   },
-
+  "join": "Tham gia",
   "updateInfo": {
     "title": "Cập Nhật Thông Tin",
     "username": "Tên người dùng",
