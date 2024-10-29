@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom"; // For redirection
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "../../services/axiosClient";
 
@@ -30,7 +30,7 @@ const Pets = () => {
   };
 
   const getUserRole = () => {
-    return localStorage.getItem("role") || ""; // Retrieve user role
+    return localStorage.getItem("role") || "";
   };
 
   const handleAdopt = (petID) => {
@@ -38,11 +38,11 @@ const Pets = () => {
       toast.error("Bạn phải login để sử dụng tính năng này");
       setTimeout(() => {
         navigate("/admin/login");
-      }, 500); // Delay for redirection after toast
+      }, 500);
     } else if (!getUserRole().split(",").includes("Adopter")) {
       toast.error("Bạn không có quyền để nhận nuôi thú cưng");
     } else {
-      navigate("/registration-form", { state: { petID } }); // Pass the petId in state
+      navigate("/registration-form", { state: { petID } });
     }
   };
 
@@ -98,6 +98,21 @@ const Pets = () => {
               <p>
                 {t("pet.description")}: {pet.description}
               </p>
+
+              {/* Render pet vaccines in a single line separated by commas */}
+              <div className="mt-2">
+                <h3 className="font-bold">Vaccine</h3>
+                {pet.statuses.length > 0 ? (
+                  <p>
+                    {pet.statuses
+                      .map((status) => status.vaccine)
+                      .filter((v) => v)
+                      .join(", ") || t("noVaccineData")}
+                  </p>
+                ) : (
+                  <p>{t("noVaccineData")}</p>
+                )}
+              </div>
 
               <button
                 onClick={() => handleAdopt(pet.petID)}
