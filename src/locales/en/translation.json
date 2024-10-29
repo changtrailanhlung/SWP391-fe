@@ -114,16 +114,23 @@
     "date": "Date",
     "shelterId": "Donate for Shelter"
   },
-
   "HistoryForm": {
-    "title": "Pet adoption history",
+    "title": "History of Forms",
+    "header": {
+      "no": "No.",
+      "petName": "Pet Name",
+      "gender": "Gender",
+      "age": "Age",
+      "color": "Color",
+      "shelterName": "Shelter Name",
+      "status": "Status"
+    },
     "status": {
       "approved": "Approved",
       "denied": "Denied",
       "pending": "Pending"
     }
   },
-
   "donation": {
     "formTitle": "Donation",
     "amount": "Donation Amount",

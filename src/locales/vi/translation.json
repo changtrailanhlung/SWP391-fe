@@ -189,11 +189,20 @@
   },
 
   "HistoryForm": {
-    "title": "Lịch sử nhận nuôi thú cưng",
+    "title": "Lịch sử các biểu mẫu",
+    "header": {
+      "no": "STT",
+      "petName": "Tên thú cưng",
+      "gender": "Giới tính",
+      "age": "Tuổi",
+      "color": "Màu sắc",
+      "shelterName": "Tên trại",
+      "status": "Trạng thái"
+    },
     "status": {
       "approved": "Đã duyệt",
-      "denied": "Không được duyệt",
-      "pending": "Đang chờ xử lý"
+      "denied": "Bị từ chối",
+      "pending": "Đang chờ"
     }
   },
 
