@@ -10,7 +10,6 @@ import Donates from "../pages/guest/Donates";
 import Events from "../pages/guest/Events";
 import ChangePassword from "../pages/guest/Profile/ChangePassword";
 import UpdateProfile from "../pages/guest/Profile/UpdateInfo";
-import EventDetail from "../pages/guest/EventDetail";
 import DonationForm from "../pages/guest/DonationForm"; // Adjust import path as necessary
 import DonateWallet from "../pages/guest/Wallet";
 import RequestRole from "../pages/guest/Profile/RequestRole";
@@ -35,7 +34,6 @@ const GuestRoutes = () => {
           <Route path="/donate-wallet" element={<DonateWallet />} />
           <Route path="/request-role" element={<RequestRole />} />
           <Route path="/notification" element={<Notification />} />
-          <Route path="/event/:id" element={<EventDetail />} />
           <Route path="/donate/:shelterId" element={<DonationForm />} />
           <Route path="/vnpay-response" element={<VNPAYResponseHandler />} />
         </Route>
