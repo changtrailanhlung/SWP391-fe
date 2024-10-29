@@ -85,12 +85,14 @@ const Roles = () => {
       setError(error);
       
       if (error.response?.status !== 404) {
-        toast.current?.show({
-          severity: "error",
-          summary: "Error",
-          detail: t("toast.error.fetchData"),
-          life: 3000,
-        });
+        if (toast.current) {
+          toast.current.show({
+            severity: "error",
+            summary: "Error",
+            detail: t("toast.error.fetchData"),
+            life: 3000,
+          });
+        }
       }
       
       setPendingRequests([]);
@@ -254,7 +256,14 @@ const Roles = () => {
       });
     } finally {
       if (mounted.current) {
-        setLoading(false);
+        if (toast.current) {
+          toast.current.show({
+            severity: "success",
+            summary: "Success",
+            detail: t("toast.success.approveRequest"),
+            life: 3000,
+          });
+        }
       }
     }
   };
@@ -290,7 +299,14 @@ const Roles = () => {
       });
     } finally {
       if (mounted.current) {
-        setLoading(false);
+        if (toast.current) {
+          toast.current.show({
+            severity: "success",
+            summary: "Success",
+            detail: t("toast.success.rejectRequest"),
+            life: 3000,
+          });
+        }
       }
     }
   };
