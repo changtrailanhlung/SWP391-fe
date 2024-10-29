@@ -113,7 +113,19 @@ const Pets = () => {
                   <p>{t("noVaccineData")}</p>
                 )}
               </div>
-
+              <div className="mt-2">
+                <h3 className="font-bold">{t("disease")}</h3>
+                {pet.statuses.length > 0 ? (
+                  <p>
+                    {pet.statuses
+                      .map((status) => status.disease)
+                      .filter((v) => v)
+                      .join(", ") || t("noVaccineData")}
+                  </p>
+                ) : (
+                  <p>{t("noVaccineData")}</p>
+                )}
+              </div>
               <button
                 onClick={() => handleAdopt(pet.petID)}
                 className="px-4 py-2 mt-4 bg-blue-500 text-white rounded"

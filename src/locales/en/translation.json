@@ -7,7 +7,8 @@
     "name": "Name Event",
     "description": "Description"
   },
-  "noVaccineData": "No Vaccine Data",
+  "noVaccineData": "No Data",
+  "disease": "Disease",
   "feedback": {
     "title": "Feedback",
     "feedbackPlaceholder": "Enter your feedback here...",

@@ -7,7 +7,8 @@
     "name": "Tên sự kiện",
     "description": "Mô tả"
   },
-  "noVaccineData": "Không có dữ liệu Vaccine",
+  "noVaccineData": "Không có dữ liệu",
+  "disease": "Bệnh",
   "feedback": {
     "title": "Góp ý",
     "feedbackPlaceholder": "Nhập ý kiến của bạn ở đây...",
