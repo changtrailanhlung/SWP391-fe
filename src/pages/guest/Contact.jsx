@@ -15,13 +15,18 @@ const Contact = () => {
     const storedUserId = localStorage.getItem("nameid");
     if (storedUserId) {
       setUserId(parseInt(storedUserId, 10));
-    } else {
-      navigate("/admin/login");
     }
-  }, [navigate]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if userId is null and redirect to login if not logged in
+    if (!userId) {
+      toast.error(t("feedback.notLoggedIn"));
+      navigate("/admin/login");
+      return;
+    }
 
     if (description.length < 5) {
       toast.error(t("feedback.validationMessage"));
