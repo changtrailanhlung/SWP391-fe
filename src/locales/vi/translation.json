@@ -150,7 +150,9 @@
     "passwordChangeSuccess": "Đổi mật khẩu thành công!",
     "passwordChangeError": "Lỗi khi đổi mật khẩu. Vui lòng thử lại.",
     "confirmPassword": "Xác thực mật khẩu mới",
-    "passwordsDoNotMatch": "Mật khẩu không khớp!"
+    "passwordsDoNotMatch": "Mật khẩu không khớp!",
+    "wallet": "Ví",
+    "requestMemberPermission": "Yêu cầu quyền"
   },
   "join": "Tham gia",
   "updateInfo": {
