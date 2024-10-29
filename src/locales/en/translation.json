@@ -7,13 +7,17 @@
   "registrationform": "Registration Form",
   "donate": "Donate",
   "login": "Login",
+  "signup":"Sign up",
   "logout": "Logout",
+  "userinformation": "User Information",
+  "no": "No",
+  "notification": "Notification",
+  "walletinput": "Deposit money into wallet",
   
-  "landing": {
     "lg1": "Join us in",
     "lg2": "creating second chances for pets",
-    "lg3": "Help us bring new life to abandoned pets. With your support, we can provide safe shelter, medical care, and love for these four-legged friends. Every contribution and adoption changes the life of a pet."
-  },
+    "lg3": "Help us bring new life to abandoned pets. With your support, we can provide safe shelter, medical care, and love for these four-legged friends. Every contribution and adoption changes the life of a pet.",
+  
 
   "common": {
     "delete": "Delete",
