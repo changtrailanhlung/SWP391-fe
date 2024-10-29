@@ -75,7 +75,9 @@
     "newPassword": "New Password",
     "loading": "Loading...",
     "passwordChangeSuccess": "Password changed successfully!",
-    "passwordChangeError": "Error changing password. Please try again."
+    "passwordChangeError": "Error changing password. Please try again.",
+    "confirmPassword":"Confirm Password",
+    "passwordsDoNotMatch":"Passwords do not match!"
   },
 
   "updateInfo": {

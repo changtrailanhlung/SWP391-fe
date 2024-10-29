@@ -148,7 +148,9 @@
     "newPassword": "Mật Khẩu Mới",
     "loading": "Đang Tải...",
     "passwordChangeSuccess": "Đổi mật khẩu thành công!",
-    "passwordChangeError": "Lỗi khi đổi mật khẩu. Vui lòng thử lại."
+    "passwordChangeError": "Lỗi khi đổi mật khẩu. Vui lòng thử lại.",
+    "confirmPassword": "Xác thực mật khẩu mới",
+    "passwordsDoNotMatch": "Mật khẩu không khớp!"
   },
 
   "updateInfo": {
