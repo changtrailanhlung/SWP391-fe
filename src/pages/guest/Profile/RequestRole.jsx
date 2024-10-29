@@ -3,6 +3,8 @@ import axios from "../../../services/axiosClient"; // Adjust the import path as 
 import { DataTable } from "primereact/datatable"; // Import PrimeReact DataTable
 import { Column } from "primereact/column"; // Import PrimeReact Column
 import { useTranslation } from "react-i18next"; // Import useTranslation
+import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
+import "react-toastify/dist/ReactToastify.css"; // Import CSS for toast
 
 const RequestRole = () => {
   const { t } = useTranslation(); // Initialize translation
@@ -19,25 +21,25 @@ const RequestRole = () => {
   const [pendingRequests, setPendingRequests] = useState([]); // State to manage pending role requests
   const userId = localStorage.getItem("nameid"); // Get the user ID from local storage
 
+  const fetchRoles = async () => {
+    try {
+      // Fetch current roles
+      const response = await axios.get(`/userrole/role/${userId}/roles`);
+      setCurrentRoles(response.data.roles || []); // Set current roles
+
+      // Fetch pending requests
+      const pendingResponse = await axios.get(
+        `/userrole/pendingrequests?userId=${userId}`
+      );
+      setPendingRequests(pendingResponse.data || []); // Set pending requests
+    } catch (error) {
+      console.error("Error fetching roles or pending requests:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchRoles = async () => {
-      try {
-        // Fetch current roles
-        const response = await axios.get(`/userrole/role/${userId}/roles`);
-        setCurrentRoles(response.data.roles || []); // Set current roles
-
-        // Fetch pending requests
-        const pendingResponse = await axios.get(
-          `/userrole/pendingrequests?userId=${userId}`
-        );
-        setPendingRequests(pendingResponse.data || []); // Set pending requests
-      } catch (error) {
-        console.error("Error fetching roles or pending requests:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchRoles();
   }, [userId]);
 
@@ -77,12 +79,16 @@ const RequestRole = () => {
 
       try {
         await axios.post("/userrole/requestrole", payload); // Send the POST request
-        alert(t("requestRole.success", { role })); // Display success message using translation
+        toast.success(t("requestRole.success", { role })); // Display success message using toast
       } catch (error) {
         console.error("Error submitting request:", error);
-        alert(t("requestRole.error", { role })); // Display error message using translation
+        toast.error(t("requestRole.error", { role })); // Display error message using toast
       }
     }
+
+    // Reset the selected roles and fetch updated roles and requests
+    setRolesToSubmit([]);
+    fetchRoles(); // Re-fetch the roles and pending requests
   };
 
   if (loading) {
@@ -98,6 +104,9 @@ const RequestRole = () => {
 
   return (
     <div className="container mx-auto p-6">
+      {/* Toast container for notifications */}
+      <ToastContainer />
+
       {/* Display current roles */}
       <h2 className="text-2xl font-bold mb-4">{t("currentRoles.title")}</h2>
       <div className="mb-4">
