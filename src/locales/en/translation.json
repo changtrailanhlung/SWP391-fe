@@ -647,5 +647,17 @@
     "titleHeader": "Title",
     "messageHeader": "Message",
     "dateHeader": "Date"
+  },  
+  "info": {
+    "noEventsAvailable": "No events available."
+  },
+  "header": {
+    "eventList": "Event List"
+  },
+  "columns": {
+    "number": "No.",
+    "name": "Name",
+    "date": "Date",
+    "location": "Location"
   }
 }

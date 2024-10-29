@@ -652,5 +652,17 @@
     "titleHeader": "Tiêu đề",
     "messageHeader": "Nội dung",
     "dateHeader": "Ngày"
+  },
+  "info": {
+    "noEventsAvailable": "Không có sự kiện nào."
+  },
+  "header": {
+    "eventList": "Danh sách sự kiện"
+  },
+  "columns": {
+    "number": "STT",
+    "name": "Tên",
+    "date": "Ngày",
+    "location": "Địa điểm"
   }
 }
