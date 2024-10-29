@@ -3,8 +3,10 @@ import axios from "../../../services/axiosClient"; // Adjust the import path as 
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { ProgressSpinner } from "primereact/progressspinner";
+import { useTranslation } from "react-i18next"; // Import useTranslation
 
 const Notifications = () => {
+  const { t } = useTranslation(); // Initialize translation
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("nameid");
@@ -42,25 +44,31 @@ const Notifications = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-semibold mb-4">Notifications</h2>
+    <div className="container mx-auto p-6">
+      <h2 className="text-2xl font-bold text-center mb-4">
+        {t("notifications.title")}
+      </h2>
       <DataTable
         value={notifications}
         responsiveLayout="scroll"
-        emptyMessage="No notifications available."
+        emptyMessage={t("notifications.emptyMessage")}
         paginator
         rows={10}
       >
         <Column
           field="title"
-          header="Title"
+          header={t("notifications.titleHeader")}
           sortable
           style={{ width: "30%" }}
         />
-        <Column field="message" header="Message" sortable />
+        <Column
+          field="message"
+          header={t("notifications.messageHeader")}
+          sortable
+        />
         <Column
           field="date"
-          header="Date"
+          header={t("notifications.dateHeader")}
           body={dateTemplate}
           style={{ width: "20%" }}
           sortable
