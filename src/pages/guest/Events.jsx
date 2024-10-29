@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "../../services/axiosClient";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
 const Events = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate(); // Initialize useNavigate
   const [events, setEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -59,7 +61,14 @@ const Events = () => {
   };
 
   const handleJoinEvent = async () => {
-    if (!selectedEvent || userId === null) return;
+    if (!selectedEvent) return;
+
+    // Check if the user is logged in
+    if (userId === null) {
+      // Redirect to the login page
+      navigate("/admin/login"); // Adjust the path as necessary
+      return;
+    }
 
     try {
       await axios.post("/events/adduser", {
@@ -156,7 +165,7 @@ const Events = () => {
               onClick={() => setIsDialogOpen(false)}
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
             >
-              &times; {/* Biểu tượng đóng */}
+              &times; {/* Close icon */}
             </button>
             <h2 className="text-2xl font-semibold">{selectedEvent.name}</h2>
             <p>
