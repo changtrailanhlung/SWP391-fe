@@ -9,14 +9,15 @@ const Events = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [userId, setUserId] = useState(null); // Initialize as null
+  const [userId, setUserId] = useState(null);
+  const [joinedEventIds, setJoinedEventIds] = useState(new Set()); // Use a Set for fast lookups
   const eventsPerPage = 9;
 
   useEffect(() => {
-    // Retrieve userId from local storage
-    const storedUserId = localStorage.getItem("nameid"); // Or sessionStorage.getItem("userId");
+    const storedUserId = localStorage.getItem("nameid");
     if (storedUserId) {
-      setUserId(parseInt(storedUserId, 10)); // Convert to number if necessary
+      setUserId(parseInt(storedUserId, 10));
+      fetchJoinedEvents(parseInt(storedUserId, 10)); // Fetch joined events for the user
     }
 
     const fetchEvents = async () => {
@@ -32,6 +33,17 @@ const Events = () => {
     fetchEvents();
   }, []);
 
+  const fetchJoinedEvents = async (userId) => {
+    try {
+      const response = await axios.get(`/events/user/${userId}`);
+      const eventIds = response.data.map((event) => event.id); // Assuming the response structure contains event IDs
+      setJoinedEventIds(new Set(eventIds)); // Store IDs in a Set
+    } catch (error) {
+      console.error("Error fetching joined events:", error);
+      toast.error("Error fetching joined events");
+    }
+  };
+
   const handleEventClick = async (id) => {
     try {
       const response = await axios.get(`/events/${id}`);
@@ -44,7 +56,7 @@ const Events = () => {
   };
 
   const handleJoinEvent = async () => {
-    if (!selectedEvent || userId === null) return; // Ensure userId is set
+    if (!selectedEvent || userId === null) return;
 
     try {
       await axios.post("/events/adduser", {
@@ -52,6 +64,7 @@ const Events = () => {
         userId: userId,
       });
       toast.success("Successfully joined the event!");
+      setJoinedEventIds((prev) => new Set(prev).add(selectedEvent.id)); // Add the event ID to the joined set
       setIsDialogOpen(false);
     } catch (error) {
       console.error("Error joining event:", error);
@@ -147,12 +160,14 @@ const Events = () => {
               className="mt-2"
               dangerouslySetInnerHTML={{ __html: selectedEvent.description }}
             />
-            <button
-              onClick={handleJoinEvent}
-              className="mt-4 px-4 py-2 bg-green-500 text-white rounded"
-            >
-              {t("join")}
-            </button>
+            {!joinedEventIds.has(selectedEvent.id) && ( // Only show the button if the user hasn't joined
+              <button
+                onClick={handleJoinEvent}
+                className="mt-4 px-4 py-2 bg-green-500 text-white rounded"
+              >
+                {t("join")}
+              </button>
+            )}
             <button
               onClick={() => setIsDialogOpen(false)}
               className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
