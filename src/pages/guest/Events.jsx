@@ -2,19 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../services/axiosClient";
 import { useTranslation } from "react-i18next";
-
-// Utility function to format date
-const formatDateTime = (dateString) => {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  const seconds = String(date.getSeconds()).padStart(2, "0");
-
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-};
+import { toast } from "react-toastify";
 
 const Events = () => {
   const { t } = useTranslation();
@@ -29,22 +17,31 @@ const Events = () => {
         setEvents(response.data);
       } catch (error) {
         console.error("Error fetching events:", error);
+        toast.error("Error fetching events");
       }
     };
 
     fetchEvents();
   }, []);
 
-  // Calculate the current events to display
+  // Filter available events (if needed)
+  const availableEvents = events; // Modify this line if you need to filter events
+
+  const totalPages = Math.ceil(availableEvents.length / eventsPerPage);
   const indexOfLastEvent = currentPage * eventsPerPage;
   const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
-  const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
+  const currentEvents = availableEvents.slice(
+    indexOfFirstEvent,
+    indexOfLastEvent
+  );
 
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const handlePrevious = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
 
-  // Calculate total pages
-  const totalPages = Math.ceil(events.length / eventsPerPage);
+  const handleNext = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -87,24 +84,46 @@ const Events = () => {
         </p>
       )}
 
-      {/* Pagination Controls */}
-      <div className="flex justify-center mt-4">
-        {Array.from({ length: totalPages }, (_, index) => (
+      {totalPages > 1 && (
+        <div className="flex justify-between mt-4">
           <button
-            key={index + 1}
-            onClick={() => paginate(index + 1)}
-            className={`mx-1 px-4 py-2 border rounded ${
-              currentPage === index + 1
-                ? "bg-blue-500 text-white"
-                : "bg-white text-blue-500"
+            onClick={handlePrevious}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 bg-gray-300 rounded ${
+              currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
-            {index + 1}
+            {t("previous")}
           </button>
-        ))}
-      </div>
+          <p>
+            {t("page")} {currentPage} {t("of")} {totalPages}
+          </p>
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 bg-gray-300 rounded ${
+              currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            {t("next")}
+          </button>
+        </div>
+      )}
     </div>
   );
+};
+
+// Utility function to format date
+const formatDateTime = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
 export default Events;
