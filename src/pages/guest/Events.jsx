@@ -9,9 +9,16 @@ const Events = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [userId, setUserId] = useState(null); // Initialize as null
   const eventsPerPage = 9;
 
   useEffect(() => {
+    // Retrieve userId from local storage
+    const storedUserId = localStorage.getItem("nameid"); // Or sessionStorage.getItem("userId");
+    if (storedUserId) {
+      setUserId(parseInt(storedUserId, 10)); // Convert to number if necessary
+    }
+
     const fetchEvents = async () => {
       try {
         const response = await axios.get("/events");
@@ -33,6 +40,22 @@ const Events = () => {
     } catch (error) {
       console.error("Error fetching event details:", error);
       toast.error("Error fetching event details");
+    }
+  };
+
+  const handleJoinEvent = async () => {
+    if (!selectedEvent || userId === null) return; // Ensure userId is set
+
+    try {
+      await axios.post("/events/adduser", {
+        eventId: selectedEvent.id,
+        userId: userId,
+      });
+      toast.success("Successfully joined the event!");
+      setIsDialogOpen(false);
+    } catch (error) {
+      console.error("Error joining event:", error);
+      toast.error("Error joining event");
     }
   };
 
@@ -125,8 +148,14 @@ const Events = () => {
               dangerouslySetInnerHTML={{ __html: selectedEvent.description }}
             />
             <button
+              onClick={handleJoinEvent}
+              className="mt-4 px-4 py-2 bg-green-500 text-white rounded"
+            >
+              {t("join")}
+            </button>
+            <button
               onClick={() => setIsDialogOpen(false)}
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
             >
               {t("close")}
             </button>
