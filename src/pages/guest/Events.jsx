@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 const formatDateTime = (dateString) => {
   const date = new Date(dateString);
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
@@ -17,8 +17,10 @@ const formatDateTime = (dateString) => {
 };
 
 const Events = () => {
-  const { t } = useTranslation(); // Initialize translation
+  const { t } = useTranslation();
   const [events, setEvents] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const eventsPerPage = 9;
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -33,13 +35,24 @@ const Events = () => {
     fetchEvents();
   }, []);
 
+  // Calculate the current events to display
+  const indexOfLastEvent = currentPage * eventsPerPage;
+  const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+  const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(events.length / eventsPerPage);
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6 text-center">{t("events")}</h1>
 
-      {events.length > 0 ? (
+      {currentEvents.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {events.map((event) => {
+          {currentEvents.map((event) => {
             const truncatedDescription =
               event.description.length > 20
                 ? event.description.substring(0, 20) + "..."
@@ -73,6 +86,23 @@ const Events = () => {
           {t("noEventsAvailable")}
         </p>
       )}
+
+      {/* Pagination Controls */}
+      <div className="flex justify-center mt-4">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={`mx-1 px-4 py-2 border rounded ${
+              currentPage === index + 1
+                ? "bg-blue-500 text-white"
+                : "bg-white text-blue-500"
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
