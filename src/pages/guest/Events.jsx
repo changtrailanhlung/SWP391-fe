@@ -69,11 +69,15 @@ const Events = () => {
                 <p className="text-gray-500 mt-2">
                   {t("event.date")}: {formatDateTime(event.date)}
                 </p>
-                <p className="text-gray-500 mt-1">
-                  {event.description.length > 20
-                    ? event.description.substring(0, 20) + "..."
-                    : event.description}
-                </p>
+                <p
+                  className="text-gray-500 mt-1"
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      event.description.length > 20
+                        ? event.description.substring(0, 20) + "..."
+                        : event.description,
+                  }}
+                />
               </div>
             </div>
           ))}
