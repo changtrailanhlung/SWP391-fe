@@ -7,6 +7,13 @@
     "name": "Name Event",
     "description": "Description"
   },
+  "feedback": {
+    "title": "Feedback",
+    "feedbackPlaceholder": "Enter your feedback here...",
+    "submitFeedback": "Submit Feedback",
+    "successMessage": "Your feedback has been submitted successfully!",
+    "errorMessage": "There was an error submitting your feedback. Please try again."
+  },
   "about": "About Us",
   "contact": "Contact",
   "pets": "Pets",

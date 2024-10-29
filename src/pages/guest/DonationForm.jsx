@@ -55,7 +55,7 @@ const DonationForm = () => {
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
         {t("donation.formTitle")}
       </h1>
-      {error && <p className="text-red-500 text-center mb-4">{error}</p>}{" "}
+      {error && <p className="text-red-500 text-center mb-4">{error}</p>}
       {/* Display error message */}
       <form
         onSubmit={handleSubmit}
