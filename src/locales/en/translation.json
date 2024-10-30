@@ -23,17 +23,16 @@
   "registrationform": "Registration Form",
   "donate": "Donate",
   "login": "Login",
-  "signup":"Sign up",
+  "signup": "Sign up",
   "logout": "Logout",
   "userinformation": "User Information",
   "no": "No",
   "notification": "Notification",
   "walletinput": "Deposit money into wallet",
 
-    "lg1": "Join us in",
-    "lg2": "creating second chances for pets",
-    "lg3": "Help us bring new life to abandoned pets. With your support, we can provide safe shelter, medical care, and love for these four-legged friends. Every contribution and adoption changes the life of a pet.",
-  
+  "lg1": "Join us in",
+  "lg2": "creating second chances for pets",
+  "lg3": "Help us bring new life to abandoned pets. With your support, we can provide safe shelter, medical care, and love for these four-legged friends. Every contribution and adoption changes the life of a pet.",
 
   "common": {
     "delete": "Delete",
@@ -160,12 +159,10 @@
       "date": "Date",
       "name": "Name",
       "description": "Description",
-    
 
-    "feedback": "Feedback"
-
-  }
-},
+      "feedback": "Feedback"
+    }
+  },
 
   "dashboard": {
     "totalRevenue": "Total Donation",
@@ -610,22 +607,21 @@
     "location": "Location"
   },
 
-  "tooltip":{
-    "confirm":"Confirm",
-    "reject":"Reject",
-    "AdditionalInformation":"Additional Information",
-    "MedicalHistory":"Medical History",
-    "disease":"Disease",
-    "vaccine":"Vaccine",
-    "Nomedicalhistoryavailable":"No medical history available",
-    "Description":"Description",
-    "no":"No.",
-    "AdopteName":"AdopteName",
-    "IDFront" : "ID Front",
-    "IDBack":"ID Back",
-    "socialAccount":"Social Account",
-    "incomeAmount":"Income Amount"
-
+  "tooltip": {
+    "confirm": "Confirm",
+    "reject": "Reject",
+    "AdditionalInformation": "Additional Information",
+    "MedicalHistory": "Medical History",
+    "disease": "Disease",
+    "vaccine": "Vaccine",
+    "Nomedicalhistoryavailable": "No medical history available",
+    "Description": "Description",
+    "no": "No.",
+    "AdopteName": "AdopteName",
+    "IDFront": "ID Front",
+    "IDBack": "ID Back",
+    "socialAccount": "Social Account",
+    "incomeAmount": "Income Amount"
   },
   "accessDenied": "You do not have access!",
   "loading": {
@@ -677,5 +673,13 @@
   "noAvailablePets": "No Available Pets",
   "allTypes": "All Types",
   "allBreeds": "All Breeds",
-  "allLocations": "All Locations"
+  "allLocations": "All Locations",
+  "transactionHistory": "Transaction History",
+  "noTransactions": "No transactions available.",
+  "userIdNotFound": "User ID not found. Please log in.",
+  "success": "Success",
+  "paymentError": "Payment error: {{code}}",
+  "Amount": "Amount",
+  "Date": "Date",
+  "Response Code": "Status"
 }
