@@ -26,14 +26,15 @@ const Footer = () => {
 
           {/* Contact Information */}
           <div className="text-center md:text-left space-y-1">
-            <p className="flex items-center justify-center md:justify-start text-sm font-bold">
-              <FaMapMarkerAlt className="mr-2" /> 
+            <p className="flex items-center justify-center md:justify-start text-sm">
+              <FaMapMarkerAlt className="mr-2" /> Lô E2a-7, Đường D1, Đ. D1,
+              Long Thạnh Mỹ, Thành Phố Thủ Đức, HCM
             </p>
             <p className="flex items-center justify-center md:justify-start text-sm">
-              <FaGlobe className="mr-2" /> 
+              <FaGlobe className="mr-2" /> abandonedpets.ddns.net
             </p>
             <p className="flex items-center justify-center md:justify-start text-sm">
-              <FaEnvelope className="mr-2" /> 
+              <FaEnvelope className="mr-2" /> infor@abandonedpets.ddns.net
             </p>
             <p className="flex items-center justify-center md:justify-start text-sm">
               <FaPhone className="mr-2" /> xxxx.xxxx.xx
@@ -69,9 +70,7 @@ const Footer = () => {
           </a>
         </div>
       </div>
-      <div className="mt-4 text-center text-xs text-gray-500">
-        copyright
-      </div>
+      <div className="mt-4 text-center text-xs text-gray-500">copyright</div>
     </footer>
   );
 };
