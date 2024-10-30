@@ -674,5 +674,13 @@
   "noAvailablePets": "No Available Pets",
   "allTypes": "All Types",
   "allBreeds": "All Breeds",
-  "allLocations": "All Locations"
+  "allLocations": "All Locations",
+  "Response Code": "Status",
+  "feedbackHistory": "Feedback History",
+  "date": "Date",
+  "Date": "Date",
+  "transactionHistory": "Transaction History",
+  "Amount": "Ammount",
+  "success": "Success",
+  "paymentError": "Unsuccess"
 }

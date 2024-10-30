@@ -679,5 +679,13 @@
   "noAvailablePets": "Không có kết quả",
   "allTypes": "Tất cả các loại",
   "allBreeds": "Tất cả các giống",
-  "allLocations": "Tất cả địa điểm"
+  "allLocations": "Tất cả địa điểm",
+  "Response Code": "Trang thái",
+  "feedbackHistory": "Lịch sử Ý kiến",
+  "date": "Ngày",
+  "Date": "Ngày",
+  "transactionHistory": "Lịch sử nạp tiền",
+  "Amount": "Số tiền",
+  "success": "Thành công",
+  "paymentError": "Lỗi"
 }
