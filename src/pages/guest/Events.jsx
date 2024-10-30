@@ -15,7 +15,6 @@ const Events = () => {
   const [joinedEventIds, setJoinedEventIds] = useState(new Set());
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-
   const today = new Date();
   const todayString = today.toISOString().split("T")[0];
   const [dateFilter, setDateFilter] = useState(todayString);
@@ -66,11 +65,24 @@ const Events = () => {
     }
   };
 
+  const getUserRole = () => localStorage.getItem("role") || "";
+
+  const isLoggedIn = () => {
+    const userId = localStorage.getItem("nameid");
+    return userId !== null;
+  };
+
   const handleJoinEvent = async () => {
     if (!selectedEvent) return;
 
-    if (userId === null) {
-      navigate("/admin/login");
+    if (!isLoggedIn()) {
+      toast.error("Bạn phải login để sử dụng tính năng này");
+      setTimeout(() => navigate("/admin/login"), 500);
+      return;
+    }
+
+    if (!getUserRole().split(",").includes("Volunteer")) {
+      toast.error("Bạn không có quyền để tham gia sự kiện này.");
       return;
     }
 
@@ -79,12 +91,12 @@ const Events = () => {
         eventId: selectedEvent.id,
         userId: userId,
       });
-      toast.success("Successfully joined the event!");
+      toast.success("Tham gia sự kiện thành công!");
       setJoinedEventIds((prev) => new Set(prev).add(selectedEvent.id));
       setIsDialogOpen(false);
     } catch (error) {
       console.error("Error joining event:", error);
-      toast.error("Error joining event");
+      toast.error("Đã xảy ra lỗi khi tham gia sự kiện.");
     }
   };
 
