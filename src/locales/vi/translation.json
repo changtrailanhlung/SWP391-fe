@@ -679,5 +679,23 @@
   "noAvailablePets": "Không có kết quả",
   "allTypes": "Tất cả các loại",
   "allBreeds": "Tất cả các giống",
-  "allLocations": "Tất cả địa điểm"
-}
+  "allLocations": "Tất cả địa điểm",
+  "a":{
+    "titles": {
+      "feedback": "Phản hồi"
+    },
+    "table": {
+      "headers": {
+        "no": "STT",
+        "user": "Người dùng",
+        "feedback": "Phản hồi",
+        "date": "Ngày"
+      }
+    },
+    "error": {
+      "title": "Lỗi",
+      "fetchUsers": "Không thể lấy danh sách người dùng",
+      "fetchFeedback": "Không thể lấy danh sách phản hồi"
+    }
+  
+  }}
