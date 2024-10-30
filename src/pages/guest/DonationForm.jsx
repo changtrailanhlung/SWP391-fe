@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../services/axiosClient"; // Adjust the import path as necessary
 import { useTranslation } from "react-i18next";
@@ -11,6 +11,24 @@ const DonationForm = () => {
 
   const [amount, setAmount] = useState(""); // Default amount
   const [error, setError] = useState(""); // State for error messages
+  const [walletBalance, setWalletBalance] = useState(0); // State for wallet balance
+
+  useEffect(() => {
+    const fetchWalletBalance = async () => {
+      const donorId = localStorage.getItem("nameid");
+      if (!donorId) return;
+
+      try {
+        const response = await axios.get(`/api/users/${donorId}`);
+        setWalletBalance(response.data.wallet); // Set wallet balance from API response
+      } catch (error) {
+        console.error("Error fetching wallet balance:", error);
+        toast.error(t("error.fetchWalletBalance"));
+      }
+    };
+
+    fetchWalletBalance();
+  }, [t]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +36,12 @@ const DonationForm = () => {
     const donorId = localStorage.getItem("nameid");
     if (!donorId) {
       navigate("/admin/login");
+      return;
+    }
+
+    // Check if donation amount exceeds wallet balance
+    if (amount > walletBalance) {
+      toast.error(t("error.insufficientFunds")); // Display insufficient funds error
       return;
     }
 

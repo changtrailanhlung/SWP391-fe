@@ -500,7 +500,9 @@
   },
   "error": {
     "title": "Error",
-    "fetchPets": "Unable to fetch pets"
+    "fetchPets": "Unable to fetch pets",
+    "fetchWalletBalance": "Error fetching wallet balance. Please try again later.",
+    "insufficientFunds": "Insufficient funds in your wallet for this donation."
   },
 
   "titles": {
