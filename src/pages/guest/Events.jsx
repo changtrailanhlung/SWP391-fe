@@ -14,12 +14,11 @@ const Events = () => {
   const [userId, setUserId] = useState(null);
   const [joinedEventIds, setJoinedEventIds] = useState(new Set());
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
 
-  // Set default dateFilter to today
   const today = new Date();
   const todayString = today.toISOString().split("T")[0];
-  const [dateFilter, setDateFilter] = useState(todayString); // Initialize with today's date
-
+  const [dateFilter, setDateFilter] = useState(todayString);
   const eventsPerPage = 9;
 
   useEffect(() => {
@@ -89,7 +88,10 @@ const Events = () => {
     }
   };
 
-  // Filter events based on search query and date filter
+  // Extract unique locations for filtering
+  const uniqueLocations = [...new Set(events.map((event) => event.location))];
+
+  // Filter events based on search query, date filter, and location filter
   const filteredEvents = events.filter((event) => {
     const matchesSearchQuery = event.name
       .toLowerCase()
@@ -98,8 +100,10 @@ const Events = () => {
       dateFilter === "" ||
       new Date(event.date).toLocaleDateString() ===
         new Date(dateFilter).toLocaleDateString();
+    const matchesLocationFilter =
+      selectedLocation === "" || event.location === selectedLocation;
 
-    return matchesSearchQuery && matchesDateFilter;
+    return matchesSearchQuery && matchesDateFilter && matchesLocationFilter;
   });
 
   const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
@@ -122,11 +126,11 @@ const Events = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6 text-center">{t("events")}</h1>
 
-      {/* Search Bar and Date Filter in a single row */}
+      {/* Search Bar, Date Filter, and Location Filter in a single row */}
       <div className="flex space-x-4 mb-4">
         <input
           type="text"
-          placeholder={t("search")}
+          placeholder={t("search.event")}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="p-2 border rounded w-full"
@@ -138,6 +142,18 @@ const Events = () => {
           className="p-2 border rounded w-40"
           min={todayString} // Prevent selecting past dates
         />
+        <select
+          value={selectedLocation}
+          onChange={(e) => setSelectedLocation(e.target.value)}
+          className="p-2 border rounded w-40"
+        >
+          <option value="">{t("allLocations")}</option>
+          {uniqueLocations.map((location) => (
+            <option key={location} value={location}>
+              {location}
+            </option>
+          ))}
+        </select>
       </div>
 
       {currentEvents.length > 0 ? (
