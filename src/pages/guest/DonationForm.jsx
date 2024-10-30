@@ -38,8 +38,9 @@ const DonationForm = () => {
 
       // Show success toast message
 
-      navigate("/donate");
-      toast.success(t("donation.successMessage"));
+      toast.success(t("donation.successMessage"), {
+        onClose: () => navigate("/donate"), // Navigate after toast closes
+      });
     } catch (error) {
       console.error("Error creating donation:", error);
       if (error.response && error.response.data) {
