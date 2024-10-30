@@ -647,7 +647,7 @@
     "titleHeader": "Title",
     "messageHeader": "Message",
     "dateHeader": "Date"
-  },  
+  },
   "info": {
     "noEventsAvailable": "No events available."
   },
@@ -659,5 +659,6 @@
     "name": "Name",
     "date": "Date",
     "location": "Location"
-  }
+  },
+  "search": "Enter the keyword you want to search"
 }
