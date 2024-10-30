@@ -7,7 +7,8 @@
     "name": "Name Event",
     "description": "Description"
   },
-  "noVaccineData": "No Vaccine Data",
+  "noVaccineData": "No Data",
+  "disease": "Disease",
   "feedback": {
     "title": "Feedback",
     "feedbackPlaceholder": "Enter your feedback here...",
@@ -75,9 +76,13 @@
     "newPassword": "New Password",
     "loading": "Loading...",
     "passwordChangeSuccess": "Password changed successfully!",
-    "passwordChangeError": "Error changing password. Please try again."
+    "passwordChangeError": "Error changing password. Please try again.",
+    "confirmPassword": "Confirm Password",
+    "passwordsDoNotMatch": "Passwords do not match!",
+    "wallet": "Wallet",
+    "requestMemberPermission": "Request Member Permission"
   },
-
+  "join": "Join",
   "updateInfo": {
     "title": "Update Information",
     "username": "Username",
@@ -90,7 +95,7 @@
   },
 
   "donates": {
-    "title": "Thông tin Shelter Information",
+    "title": "Shelter Information",
     "location": "Location",
     "phone": "Phone Number",
     "donate": "Donate"
@@ -110,18 +115,25 @@
     "date": "Date",
     "shelterId": "Donate for Shelter"
   },
-
   "HistoryForm": {
-    "title": "Pet adoption history",
+    "title": "History of Forms",
+    "header": {
+      "no": "No.",
+      "petName": "Pet Name",
+      "gender": "Gender",
+      "age": "Age",
+      "color": "Color",
+      "shelterName": "Shelter Name",
+      "status": "Status"
+    },
     "status": {
       "approved": "Approved",
       "denied": "Denied",
       "pending": "Pending"
     }
   },
-
   "donation": {
-    "formTitle": "Donation Form",
+    "formTitle": "Donation",
     "amount": "Donation Amount",
     "submit": "Submit",
     "successMessage": "Thank you for your donation!"
@@ -459,7 +471,16 @@
     "dog": "Dog",
     "cat": "Cat"
   },
-
+  "registration_form": {
+    "title": "Registration Form",
+    "social_account": "Social Account",
+    "income_amount": "Income Amount",
+    "identification_image_front": "Identification Image (Front)",
+    "identification_image_back": "Identification Image (Back)",
+    "submit": "Submit",
+    "success": "Registration successful!",
+    "error": "Registration failed, please try again."
+  },
   "adoptionStatus": {
     "available": "Available",
     "adopted": "Adopted"
@@ -605,23 +626,5 @@
     "incomeAmount":"Income Amount"
 
   },
-  "a":{
-    "titles": {
-      "feedback": "Feedback"
-    },
-    "table": {
-      "headers": {
-        "no": "No.",
-        "user": "User",
-        "feedback": "Feedback",
-        "date": "Date"
-      }
-    },
-    "error": {
-      "title": "Error",
-      "fetchUsers": "Failed to fetch users",
-      "fetchFeedback": "Failed to fetch feedback"
-    }
-  }
- 
+  "accessDenied": "You do not have access!"
 }

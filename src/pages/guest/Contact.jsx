@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import axios from "../../services/axiosClient"; // Adjust the import based on your file structure
+import axios from "../../services/axiosClient"; // Điều chỉnh theo cấu trúc thư mục của bạn
 
 const Contact = () => {
   const { t } = useTranslation();
@@ -15,47 +15,53 @@ const Contact = () => {
     const storedUserId = localStorage.getItem("nameid");
     if (storedUserId) {
       setUserId(parseInt(storedUserId, 10));
-    } else {
-      navigate("/admin/login");
     }
-  }, [navigate]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (description.length < 5) {
-      toast.error(t("feedback.validationMessage"));
+    // Kiểm tra nếu userId là null và điều hướng đến trang đăng nhập nếu chưa đăng nhập
+    if (!userId) {
+      toast.error(t("feedback.notLoggedIn"));
+      navigate("/admin/login");
       return;
     }
 
-    const feedbackData = {
-      userId,
-      postId: null, // Add postId here as null
-      description,
-    };
+    // if (description.length < 5) {
+    //   toast.error(t("feedback.validationMessage"));
+    //   return;
+    // }
 
-    // Log the feedbackData to check what is being sent
-    console.log("Data being sent:", feedbackData);
+    const formData = new FormData(); // Tạo FormData mới
+    formData.append("userId", userId);
+    // Không thêm postId vào formData
+    formData.append("description", description);
+
+    // Log dữ liệu để kiểm tra
+    console.log("Data being sent:", Object.fromEntries(formData.entries()));
 
     setLoading(true);
 
     try {
-      const response = await axios.post("/feedback", feedbackData);
+      const response = await axios.post("/feedback", formData);
 
-      // Assuming the response is structured correctly
+      // Giả sử phản hồi được cấu trúc đúng
       console.log("Feedback submitted:", response.data);
       toast.success(t("feedback.successMessage"));
       setDescription("");
     } catch (error) {
       console.error("Error submitting feedback:", error);
-      toast.error(t("feedback.errorMessage"));
+      const errorMessage =
+        error.response?.data?.message || t("feedback.errorMessage");
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md mb-10">
       <h2 className="text-xl font-bold mb-4">{t("feedback.title")}</h2>
       <form onSubmit={handleSubmit}>
         <textarea

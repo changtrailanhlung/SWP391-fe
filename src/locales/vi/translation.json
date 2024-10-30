@@ -7,7 +7,8 @@
     "name": "Tên sự kiện",
     "description": "Mô tả"
   },
-  "noVaccineData": "Không có dữ liệu Vaccine",
+  "noVaccineData": "Không có dữ liệu",
+  "disease": "Bệnh",
   "feedback": {
     "title": "Góp ý",
     "feedbackPlaceholder": "Nhập ý kiến của bạn ở đây...",
@@ -148,9 +149,13 @@
     "newPassword": "Mật Khẩu Mới",
     "loading": "Đang Tải...",
     "passwordChangeSuccess": "Đổi mật khẩu thành công!",
-    "passwordChangeError": "Lỗi khi đổi mật khẩu. Vui lòng thử lại."
+    "passwordChangeError": "Lỗi khi đổi mật khẩu. Vui lòng thử lại.",
+    "confirmPassword": "Xác thực mật khẩu mới",
+    "passwordsDoNotMatch": "Mật khẩu không khớp!",
+    "wallet": "Ví",
+    "requestMemberPermission": "Yêu cầu quyền"
   },
-
+  "join": "Tham gia",
   "updateInfo": {
     "title": "Cập Nhật Thông Tin",
     "username": "Tên người dùng",
@@ -185,16 +190,25 @@
   },
 
   "HistoryForm": {
-    "title": "Lịch sử nhận nuôi thú cưng",
+    "title": "Lịch sử các biểu mẫu",
+    "header": {
+      "no": "STT",
+      "petName": "Tên thú cưng",
+      "gender": "Giới tính",
+      "age": "Tuổi",
+      "color": "Màu sắc",
+      "shelterName": "Tên trại",
+      "status": "Trạng thái"
+    },
     "status": {
       "approved": "Đã duyệt",
-      "denied": "Không được duyệt",
-      "pending": "Đang chờ xử lý"
+      "denied": "Bị từ chối",
+      "pending": "Đang chờ"
     }
   },
 
   "donation": {
-    "formTitle": "Biểu mẫu quyên góp",
+    "formTitle": "Quyên góp",
     "amount": "Số tiền quyên góp",
     "submit": "Gửi",
     "successMessage": "Cảm ơn bạn đã quyên góp!"
@@ -474,6 +488,16 @@
     "disease": "Bệnh",
     "vaccine": "Vaccine"
   },
+  "registration_form": {
+    "title": "Mẫu Đăng Ký",
+    "social_account": "Tài Khoản Xã Hội",
+    "income_amount": "Số Tiền Thu Nhập",
+    "identification_image_front": "Hình Ảnh Nhận Dạng (Mặt Trước)",
+    "identification_image_back": "Hình Ảnh Nhận Dạng (Mặt Sau)",
+    "submit": "Gửi",
+    "success": "Đăng ký thành công!",
+    "error": "Đăng ký không thành công, vui lòng thử lại."
+  },
   "stats": {
     "totalRevenue": "Tổng doanh thu",
     "availablePets": "Thú cưng có sẵn",
@@ -604,25 +628,5 @@
     "incomeAmount":"Thu nhập"
 
   },
-  "a":{
-    "titles": {
-      "feedback": "Phản hồi"
-    },
-    "table": {
-      "headers": {
-        "no": "STT",
-        "user": "Người dùng",
-        "feedback": "Phản hồi",
-        "date": "Ngày"
-      }
-    },
-    "error": {
-      "title": "Lỗi",
-      "fetchUsers": "Không thể lấy danh sách người dùng",
-      "fetchFeedback": "Không thể lấy danh sách phản hồi"
-    }
-  }
-  
-  
+  "accessDenied": "Bạn không có quyền truy cập!"
 }
-
