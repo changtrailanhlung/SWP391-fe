@@ -33,7 +33,7 @@
   "size": "Kích thước",
   "color": "Màu sắc",
   "adoption-status": "Tình trạng nhận nuôi",
-  "description": "Mô tả",
+  "description": "Nội dung",
   "years": "tuổi",
   "adopt": "Nhận nuôi",
   "previous": "Trước",
@@ -177,7 +177,8 @@
     "tab1": "Thông tin người dùng",
     "tab2": "Lịch sử quyên góp",
     "tab3": "Form đăng kí nhận nuôi pet",
-    "tab4": "Lịch sử đăng kí tham gia Event"
+    "tab4": "Lịch sử đăng kí tham gia Event",
+    "tab5": "Lịch sử ý kiến"
   },
 
   "donationHistory": {
@@ -673,5 +674,8 @@
   "noAvailablePets": "Không có kết quả",
   "allTypes": "Tất cả các loại",
   "allBreeds": "Tất cả các giống",
-  "allLocations": "Tất cả địa điểm"
+  "allLocations": "Tất cả địa điểm",
+  "feedbackHistory": "Lịch sử phản hồi",
+  "noFeedbacks": "Không tìm thấy phản hồi nào.",
+  "date": "Ngày"
 }
