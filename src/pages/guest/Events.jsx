@@ -242,7 +242,7 @@ const Events = () => {
               {t("event.location")}: {selectedEvent.location}
             </p>
             <p
-              className="mt-2"
+              className="mt-2 leading-relaxed"
               dangerouslySetInnerHTML={{ __html: selectedEvent.description }}
             />
             {!joinedEventIds.has(selectedEvent.id) && (
