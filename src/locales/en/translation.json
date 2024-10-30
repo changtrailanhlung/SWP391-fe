@@ -677,5 +677,23 @@
   "noAvailablePets": "No Available Pets",
   "allTypes": "All Types",
   "allBreeds": "All Breeds",
-  "allLocations": "All Locations"
+  "allLocations": "All Locations",
+  "a":{
+    "titles": {
+      "feedback": "Feedback"
+    },
+    "table": {
+      "headers": {
+        "no": "No.",
+        "user": "User",
+        "feedback": "Feedback",
+        "date": "Date"
+      }
+    },
+    "error": {
+      "title": "Error",
+      "fetchUsers": "Failed to fetch users",
+      "fetchFeedback": "Failed to fetch feedback"
+    }
+  }
 }
