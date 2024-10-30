@@ -665,6 +665,12 @@
     "date": "Ngày",
     "location": "Địa điểm"
   },
-  "search": "Nhập từ khóa bạn muốn tìm kiếm",
-  "noEventsAvailable": "Không có sự kiện được tìm thấy"
+  "search": {
+    "pet": "Nhập tên thú cưng bạn muốn tìm kiếm",
+    "event": "Nhập tên sự kiện bạn muốn tìm kiếm"
+  },
+  "noEventsAvailable": "Không có sự kiện được tìm thấy",
+  "noAvailablePets": "Không có kết quả",
+  "allTypes": "Tất cả các loại",
+  "allBreeds": "Tất cả các giống"
 }

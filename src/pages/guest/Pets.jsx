@@ -87,7 +87,7 @@ const Pets = () => {
       <div className="flex flex-col md:flex-row items-center mb-4">
         <input
           type="text"
-          placeholder={t("search")}
+          placeholder={t("search.pet")}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="p-2 border rounded w-full md:w-1/3 mr-2"
