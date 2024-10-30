@@ -37,9 +37,9 @@ const DonationForm = () => {
       console.log("Donation Response:", response.data);
 
       // Show success toast message
-      toast.success(t("donation.successMessage"));
 
       navigate("/donate");
+      toast.success(t("donation.successMessage"));
     } catch (error) {
       console.error("Error creating donation:", error);
       if (error.response && error.response.data) {
