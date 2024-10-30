@@ -2,6 +2,7 @@ import React from "react";
 import { FaFacebookF, FaInstagram, FaTimes } from "react-icons/fa";
 import userabout from "../../assets/images/user-meo.jpg";
 import { useTranslation } from "react-i18next";
+import TestimonialsSection from "../../components/TestimonialsSection"; // Import the Testimonials section
 
 const Home = () => {
   const { t } = useTranslation();
@@ -63,6 +64,7 @@ const Home = () => {
             </div>
           </div>
         </section>
+        <TestimonialsSection /> {/* Insert the testimonial section here */}
       </main>
     </div>
   );
