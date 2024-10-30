@@ -52,7 +52,7 @@ const Banner = () => {
         <p>No images found</p> // Message if no images are loaded
       )}
       {/* Navigation buttons */}
-      <div className="absolute inset-0 flex justify-between items-center">
+      {/* <div className="absolute inset-0 flex justify-between items-center">
         <button
           onClick={() =>
             setCurrentImageIndex(
@@ -77,7 +77,7 @@ const Banner = () => {
         >
           Next
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
