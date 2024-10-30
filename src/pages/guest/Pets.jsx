@@ -7,6 +7,7 @@ import axios from "../../services/axiosClient";
 const Pets = () => {
   const [pets, setPets] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const petsPerPage = 6;
 
   const { t } = useTranslation();
@@ -50,10 +51,20 @@ const Pets = () => {
     (pet) => pet.adoptionStatus === "Available"
   );
 
-  const totalPages = Math.ceil(availablePets.length / petsPerPage);
+  // Filter pets based on the search query
+  const filteredPets = availablePets.filter((pet) => {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    return (
+      (pet.name && pet.name.toLowerCase().includes(lowerCaseQuery)) ||
+      (pet.type && pet.type.toLowerCase().includes(lowerCaseQuery)) ||
+      (pet.breed && pet.breed.toLowerCase().includes(lowerCaseQuery))
+    );
+  });
+
+  const totalPages = Math.ceil(filteredPets.length / petsPerPage);
   const indexOfLastPet = currentPage * petsPerPage;
   const indexOfFirstPet = indexOfLastPet - petsPerPage;
-  const currentPets = availablePets.slice(indexOfFirstPet, indexOfLastPet);
+  const currentPets = filteredPets.slice(indexOfFirstPet, indexOfLastPet);
 
   const handlePrevious = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -69,7 +80,18 @@ const Pets = () => {
         {t("stats.availablePets")}
       </h1>
 
-      {availablePets.length > 0 ? (
+      {/* Search Input */}
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder={t("search")}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="p-2 border rounded w-full"
+        />
+      </div>
+
+      {filteredPets.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {currentPets.map((pet) => (
             <div key={pet.petID} className="border p-4 rounded-lg shadow">

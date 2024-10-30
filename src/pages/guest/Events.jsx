@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import axios from "../../services/axiosClient";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
 const Events = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [events, setEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [userId, setUserId] = useState(null);
   const [joinedEventIds, setJoinedEventIds] = useState(new Set());
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Set default dateFilter to today
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0];
+  const [dateFilter, setDateFilter] = useState(todayString); // Initialize with today's date
+
   const eventsPerPage = 9;
 
   useEffect(() => {
@@ -63,10 +70,8 @@ const Events = () => {
   const handleJoinEvent = async () => {
     if (!selectedEvent) return;
 
-    // Check if the user is logged in
     if (userId === null) {
-      // Redirect to the login page
-      navigate("/admin/login"); // Adjust the path as necessary
+      navigate("/admin/login");
       return;
     }
 
@@ -84,10 +89,26 @@ const Events = () => {
     }
   };
 
-  const totalPages = Math.ceil(events.length / eventsPerPage);
+  // Filter events based on search query and date filter
+  const filteredEvents = events.filter((event) => {
+    const matchesSearchQuery = event.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesDateFilter =
+      dateFilter === "" ||
+      new Date(event.date).toLocaleDateString() ===
+        new Date(dateFilter).toLocaleDateString();
+
+    return matchesSearchQuery && matchesDateFilter;
+  });
+
+  const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
   const indexOfLastEvent = currentPage * eventsPerPage;
   const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
-  const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
+  const currentEvents = filteredEvents.slice(
+    indexOfFirstEvent,
+    indexOfLastEvent
+  );
 
   const handlePrevious = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -100,6 +121,24 @@ const Events = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6 text-center">{t("events")}</h1>
+
+      {/* Search Bar and Date Filter in a single row */}
+      <div className="flex space-x-4 mb-4">
+        <input
+          type="text"
+          placeholder={t("search")}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="p-2 border rounded w-full"
+        />
+        <input
+          type="date"
+          value={dateFilter}
+          onChange={(e) => setDateFilter(e.target.value)}
+          className="p-2 border rounded w-40"
+          min={todayString} // Prevent selecting past dates
+        />
+      </div>
 
       {currentEvents.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
