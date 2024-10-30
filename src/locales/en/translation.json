@@ -105,7 +105,8 @@
     "tab2": "History Donation",
     "tab3": "Pet adoption registration history",
     "tab4": "Event registration history",
-    "tab5": "Feedback History"
+    "tab5": "Feedback History",
+    "tab6": "Transaction History"
   },
 
   "donationHistory": {
