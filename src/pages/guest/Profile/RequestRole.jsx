@@ -47,7 +47,9 @@ const RequestRole = () => {
     // Only allow selection of roles that are not currently assigned and not in pending requests
     if (
       !currentRoles.includes(role) &&
-      !pendingRequests.some((req) => roles[req.roleId - 1] === role)
+      !pendingRequests.some((req) => roles[req.roleId - 1] === role) &&
+      role !== "Admin" && // Prevent selecting Admin
+      role !== "ShelterStaff" // Prevent selecting ShelterStaff
     ) {
       setRolesToSubmit((prevRoles) => {
         if (prevRoles.includes(role)) {
@@ -95,11 +97,13 @@ const RequestRole = () => {
     return <div className="text-center mt-5">{t("loading.roles")}</div>;
   }
 
-  // Check if there are any roles available for selection
+  // Check if there are any roles available for selection, excluding Admin and ShelterStaff
   const availableRoles = roles.filter(
     (role) =>
       !currentRoles.includes(role) &&
-      !pendingRequests.some((req) => req.roleId === roles.indexOf(role) + 1)
+      !pendingRequests.some((req) => req.roleId === roles.indexOf(role) + 1) &&
+      role !== "Admin" && // Exclude Admin
+      role !== "ShelterStaff" // Exclude ShelterStaff
   );
 
   return (
