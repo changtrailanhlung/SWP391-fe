@@ -43,8 +43,9 @@ const RegistrationForm = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      toast.success(t("registration_form.success")); // Use translation for success message
-      navigate("/success");
+      toast.success(t("registration_form.success"), {
+        onClose: () => navigate("/pets"), // Navigate after toast closes
+      });
     } catch (error) {
       console.error(
         "Error submitting the form:",
