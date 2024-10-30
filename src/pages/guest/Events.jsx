@@ -14,7 +14,12 @@ const Events = () => {
   const [userId, setUserId] = useState(null);
   const [joinedEventIds, setJoinedEventIds] = useState(new Set());
   const [searchQuery, setSearchQuery] = useState("");
-  const [dateFilter, setDateFilter] = useState("");
+
+  // Set default dateFilter to today
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0];
+  const [dateFilter, setDateFilter] = useState(todayString); // Initialize with today's date
+
   const eventsPerPage = 9;
 
   useEffect(() => {
@@ -113,10 +118,6 @@ const Events = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
-  // Get today's date in YYYY-MM-DD format
-  const today = new Date();
-  const todayString = today.toISOString().split("T")[0];
-
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6 text-center">{t("events")}</h1>
@@ -125,7 +126,7 @@ const Events = () => {
       <div className="flex space-x-4 mb-4">
         <input
           type="text"
-          placeholder={t("searchByTitle")}
+          placeholder={t("search")}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="p-2 border rounded w-full"

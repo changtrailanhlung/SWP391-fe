@@ -665,5 +665,6 @@
     "date": "Ngày",
     "location": "Địa điểm"
   },
-  "search": "Nhập từ khóa bạn muốn tìm kiếm"
+  "search": "Nhập từ khóa bạn muốn tìm kiếm",
+  "noEventsAvailable": "Không có sự kiện được tìm thấy"
 }

@@ -660,5 +660,6 @@
     "date": "Date",
     "location": "Location"
   },
-  "search": "Enter the keyword you want to search"
+  "search": "Enter the keyword you want to search",
+  "noEventsAvailable": "No Events Available"
 }
