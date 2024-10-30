@@ -682,5 +682,7 @@
   "paymentError": "Payment error: {{code}}",
   "Amount": "Amount",
   "Date": "Date",
-  "Response Code": "Status"
+  "Response Code": "Status",
+  "feedbackHistory": "Feedback History",
+  "date": "Date"
 }

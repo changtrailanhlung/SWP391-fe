@@ -687,5 +687,7 @@
   "paymentError": "Lỗi thanh toán: {{code}}",
   "Amount": "Số tiền",
   "Date": "Ngày",
-  "Response Code": "Trang thái"
+  "Response Code": "Trang thái",
+  "feedbackHistory": "Lịch sử Ý kiến",
+  "date": "Ngày"
 }
