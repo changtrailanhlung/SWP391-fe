@@ -9,27 +9,38 @@ const Notifications = () => {
   const { t } = useTranslation(); // Initialize translation
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // State for error handling
   const userId = localStorage.getItem("nameid");
 
   useEffect(() => {
     const fetchNotifications = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(`/notifications`, {
           params: { userId },
         });
-        const sortedNotifications = (response.data || []).sort(
+
+        // Filter notifications by userId
+        const filteredNotifications = (response.data || []).filter(
+          (notification) => notification.userId === Number(userId)
+        );
+
+        // Sort notifications by date in descending order
+        const sortedNotifications = filteredNotifications.sort(
           (a, b) => new Date(b.date) - new Date(a.date)
         );
+
         setNotifications(sortedNotifications);
       } catch (error) {
         console.error("Error fetching notifications:", error);
+        setError(t("notifications.fetchError")); // Set error message
       } finally {
         setLoading(false);
       }
     };
 
     fetchNotifications();
-  }, [userId]);
+  }, [userId, t]);
 
   if (loading) {
     return (
@@ -37,6 +48,10 @@ const Notifications = () => {
         <ProgressSpinner />
       </div>
     );
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center mt-5">{error}</div>;
   }
 
   const dateTemplate = (rowData) => {
