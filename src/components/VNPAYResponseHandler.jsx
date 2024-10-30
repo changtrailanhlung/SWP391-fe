@@ -1,16 +1,17 @@
-import { ApiRequest } from "../services/axiosClient"; // Đảm bảo rằng đường dẫn đúng
+import { ApiRequest } from "../services/axiosClient"; // Ensure the path is correct
 import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const PaymentResult = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    console.log("Location:", location); // Log location để kiểm tra
+    console.log("Location:", location); // Log location for debugging
     const params = new URLSearchParams(location.search);
 
-    // Log tất cả tham số để kiểm tra
+    // Log all parameters for debugging
     console.log("Received URL Parameters:", Object.fromEntries(params));
 
     const vnp_ResponseCode = params.get("vnp_ResponseCode");
@@ -39,15 +40,27 @@ const PaymentResult = () => {
 
       ApiRequest(apiParams)
         .then((data) => {
-          console.log("Dữ liệu nhận được từ API:", data);
-          navigate("/");
+          console.log("Received data from API:", data);
+          toast.success("Giao dịch thành công!"); // Show success toast
+          setTimeout(() => {
+            navigate("/"); // Navigate after a short delay
+          }, 2000); // Adjust delay as needed
         })
         .catch((error) => {
-          console.error("Lỗi khi gọi API:", error);
+          console.error("Error calling API:", error);
+          toast.error("Giao dịch không thành công. Vui lòng thử lại."); // Show error toast
+          setTimeout(() => {
+            navigate("/"); // Navigate back to home after a short delay
+          }, 2000); // Adjust delay as needed
         });
     } else {
-      console.error("Giao dịch không thành công");
-      alert("Giao dịch không thành công. Mã phản hồi: " + vnp_ResponseCode);
+      console.error("Transaction not successful");
+      toast.error(
+        "Giao dịch không thành công. Mã phản hồi: " + vnp_ResponseCode
+      ); // Show error toast
+      setTimeout(() => {
+        navigate("/"); // Navigate back to home after a short delay
+      }, 2000); // Adjust delay as needed
     }
   }, [navigate, location]);
 
