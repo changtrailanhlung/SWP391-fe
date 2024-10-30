@@ -516,9 +516,7 @@
   },
   "error": {
     "title": "Lỗi",
-    "fetchPets": "Không thể tải danh sách thú cưng",
-    "fetchWalletBalance": "Lỗi khi lấy số dư ví. Vui lòng thử lại sau.",
-    "insufficientFunds": "Số dư trong ví không đủ cho khoản quyên góp này."
+    "fetchPets": "Không thể tải danh sách thú cưng"
   },
 
   "titles": {
