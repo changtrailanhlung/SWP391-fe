@@ -660,6 +660,13 @@
     "date": "Date",
     "location": "Location"
   },
-  "search": "Enter the keyword you want to search",
-  "noEventsAvailable": "No Events Available"
+  "search": {
+    "pet": "Enter the Pet Names you want to search",
+    "event": "Enter the Event Name you want to search"
+  },
+  "noEventsAvailable": "No Events Available",
+  "noAvailablePets": "No Available Pets",
+  "allTypes": "All Types",
+  "allBreeds": "All Breeds",
+  "allLocations": "All Locations"
 }

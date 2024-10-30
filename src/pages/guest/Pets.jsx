@@ -8,6 +8,8 @@ const Pets = () => {
   const [pets, setPets] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [selectedType, setSelectedType] = useState(""); // State for type filter
+  const [selectedBreed, setSelectedBreed] = useState(""); // State for breed filter
   const petsPerPage = 6;
 
   const { t } = useTranslation();
@@ -26,20 +28,13 @@ const Pets = () => {
     fetchPets();
   }, []);
 
-  const isLoggedIn = () => {
-    return !!localStorage.getItem("token");
-  };
-
-  const getUserRole = () => {
-    return localStorage.getItem("role") || "";
-  };
+  const isLoggedIn = () => !!localStorage.getItem("token");
+  const getUserRole = () => localStorage.getItem("role") || "";
 
   const handleAdopt = (petID) => {
     if (!isLoggedIn()) {
       toast.error("Bạn phải login để sử dụng tính năng này");
-      setTimeout(() => {
-        navigate("/admin/login");
-      }, 500);
+      setTimeout(() => navigate("/admin/login"), 500);
     } else if (!getUserRole().split(",").includes("Adopter")) {
       toast.error("Bạn không có quyền để nhận nuôi thú cưng");
     } else {
@@ -51,14 +46,18 @@ const Pets = () => {
     (pet) => pet.adoptionStatus === "Available"
   );
 
-  // Filter pets based on the search query
+  // Filter pets based on the search query, type, and breed
   const filteredPets = availablePets.filter((pet) => {
     const lowerCaseQuery = searchQuery.toLowerCase();
-    return (
+    const matchesQuery =
       (pet.name && pet.name.toLowerCase().includes(lowerCaseQuery)) ||
       (pet.type && pet.type.toLowerCase().includes(lowerCaseQuery)) ||
-      (pet.breed && pet.breed.toLowerCase().includes(lowerCaseQuery))
-    );
+      (pet.breed && pet.breed.toLowerCase().includes(lowerCaseQuery));
+
+    const matchesType = selectedType ? pet.type === selectedType : true;
+    const matchesBreed = selectedBreed ? pet.breed === selectedBreed : true;
+
+    return matchesQuery && matchesType && matchesBreed;
   });
 
   const totalPages = Math.ceil(filteredPets.length / petsPerPage);
@@ -74,21 +73,49 @@ const Pets = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
+  // Extract unique types and breeds for filtering
+  const petTypes = [...new Set(pets.map((pet) => pet.type))];
+  const petBreeds = [...new Set(pets.map((pet) => pet.breed))];
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6 text-center">
         {t("stats.availablePets")}
       </h1>
 
-      {/* Search Input */}
-      <div className="mb-4">
+      {/* Search and Filter Inputs in a Row */}
+      <div className="flex flex-col md:flex-row items-center mb-4">
         <input
           type="text"
-          placeholder={t("search")}
+          placeholder={t("search.pet")}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="p-2 border rounded w-full"
+          className="p-2 border rounded w-full md:w-1/3 mr-2"
         />
+        <select
+          value={selectedType}
+          onChange={(e) => setSelectedType(e.target.value)}
+          className="p-2 border rounded w-full md:w-1/3 mr-2"
+        >
+          <option value="">{t("allTypes")}</option>
+          {petTypes.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+        <select
+          value={selectedBreed}
+          onChange={(e) => setSelectedBreed(e.target.value)}
+          className="p-2 border rounded w-full md:w-1/3"
+        >
+          <option value="">{t("allBreeds")}</option>
+          {petBreeds.map((breed) => (
+            <option key={breed} value={breed}>
+              {breed}
+            </option>
+          ))}
+        </select>
       </div>
 
       {filteredPets.length > 0 ? (
@@ -123,32 +150,27 @@ const Pets = () => {
                 {t("pet.description")}: {pet.description}
               </p>
 
-              {/* Render pet vaccines in a single line separated by commas */}
               <div className="mt-2">
                 <h3 className="font-bold">Vaccine</h3>
-                {pet.statuses.length > 0 ? (
-                  <p>
-                    {pet.statuses
-                      .map((status) => status.vaccine)
-                      .filter((v) => v)
-                      .join(", ") || t("noVaccineData")}
-                  </p>
-                ) : (
-                  <p>{t("noVaccineData")}</p>
-                )}
+                <p>
+                  {pet.statuses.length > 0
+                    ? pet.statuses
+                        .map((status) => status.vaccine)
+                        .filter((v) => v)
+                        .join(", ") || t("noVaccineData")
+                    : t("noVaccineData")}
+                </p>
               </div>
               <div className="mt-2">
                 <h3 className="font-bold">{t("disease")}</h3>
-                {pet.statuses.length > 0 ? (
-                  <p>
-                    {pet.statuses
-                      .map((status) => status.disease)
-                      .filter((v) => v)
-                      .join(", ") || t("noVaccineData")}
-                  </p>
-                ) : (
-                  <p>{t("noVaccineData")}</p>
-                )}
+                <p>
+                  {pet.statuses.length > 0
+                    ? pet.statuses
+                        .map((status) => status.disease)
+                        .filter((d) => d)
+                        .join(", ") || t("noVaccineData")
+                    : t("noVaccineData")}
+                </p>
               </div>
               <button
                 onClick={() => handleAdopt(pet.petID)}
