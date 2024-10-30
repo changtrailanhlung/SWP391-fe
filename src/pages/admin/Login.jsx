@@ -151,7 +151,7 @@ function Login() {
                   margin: "0 0 20px 0",
                 }}
               >
-                Đăng nhập
+                {t("login")}
               </h2>
               <form onSubmit={handleLogin}>
                 <MDBInput
@@ -178,7 +178,7 @@ function Login() {
                   size="md"
                   disabled={loading}
                 >
-                  {loading ? "Đang đăng nhập..." : "Login"}
+                  {loading ? "Đang đăng nhập..." : t("login")}
                 </MDBBtn>
               </form>
               <div className="text-center">

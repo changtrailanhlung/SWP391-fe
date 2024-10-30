@@ -73,8 +73,6 @@ const Roles = () => {
         });
   
         setUserDetails(userDetailsMap);
-      } else {
-        setUserDetails({});
       }
   
       setPendingRequests(requests);
@@ -85,14 +83,7 @@ const Roles = () => {
       setError(error);
       
       if (error.response?.status !== 404) {
-        if (toast.current) {
-          toast.current.show({
-            severity: "error",
-            summary: "Error",
-            detail: t("toast.error.fetchData"),
-            life: 3000,
-          });
-        }
+        showToast("error", "Error", "Failed to fetch data");
       }
       
       setPendingRequests([]);
@@ -232,12 +223,7 @@ const Roles = () => {
       
       if (!mounted.current) return;
 
-      toast.current?.show({
-        severity: "success",
-        summary: "Success",
-        detail: t("toast.success.approveRequest"),
-        life: 3000,
-      });
+      showToast("success", "Success", "Request approved successfully");
       
       setPendingRequests(prev => prev.filter(req => 
         !(req.userId === request.userId && req.roleId === request.roleId)
@@ -248,26 +234,23 @@ const Roles = () => {
       if (!mounted.current) return;
       
       console.error("Error approving request:", error);
-      toast.current?.show({
-        severity: "error",
-        summary: "Error",
-        detail: t("toast.error.approveRequest"),
-        life: 3000,
-      });
+      showToast("error", "Error", "Failed to approve request");
     } finally {
       if (mounted.current) {
-        if (toast.current) {
-          toast.current.show({
-            severity: "success",
-            summary: "Success",
-            detail: t("toast.success.approveRequest"),
-            life: 3000,
-          });
-        }
+        setLoading(false);
       }
     }
   };
-
+  const showToast = (severity, summary, detail) => {
+    if (mounted.current && toast.current) {
+      toast.current.show({
+        severity,
+        summary,
+        detail,
+        life: 3000,
+      });
+    }
+  };
   const handleReject = async (request) => {
     try {
       setLoading(true);
@@ -275,12 +258,7 @@ const Roles = () => {
       
       if (!mounted.current) return;
 
-      toast.current?.show({
-        severity: "success",
-        summary: "Success",
-        detail: t("toast.success.rejectRequest"),
-        life: 3000,
-      });
+      showToast("success", "Success", "Request rejected successfully");
       
       setPendingRequests(prev => prev.filter(req => 
         !(req.userId === request.userId && req.roleId === request.roleId)
@@ -291,25 +269,14 @@ const Roles = () => {
       if (!mounted.current) return;
       
       console.error("Error rejecting request:", error);
-      toast.current?.show({
-        severity: "error",
-        summary: "Error",
-        detail: t("toast.error.rejectRequest"),
-        life: 3000,
-      });
+      showToast("error", "Error", "Failed to reject request");
     } finally {
       if (mounted.current) {
-        if (toast.current) {
-          toast.current.show({
-            severity: "success",
-            summary: "Success",
-            detail: t("toast.success.rejectRequest"),
-            life: 3000,
-          });
-        }
+        setLoading(false);
       }
     }
   };
+
 
   const userDetailContent = (user) => {
     if (!user) return null;

@@ -23,6 +23,7 @@
   "registrationform": "Đăng ký nhận nuôi",
   "donate": "Quyên góp",
   "login": "Đăng nhập",
+  "signup":"Đăng kí",
   "logout": "Đăng xuất",
   "lg1": "Cùng chúng tôi ",
   "lg2": "tạo cơ hội thứ hai cho thú cưng",
@@ -229,7 +230,9 @@
     "shelterPanel": "Shelter Panel",
     "pets": "Thú Cưng",
     "adoptionForm": "Đơn Nhận Nuôi",
-    "events": "Sự Kiện"
+
+    "events": "Sự Kiện",
+    "feedback": "Phản hồi"
   },
 
   "dashboard": {
@@ -608,21 +611,23 @@
     "phone": "Số điện thoại",
     "location": "Địa chỉ"
   },
-  "tooltip": {
-    "confirm": "xác nhận đơn",
-    "reject": "Từ Chối",
-    "AdditionalInformation": "Thông tin bổ sung",
-    "MedicalHistory": "thông tin y tế",
-    "disease": "Bệnh",
-    "vaccine": "Vaccine",
-    "Nomedicalhistoryavailable": "Không có thông tin y tế",
-    "Description": "Mô tả",
-    "no": "STT",
-    "AdopteName": "Người nhận nuôi",
-    "IDFront": "CCCD mặt trước",
-    "IDBack": "CCCD mặt sau",
-    "socialAccount": "Tài khoản MXH",
-    "incomeAmount": "Thu nhập"
+
+  "tooltip":{
+    "confirm":"xác nhận đơn",
+    "reject":"Từ Chối",
+    "AdditionalInformation":"Thông tin bổ sung",
+    "MedicalHistory":"thông tin y tế",
+    "disease":"Bệnh",
+    "vaccine":"Vaccine",
+    "Nomedicalhistoryavailable":"Không có thông tin y tế",
+    "Description":"Mô tả",
+    "no":"STT",
+    "AdopteName":"Người nhận nuôi",
+    "IDFront" : "CCCD mặt trước",
+    "IDBack":"CCCD mặt sau",
+    "socialAccount":"Tài khoản MXH",
+    "incomeAmount":"Thu nhập"
+
   },
   "accessDenied": "Bạn không có quyền truy cập!",
   "loading": {
@@ -674,8 +679,5 @@
   "noAvailablePets": "Không có kết quả",
   "allTypes": "Tất cả các loại",
   "allBreeds": "Tất cả các giống",
-  "allLocations": "Tất cả địa điểm",
-  "feedbackHistory": "Lịch sử phản hồi",
-  "noFeedbacks": "Không tìm thấy phản hồi nào.",
-  "date": "Ngày"
+  "allLocations": "Tất cả địa điểm"
 }
