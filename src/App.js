@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import GuestRoutes from "./routes/GuestRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
 import ShelterRoutes from "./routes/ShelterRoutes";
+import PaymentResult from "./components/VNPAYResponseHandler";
 import { AuthProvider } from "./context/AuthContext"; // Import your AuthProvider
 import "./style/tailwind.css";
 import "primeicons/primeicons.css";
@@ -26,6 +27,7 @@ function App() {
           <Route path="/*" element={<GuestRoutes />} />
           <Route path="/admin/*" element={<AdminRoutes />} />
           <Route path="/shelter/*" element={<ShelterRoutes />} />
+          <Route path="/payment-result" element={<PaymentResult />} />
         </Routes>
       </Router>
     </AuthProvider>
