@@ -20,10 +20,11 @@ const HistoryFeedback = () => {
         const response = await axios.get("/feedback"); // Use axios to call API
         const data = response.data;
 
-        // Filter feedbacks by userId
-        const userFeedbacks = data.filter(
-          (feedback) => feedback.userId === Number(userId)
-        );
+        // Filter and sort feedbacks by userId and date (most recent first)
+        const userFeedbacks = data
+          .filter((feedback) => feedback.userId === Number(userId))
+          .sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort by date descending
+
         setFeedbacks(userFeedbacks);
       } catch (error) {
         setError("Error fetching feedbacks. Please try again later.");
