@@ -104,7 +104,8 @@
     "tab1": "User Information",
     "tab2": "History Donation",
     "tab3": "Pet adoption registration history",
-    "tab4": "Event registration history"
+    "tab4": "Event registration history",
+    "tab5": "Feedback History"
   },
 
   "donationHistory": {
@@ -668,5 +669,9 @@
   "noAvailablePets": "No Available Pets",
   "allTypes": "All Types",
   "allBreeds": "All Breeds",
-  "allLocations": "All Locations"
+  "allLocations": "All Locations",
+  "feedbackHistory": "Feedback History",
+  "noFeedbacks": "No feedbacks found.",
+  "description": "Description",
+  "date": "Date"
 }

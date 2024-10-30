@@ -7,6 +7,7 @@ import ProfileInfo from "./ProfileInfo";
 import HistoryDonation from "./HistoryDonation";
 import RegisterForm from "./HistoryForm";
 import RegisterEvent from "./RegisterEvent";
+import HistoryFeedback from "./HistoryFeedback";
 
 const Profile = () => {
   const { t } = useTranslation();
@@ -73,6 +74,9 @@ const Profile = () => {
           </TabPanel>
           <TabPanel header={t("tabprofile.tab4")}>
             <RegisterEvent />
+          </TabPanel>
+          <TabPanel header={t("tabprofile.tab5")}>
+            <HistoryFeedback />
           </TabPanel>
         </TabView>
       </div>
