@@ -55,7 +55,6 @@
     "cancel": "Hủy",
     "basicInformation": "Thông tin cơ bản"
   },
-
   "buttons": {
     "createUser": "Tạo tài khoản",
     "cancel": "Hủy",
@@ -75,7 +74,6 @@
     "viewMore": "Xem thêm",
     "addNewPet": "Thêm thú cưng mới"
   },
-
   "table": {
     "adopterName": "Người nhận nuôi",
     "idFront": "CMND Mặt trước",
@@ -110,7 +108,6 @@
       "actions": "Thao tác"
     }
   },
-
   "pet": {
     "type": "Loại",
     "breed": "Giống",
@@ -127,14 +124,12 @@
     "name": "Tên thú cưng",
     "create": "Tạo thú cưng"
   },
-
   "pagination": {
     "previous": "Trước",
     "next": "Sau",
     "page": "Trang",
     "of": "của"
   },
-
   "profile": {
     "title": "Hồ sơ người dùng",
     "username": "Tên người dùng",
@@ -166,14 +161,12 @@
     "profileUpdateError": "Lỗi khi cập nhật hồ sơ. Vui lòng thử lại.",
     "image": "Hình ảnh"
   },
-
   "donates": {
     "title": "Thông tin Shelter",
     "location": "Địa điểm",
     "phone": "Điện thoại",
     "donate": "Quyên góp"
   },
-
   "tabprofile": {
     "tab1": "Thông tin người dùng",
     "tab2": "Lịch sử quyên góp",
@@ -182,7 +175,6 @@
     "tab5": "Lịch sử ý kiến",
     "tab6": "Lịch sử nạp tiền"
   },
-
   "donationHistory": {
     "title": "Lịch sử quyên góp",
     "noData": "Không có quyên góp nào.",
@@ -190,7 +182,6 @@
     "date": "Ngày",
     "shelterId": "Quyên góp cho Shelter"
   },
-
   "HistoryForm": {
     "title": "Lịch sử các biểu mẫu",
     "header": {
@@ -208,14 +199,12 @@
       "pending": "Đang chờ"
     }
   },
-
   "donation": {
     "formTitle": "Quyên góp",
     "amount": "Số tiền quyên góp",
     "submit": "Gửi",
     "successMessage": "Cảm ơn bạn đã quyên góp!"
   },
-
   "sidebar": {
     "main": "Trang chính",
     "adminPanel": "Admin Panel",
@@ -226,16 +215,13 @@
     "shelter": "Trại",
     "roles": "Đơn cấp quyền",
     "logout": "Đăng xuất",
-
     "shelterId": "Mã Số Trại",
     "shelterPanel": "Shelter Panel",
     "pets": "Thú Cưng",
     "adoptionForm": "Đơn Nhận Nuôi",
-
     "events": "Sự Kiện",
     "feedback": "Phản hồi"
   },
-
   "dashboard": {
     "totalRevenue": "Tổng ủng hộ",
     "totalPets": "Tổng số thú cưng",
@@ -247,7 +233,6 @@
     "error": "Lỗi",
     "fetchError": "Không thể tải dữ liệu"
   },
-
   "dialog": {
     "Cancel": "Hủy",
     "createUser": "Tạo người dùng mới",
@@ -268,7 +253,6 @@
       "requestDate": "Ngày Yêu Cầu"
     }
   },
-
   "roles": {
     "admin": "Quản trị viên",
     "shelterStaff": "Nhân viên trại",
@@ -279,7 +263,6 @@
     "chooseroles": "Chọn vai trò",
     "Shelter": "Trại"
   },
-
   "validation": {
     "usernameRequired": "Vui lòng nhập tên người dùng",
     "emailRequired": "Vui lòng nhập email",
@@ -292,14 +275,12 @@
     "required": "{{field}} là bắt buộc",
     "imageRequired": "Hình ảnh là bắt buộc"
   },
-
   "messages": {
     "createSuccess": "Tạo người dùng thành công",
     "updateSuccess": "Cập nhật thành công",
     "deleteSuccess": "Xóa thành công",
     "error": "Đã xảy ra lỗi"
   },
-
   "shelter": {
     "title1": "Thông tin Shelter",
     "name": "Tên Shelter",
@@ -427,7 +408,6 @@
       "message": "Bạn có chắc chắn muốn từ chối yêu cầu vai trò này?"
     }
   },
-
   "toast": {
     "error": {
       "fetchData": "Không thể tải dữ liệu. Vui lòng thử lại sau.",
@@ -439,14 +419,12 @@
       "rejectRequest": "Từ chối yêu cầu vai trò thành công"
     }
   },
-
   "headers": {
     "editPetDetails": "Chỉnh sửa Thông tin Thú cưng",
     "petDetails": "Thông tin của {{name}}",
     "healthStatus": "Tình trạng Sức khỏe",
     "updateHealthStatus": "Cập nhật Tình trạng Sức khỏe"
   },
-
   "placeholders": {
     "enterPetName": "Nhập tên thú cưng",
     "selectPetType": "Chọn loại thú cưng",
@@ -458,22 +436,18 @@
     "selectAdoptionStatus": "Chọn trạng thái nhận nuôi",
     "enterDescription": "Nhập mô tả"
   },
-
   "gender": {
     "male": "Đực",
     "female": "Cái"
   },
-
   "petType": {
     "dog": "Chó",
     "cat": "Mèo"
   },
-
   "adoptionStatus": {
     "available": "Có sẵn",
     "adopted": "Đã được nhận nuôi"
   },
-
   "labels": {
     "petName": "Tên Thú cưng",
     "petType": "Loại Thú cưng",
@@ -518,7 +492,6 @@
     "title": "Lỗi",
     "fetchPets": "Không thể tải danh sách thú cưng"
   },
-
   "titles": {
     "pets": "Thú cưng"
   },
@@ -592,7 +565,6 @@
       }
     }
   },
-
   "adoptionForms": {
     "title": "Đơn xin nhận nuôi",
     "userDetails": "Thông tin người dùng",
@@ -612,7 +584,6 @@
     "phone": "Số điện thoại",
     "location": "Địa chỉ"
   },
-
   "tooltip": {
     "confirm": "xác nhận đơn",
     "reject": "Từ Chối",
@@ -687,5 +658,11 @@
   "transactionHistory": "Lịch sử nạp tiền",
   "Amount": "Số tiền",
   "success": "Thành công",
-  "paymentError": "Lỗi"
+  "paymentError": "Lỗi",
+  "function": "TÍNH NĂNG CỦA CHÚNG TÔI",
+  "function1": "SỰ KIỆN",
+  "function2": "NHẬN NUÔI THÚ CƯNG",
+  "function3": "QUYÊN GÓP",
+  "aboutus": "Về chúng tôi",
+  "desctiptionhome": "Tại Pet Rescue Haven, chúng tôi tận tâm giải cứu, phục hồi,               và nuôi dưỡng lại những động vật có nhu cầu. Sứ mệnh của chúng tôi là cung cấp một môi trường an toàn và               môi trường yêu thương dành cho động vật bị bỏ rơi, bị ngược đãi và vô gia cư,               cho họ cơ hội sống thứ hai. Với sự hỗ trợ của chúng tôi               tình nguyện viên đầy nhiệt huyết và sự hào phóng của cộng đồng, chúng tôi làm việc               không mệt mỏi để đảm bảo rằng mỗi con vật đều nhận được sự chăm sóc và               lòng trắc ẩn mà họ xứng đáng nhận được. Hãy tham gia cùng chúng tôi trong hành trình tạo nên một               sự khác biệt trong cuộc sống của động vật và giúp tạo ra một thế giới nơi               mỗi thú cưng đều có một ngôi nhà yêu thương."
 }

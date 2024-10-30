@@ -29,11 +29,9 @@
   "no": "No",
   "notification": "Notification",
   "walletinput": "Deposit money into wallet",
-
   "lg1": "Join us in",
   "lg2": "creating second chances for pets",
   "lg3": "Help us bring new life to abandoned pets. With your support, we can provide safe shelter, medical care, and love for these four-legged friends. Every contribution and adoption changes the life of a pet.",
-
   "common": {
     "delete": "Delete",
     "cancel": "Cancel",
@@ -60,7 +58,6 @@
     "success": "Success",
     "error": "Error"
   },
-
   "profile": {
     "title": "User Profile",
     "username": "Username",
@@ -92,14 +89,12 @@
     "profileUpdateError": "Error updating profile. Please try again.",
     "image": "Image"
   },
-
   "donates": {
     "title": "Shelter Information",
     "location": "Location",
     "phone": "Phone Number",
     "donate": "Donate"
   },
-
   "tabprofile": {
     "tab1": "User Information",
     "tab2": "History Donation",
@@ -108,7 +103,6 @@
     "tab5": "Feedback History",
     "tab6": "Transaction History"
   },
-
   "donationHistory": {
     "title": "Donation History",
     "noData": "No donations found.",
@@ -139,7 +133,6 @@
     "submit": "Submit",
     "successMessage": "Thank you for your donation!"
   },
-
   "sidebar": {
     "main": "Main",
     "adminPanel": "Admin Panel",
@@ -154,17 +147,14 @@
     "pets": "Pets",
     "adoptionForm": "Adoption Form",
     "events": "Events",
-
     "event": {
       "location": "Location",
       "date": "Date",
       "name": "Name",
       "description": "Description",
-
       "feedback": "Feedback"
     }
   },
-
   "dashboard": {
     "totalRevenue": "Total Donation",
     "totalPets": "Total Pets",
@@ -176,7 +166,6 @@
     "error": "Error",
     "fetchError": "Failed to fetch data"
   },
-
   "buttons": {
     "createUser": "Create User",
     "cancel": "Cancel",
@@ -196,7 +185,6 @@
     "viewMore": "View More",
     "addNewPet": "Add New Pet"
   },
-
   "table": {
     "adopterName": "Adopter Name",
     "idFront": "ID Front",
@@ -231,7 +219,6 @@
       "actions": "Actions"
     }
   },
-
   "dialog": {
     "cancel": "Cancel",
     "createUser": "Create New User",
@@ -252,7 +239,6 @@
       "requestDate": "Request Date"
     }
   },
-
   "roles": {
     "admin": "Admin",
     "shelterStaff": "Shelter Staff",
@@ -263,7 +249,6 @@
     "chooseroles": "Choose Roles",
     "Shelter": "Shelter"
   },
-
   "validation": {
     "usernameRequired": "Username is required",
     "emailRequired": "Email is required",
@@ -276,14 +261,12 @@
     "required": "{{field}} is required",
     "imageRequired": "Image is required"
   },
-
   "messages": {
     "createSuccess": "User created successfully",
     "updateSuccess": "User updated successfully",
     "deleteSuccess": "User deleted successfully",
     "error": "An error occurred"
   },
-
   "shelter": {
     "title1": "Shelter Information",
     "name": "Shelter Name",
@@ -401,7 +384,6 @@
       }
     }
   },
-
   "confirmDialog": {
     "approve": {
       "title": "Approve Confirmation",
@@ -412,7 +394,6 @@
       "message": "Are you sure you want to reject this role request?"
     }
   },
-
   "toast": {
     "error": {
       "fetchData": "Failed to fetch data. Please try again later.",
@@ -424,14 +405,12 @@
       "rejectRequest": "Role request rejected successfully"
     }
   },
-
   "headers": {
     "editPetDetails": "Edit Pet Details",
     "petDetails": "{{name}} Details",
     "healthStatus": "Health Status",
     "updateHealthStatus": "Update Health Status"
   },
-
   "labels": {
     "petName": "Pet Name",
     "petType": "Pet Type",
@@ -448,7 +427,6 @@
     "disease": "Disease",
     "vaccine": "Vaccine"
   },
-
   "placeholders": {
     "enterPetName": "Enter pet name",
     "selectPetType": "Select pet type",
@@ -460,12 +438,10 @@
     "selectAdoptionStatus": "Select adoption status",
     "enterDescription": "Enter pet description"
   },
-
   "gender": {
     "male": "Male",
     "female": "Female"
   },
-
   "petType": {
     "dog": "Dog",
     "cat": "Cat"
@@ -502,7 +478,6 @@
     "title": "Error",
     "fetchPets": "Unable to fetch pets"
   },
-
   "titles": {
     "pets": "Pets"
   },
@@ -607,7 +582,6 @@
     "phone": "Phone",
     "location": "Location"
   },
-
   "tooltip": {
     "confirm": "Confirm",
     "reject": "Reject",
@@ -682,5 +656,11 @@
   "transactionHistory": "Transaction History",
   "Amount": "Ammount",
   "success": "Success",
-  "paymentError": "Unsuccess"
+  "paymentError": "Unsuccess",
+  "function": "OUR FUNCTION",
+  "function1": "EVENTS",
+  "function2": "ADOPT PET",
+  "function3": "DONATES",
+  "aboutus": "About Us",
+  "desctiptionhome": " At Pet Rescue Haven, we are dedicated to rescuing, rehabilitating,               and rehoming animals in need. Our mission is to provide a safe and               loving environment for abandoned, abused, and homeless animals,               giving them a second chance at life. With the support of our               passionate volunteers and the generosity of our community, we work               tirelessly to ensure that each animal receives the care and               compassion they deserve. Join us in our journey to make a               difference in the lives of animals and help create a world where               every pet has a loving home."
 }
