@@ -91,9 +91,12 @@ const Events = () => {
         eventId: selectedEvent.id,
         userId: userId,
       });
-      toast.success("Tham gia sự kiện thành công!");
-      setJoinedEventIds((prev) => new Set(prev).add(selectedEvent.id));
-      setIsDialogOpen(false);
+      toast.success("Tham gia sự kiện thành công!", {
+        onClose: () => {
+          setJoinedEventIds((prev) => new Set(prev).add(selectedEvent.id));
+          setIsDialogOpen(false);
+        },
+      });
     } catch (error) {
       console.error("Error joining event:", error);
       toast.error("Đã xảy ra lỗi khi tham gia sự kiện.");
