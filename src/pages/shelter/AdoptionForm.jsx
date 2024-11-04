@@ -195,7 +195,7 @@ const AdoptionForm = () => {
       <div className="flex justify-end gap-2 mt-4">
         <Button
           icon="pi pi-times"
-          label={'t(buttons.cancel)'}
+          label={t('buttons.cancel')}
           className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-full inline-flex items-center transition-colors duration-300"
           onClick={() => {
             setShowNotificationDialog(false);
@@ -204,7 +204,7 @@ const AdoptionForm = () => {
         />
         <Button
           icon="pi pi-check"
-          label={'t(buttons.save)'}
+          label={t('button.save')}
           className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-full inline-flex items-center transition-colors duration-300 mr-4"
           onClick={() => {
             if (tempFormData && tempStatus !== null) {
@@ -401,14 +401,14 @@ const AdoptionForm = () => {
                 icon="pi pi-check"
                 className="p-button-rounded p-button-success p-button-sm"
                 onClick={() => confirmStatusUpdate(rowData.id, true)}
-                tooltip={"t(tooltip.confirm)"}
+                tooltip={t('tooltip.confirm')}
               />
             )}
             <Button
               icon="pi pi-times"
               className="p-button-rounded p-button-danger p-button-sm"
               onClick={() => confirmStatusUpdate(rowData.id, false)}
-              tooltip={"t(tooltip.reject)"}
+              tooltip={t('tooltip.reject')}
             />
           </>
         )}

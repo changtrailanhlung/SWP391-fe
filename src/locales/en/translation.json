@@ -153,7 +153,8 @@
       "name": "Name",
       "description": "Description",
       "feedback": "Feedback"
-    }
+    },
+    "feedback":"Feedback"
   },
   "dashboard": {
     "totalRevenue": "Total Donation",
@@ -663,5 +664,19 @@
   "function3": "DONATES",
   "aboutus": "About Us",
   "desctiptionhome": " At Pet Rescue Haven, we are dedicated to rescuing, rehabilitating,               and rehoming animals in need. Our mission is to provide a safe and               loving environment for abandoned, abused, and homeless animals,               giving them a second chance at life. With the support of our               passionate volunteers and the generosity of our community, we work               tirelessly to ensure that each animal receives the care and               compassion they deserve. Join us in our journey to make a               difference in the lives of animals and help create a world where               every pet has a loving home.",
-  "founder": "FOUNDER"
+  "founder": "FOUNDER",
+  "button":{
+    "cancel":"Cancel",
+    "save":"Save"
+  },
+  "a":{
+    "table":{
+      "headers":{
+        "no":"No.",
+        "user":"Username",
+        "feedback":"Feedback",
+        "date":"Date"
+      }
+    }
+  }
 }

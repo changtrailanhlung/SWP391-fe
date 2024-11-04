@@ -18,6 +18,7 @@ const Roles = () => {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [error, setError] = useState(null);
   const toast = useRef(null);
+  const toastDisplayed = useRef(false);
   const mounted = useRef(false);
 
   // Define button styles similar to Shelter component
