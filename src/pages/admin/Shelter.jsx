@@ -389,13 +389,22 @@ const Shelter = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        donorsData[id] = response.data.name || "Unknown";
+        donorsData[id] = response.data.username ; // Changed from name to username based on API response
       }
 
       setDonorsMap(donorsData);
     } catch (error) {
       console.error("Error fetching donors:", error);
+      toast.current.show({
+        severity: "error",
+        summary: t("shelter.toast.error.title"),
+        detail: t("shelter.toast.error.fetchDonors"),
+        life: 3000,
+      });
     }
+  }
+  const donorNameTemplate = (rowData) => {
+    return donorsMap[rowData.donorId] || "Loading...";
   };
   return (
     <div className="container mx-auto p-8 bg-gray-50">
@@ -674,6 +683,7 @@ const Shelter = () => {
             <Column
               field="donorId"
               header={t("shelter.details.donations.columns.donorId")}
+              body={donorNameTemplate}
               sortable
             />
             <Column
@@ -723,8 +733,8 @@ const Shelter = () => {
             />
             <Column
               field="donorId"
-              
-              header="Donor ID"
+              body={donorNameTemplate}
+              header={t("shelter.details.donations.columns.donorId")}
               sortable
             />
             <Column
