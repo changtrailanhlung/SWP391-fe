@@ -33,8 +33,11 @@ const Roles = () => {
   useEffect(() => {
     mounted.current = true;
     fetchPendingRequests();
+    
+    // Cleanup function
     return () => {
       mounted.current = false;
+      toastDisplayed.current = false;
     };
   }, []);
 
@@ -83,8 +86,12 @@ const Roles = () => {
       console.error("Error fetching data:", error);
       setError(error);
       
+      // Chỉ hiển thị toast nếu không phải lỗi 404
       if (error.response?.status !== 404) {
-        showToast("error", "Error", "Failed to fetch data");
+        // Đợi một chút để đảm bảo Toast component đã được mount
+        setTimeout(() => {
+          showToast("error", "Error", "Failed to fetch data");
+        }, 100);
       }
       
       setPendingRequests([]);
@@ -95,7 +102,6 @@ const Roles = () => {
       }
     }
   };
-
   const getRoleName = (roleId) => {
     const roleMap = {
       1: t("roles.admin"),
@@ -243,13 +249,26 @@ const Roles = () => {
     }
   };
   const showToast = (severity, summary, detail) => {
-    if (mounted.current && toast.current) {
-      toast.current.show({
-        severity,
-        summary,
-        detail,
-        life: 3000,
-      });
+    // Kiểm tra xem component còn mounted không và toast đã được khởi tạo chưa
+    if (mounted.current && toast.current && !toastDisplayed.current) {
+      try {
+        toast.current.show({
+          severity,
+          summary,
+          detail,
+          life: 3000,
+        });
+        toastDisplayed.current = true; // Đánh dấu là toast đã được hiển thị
+        
+        // Reset flag sau khi toast biến mất
+        setTimeout(() => {
+          if (mounted.current) {
+            toastDisplayed.current = false;
+          }
+        }, 3000);
+      } catch (error) {
+        console.error('Error showing toast:', error);
+      }
     }
   };
   const handleReject = async (request) => {
