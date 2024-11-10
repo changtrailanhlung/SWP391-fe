@@ -17,8 +17,8 @@ const HistoryDonation = () => {
       try {
         const donationResponse = await axios.get(`/donate`);
         const shelterResponse = await axios.get(`/shelter`); // Fetch all shelters
-        console.log(donationResponse.data); // Log the donation response data
-        console.log(shelterResponse.data); // Log the shelter response data
+        // console.log(donationResponse.data); // Log the donation response data
+        // console.log(shelterResponse.data); // Log the shelter response data
 
         // Sort donations by date in descending order
         const sortedDonations = donationResponse.data.sort(

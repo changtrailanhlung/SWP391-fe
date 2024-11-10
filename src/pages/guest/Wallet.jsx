@@ -30,7 +30,7 @@ const Wallet = () => {
 
     try {
       const response = await post("/donate/vnpay", data);
-      console.log("Donation successful:", response);
+      // console.log("Donation successful:", response);
 
       // Assume response contains the payment URL
       const paymentUrl = response; // Assign directly if response contains the URL

@@ -77,7 +77,7 @@ const RequestRole = () => {
       };
 
       // Log the payload to the console for each request
-      console.log("Payload for role request:", payload);
+      // console.log("Payload for role request:", payload);
 
       try {
         await axios.post("/userrole/requestrole", payload); // Send the POST request

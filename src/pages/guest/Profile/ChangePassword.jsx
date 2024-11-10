@@ -27,7 +27,7 @@ const ChangePassword = () => {
         oldPassword,
         newPassword,
       });
-      console.log("Password Change Response:", response.data);
+      // console.log("Password Change Response:", response.data);
       toast.success(t("profile.passwordChangeSuccess"));
       setTimeout(() => {
         navigate("/user-info");

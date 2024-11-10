@@ -65,7 +65,7 @@ const HistoryForm = () => {
 
     try {
       const response = await axios.post("/form", payload);
-      console.log("Response:", response.data);
+      // console.log("Response:", response.data);
       fetchData();
     } catch (error) {
       console.error("Error submitting form:", error);
