@@ -53,7 +53,23 @@
     "error": "Lỗi",
     "delete": "Xóa",
     "cancel": "Hủy",
-    "basicInformation": "Thông tin cơ bản"
+    "basicInformation": "Thông tin cơ bản",
+    "adopt": "Nhận nuôi",
+    "adoption-status": "Trạng thái nhận nuôi",
+    "age": "Tuổi",
+    "breed": "Giống",
+    "color": "Màu sắc",
+    "description": "Mô tả",
+    "gender": "Giới tính",
+    "next": "Tiếp theo",
+    "no": "Thứ tự",
+    "of": "của",
+    "page": "Trang",
+    "previous": "Trước",
+    "size": "Kích thước",
+    "status": "Trạng thái",
+    "type": "Loại",
+    "years": "Tuổi"
   },
   "buttons": {
     "createUser": "Tạo tài khoản",
@@ -222,7 +238,14 @@
     "pets": "Thú Cưng",
     "adoptionForm": "Đơn Nhận Nuôi",
     "events": "Sự Kiện",
-    "feedback": "Phản hồi"
+    "feedback": "Phản hồi",
+    "event": {
+      "date": "Ngày",
+      "description": "Mô tả",
+      "feedback": "Đánh giá",
+      "location": "Vị trí",
+      "name": "Tên"
+    }
   },
   "dashboard": {
     "totalRevenue": "Tổng ủng hộ",
@@ -253,7 +276,8 @@
       "currentRoles": "Vai Trò Hiện Tại",
       "requestedRole": "Vai Trò Yêu Cầu",
       "requestDate": "Ngày Yêu Cầu"
-    }
+    },
+    "cancel": "Hủy"
   },
   "roles": {
     "admin": "Quản trị viên",
