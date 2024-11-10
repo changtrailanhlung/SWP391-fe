@@ -27,37 +27,44 @@ const ProfileInfo = ({
         </div>
       )}
       <h4 className="text-lg font-semibold">
-        {t("profile.username")}:
+        {t("profile.username")}:&nbsp;
         <span className="font-normal">
           {user?.username || t("profile.noData")}
         </span>
       </h4>
       <h4 className="text-lg font-semibold">
-        {t("profile.email")}:
+        {t("profile.email")}:&nbsp;
         <span className="font-normal">
           {user?.email || t("profile.noData")}
         </span>
       </h4>
       <h4 className="text-lg font-semibold">
-        {t("profile.phone")}:
+        {t("profile.phone")}:&nbsp;
         <span className="font-normal">
           {user?.phone || t("profile.noData")}
         </span>
       </h4>
       <h4 className="text-lg font-semibold">
-        {t("profile.location")}:
+        {t("profile.location")}:&nbsp;
         <span className="font-normal">
           {user?.location || t("profile.noData")}
         </span>
       </h4>
       <h4 className="text-lg font-semibold">
-        {t("profile.donate")}:
+        {t("profile.points")}:&nbsp;
+        <span className="font-normal">
+          {user?.point || t("profile.noData")} {t("profile.point")}
+        </span>
+      </h4>
+
+      <h4 className="text-lg font-semibold">
+        {t("profile.donate")}:&nbsp;
         <span className="font-normal">
           {formatNumber(user?.totalDonation)} VND
         </span>
       </h4>
       <h4 className="text-lg font-semibold">
-        {t("profile.wallet")}:
+        {t("profile.wallet")}:&nbsp;
         <span className="font-normal">{formatNumber(user?.wallet)} VND</span>
       </h4>
       <div className="mt-4 flex space-x-4">

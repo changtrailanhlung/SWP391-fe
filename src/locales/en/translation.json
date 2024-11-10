@@ -76,7 +76,9 @@
     "confirmPassword": "Confirm Password",
     "passwordsDoNotMatch": "Passwords do not match!",
     "wallet": "Wallet",
-    "requestMemberPermission": "Request Member Permission"
+    "requestMemberPermission": "Request Member Permission",
+    "points": "Points member",
+    "point": "points"
   },
   "join": "Join",
   "updateInfo": {
@@ -154,7 +156,7 @@
       "description": "Description",
       "feedback": "Feedback"
     },
-    "feedback":"Feedback"
+    "feedback": "Feedback"
   },
   "dashboard": {
     "totalRevenue": "Total Donation",
@@ -492,9 +494,9 @@
       "cancel": "Cancel",
       "update": "Update Event",
       "createEvent": "Create Event",
-      "submit":"Submit",
-      "attended":"Attended",
-      "absent":"Absent"
+      "submit": "Submit",
+      "attended": "Attended",
+      "absent": "Absent"
     },
     "table": {
       "no": "No.",
@@ -510,7 +512,7 @@
       "edit": "Edit Event",
       "participants": "Participants",
       "noParticipants": "No participants found for this event",
-      "points":"Points"
+      "points": "Points"
     },
     "form": {
       "eventName": {
@@ -555,9 +557,9 @@
         "eventDeleted": "Event deleted successfully!"
       }
     },
-    "status":{
-      "attended":"Attended",
-      "absent":"Absent"
+    "status": {
+      "attended": "Attended",
+      "absent": "Absent"
     }
   },
   "pet": {
@@ -673,17 +675,17 @@
   "aboutus": "About Us",
   "desctiptionhome": " At Pet Rescue Haven, we are dedicated to rescuing, rehabilitating,               and rehoming animals in need. Our mission is to provide a safe and               loving environment for abandoned, abused, and homeless animals,               giving them a second chance at life. With the support of our               passionate volunteers and the generosity of our community, we work               tirelessly to ensure that each animal receives the care and               compassion they deserve. Join us in our journey to make a               difference in the lives of animals and help create a world where               every pet has a loving home.",
   "founder": "FOUNDER",
-  "button":{
-    "cancel":"Cancel",
-    "save":"Save"
+  "button": {
+    "cancel": "Cancel",
+    "save": "Save"
   },
-  "a":{
-    "table":{
-      "headers":{
-        "no":"No.",
-        "user":"Username",
-        "feedback":"Feedback",
-        "date":"Date"
+  "a": {
+    "table": {
+      "headers": {
+        "no": "No.",
+        "user": "Username",
+        "feedback": "Feedback",
+        "date": "Date"
       }
     }
   }

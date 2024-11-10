@@ -148,7 +148,9 @@
     "confirmPassword": "Xác thực mật khẩu mới",
     "passwordsDoNotMatch": "Mật khẩu không khớp!",
     "wallet": "Ví",
-    "requestMemberPermission": "Yêu cầu quyền"
+    "requestMemberPermission": "Yêu cầu quyền",
+    "points": "Điểm thành viên",
+    "point": "điểm"
   },
   "join": "Tham gia",
   "updateInfo": {
@@ -505,9 +507,9 @@
       "cancel": "Hủy",
       "update": "Cập Nhật Sự Kiện",
       "createEvent": "Tạo Sự Kiện",
-      "submit":"Gửi",
-      "attended":"Có tham gia",
-      "absent":"không tham gia"
+      "submit": "Gửi",
+      "attended": "Có tham gia",
+      "absent": "không tham gia"
     },
     "table": {
       "no": "STT",
@@ -523,7 +525,7 @@
       "edit": "Chỉnh Sửa Sự Kiện",
       "participants": "Người Tham Gia",
       "noParticipants": "Không có người tham gia cho sự kiện này",
-      "points":"Điểm"
+      "points": "Điểm"
     },
     "form": {
       "eventName": {
@@ -568,9 +570,9 @@
         "eventDeleted": "Xóa sự kiện thành công!"
       }
     },
-    "status":{
-      "attended":"Có tham gia",
-      "absent":"không tham gia"
+    "status": {
+      "attended": "Có tham gia",
+      "absent": "không tham gia"
     }
   },
   "adoptionForms": {
@@ -674,17 +676,17 @@
   "aboutus": "Về chúng tôi",
   "desctiptionhome": "Tại Pet Rescue Haven, chúng tôi tận tâm giải cứu, phục hồi,               và nuôi dưỡng lại những động vật có nhu cầu. Sứ mệnh của chúng tôi là cung cấp một môi trường an toàn và               môi trường yêu thương dành cho động vật bị bỏ rơi, bị ngược đãi và vô gia cư,               cho họ cơ hội sống thứ hai. Với sự hỗ trợ của chúng tôi               tình nguyện viên đầy nhiệt huyết và sự hào phóng của cộng đồng, chúng tôi làm việc               không mệt mỏi để đảm bảo rằng mỗi con vật đều nhận được sự chăm sóc và               lòng trắc ẩn mà họ xứng đáng nhận được. Hãy tham gia cùng chúng tôi trong hành trình tạo nên một               sự khác biệt trong cuộc sống của động vật và giúp tạo ra một thế giới nơi               mỗi thú cưng đều có một ngôi nhà yêu thương.",
   "founder": "NHÀ SÁNG LẬP",
-  "button":{
-    "cancel":"Hủy",
-    "save":"Lưu"
+  "button": {
+    "cancel": "Hủy",
+    "save": "Lưu"
   },
-  "a":{
-    "table":{
-      "headers":{
-        "no":"STT",
-        "user":"Người Dùng",
-        "feedback":"Phản hồi",
-        "date":"Ngày"
+  "a": {
+    "table": {
+      "headers": {
+        "no": "STT",
+        "user": "Người Dùng",
+        "feedback": "Phản hồi",
+        "date": "Ngày"
       }
     }
   }
