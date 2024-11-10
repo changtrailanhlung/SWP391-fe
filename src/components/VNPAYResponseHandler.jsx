@@ -8,17 +8,17 @@ const PaymentResult = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log("Location:", location); // Log location for debugging
+    // console.log("Location:", location); // Log location for debugging
     const params = new URLSearchParams(location.search);
 
     // Log all parameters for debugging
-    console.log("Received URL Parameters:", Object.fromEntries(params));
+    // console.log("Received URL Parameters:", Object.fromEntries(params));
 
     const vnp_ResponseCode = params.get("vnp_ResponseCode");
     const vnp_TransactionStatus = params.get("vnp_TransactionStatus");
 
-    console.log("Response Code:", vnp_ResponseCode);
-    console.log("Transaction Status:", vnp_TransactionStatus);
+    // console.log("Response Code:", vnp_ResponseCode);
+    // console.log("Transaction Status:", vnp_TransactionStatus);
 
     if (vnp_ResponseCode === "00" && vnp_TransactionStatus === "00") {
       const apiParams = {
@@ -40,7 +40,7 @@ const PaymentResult = () => {
 
       ApiRequest(apiParams)
         .then((data) => {
-          console.log("Received data from API:", data);
+          // console.log("Received data from API:", data);
           toast.success("Giao dịch thành công!"); // Show success toast
           setTimeout(() => {
             navigate("/"); // Navigate after a short delay

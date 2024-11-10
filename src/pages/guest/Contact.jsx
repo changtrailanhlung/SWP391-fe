@@ -39,7 +39,7 @@ const Contact = () => {
     formData.append("description", description);
 
     // Log dữ liệu để kiểm tra
-    console.log("Data being sent:", Object.fromEntries(formData.entries()));
+    // console.log("Data being sent:", Object.fromEntries(formData.entries()));
 
     setLoading(true);
 
@@ -47,7 +47,7 @@ const Contact = () => {
       const response = await axios.post("/feedback", formData);
 
       // Giả sử phản hồi được cấu trúc đúng
-      console.log("Feedback submitted:", response.data);
+      // console.log("Feedback submitted:", response.data);
       toast.success(t("feedback.successMessage"));
       setDescription("");
     } catch (error) {

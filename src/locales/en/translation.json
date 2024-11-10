@@ -156,7 +156,8 @@
       "description": "Description",
       "feedback": "Feedback"
     },
-    "feedback": "Feedback"
+    "feedback": "Feedback",
+    "shelterId": "ID Shelfter"
   },
   "dashboard": {
     "totalRevenue": "Total Donation",
@@ -240,7 +241,8 @@
       "currentRoles": "Current Roles",
       "requestedRole": "Requested Role",
       "requestDate": "Request Date"
-    }
+    },
+    "Cancel": "Cancel"
   },
   "roles": {
     "admin": "Admin",
@@ -572,7 +574,11 @@
     "size": "Size",
     "color": "Color",
     "description": "Description",
-    "create": "Create Pet"
+    "create": "Create Pet",
+    "status": "Status",
+    "years": "years",
+    "adopt": "Adopt",
+    "adoption-status": "Adoption status"
   },
   "adoptionForms": {
     "title": "Adoption Forms",
@@ -688,5 +694,25 @@
         "date": "Date"
       }
     }
-  }
+  },
+  "size": "Size",
+  "years": "years",
+  "type": "Type",
+  "next": "Next",
+  "description": "Description",
+  "age": "Age",
+  "color": "Color",
+  "of": "of",
+  "page": "Page",
+  "previous": "Previous",
+  "breed": "Breed",
+  "adopt": "Adopt",
+  "adoption-status": "Adoption status",
+  "pagination": {
+    "next": "Next",
+    "of": "of",
+    "page": "Page",
+    "previous": "Previous"
+  },
+  "joined": "Joined"
 }

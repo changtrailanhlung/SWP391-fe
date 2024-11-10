@@ -15,10 +15,15 @@ const Events = () => {
   const [joinedEventIds, setJoinedEventIds] = useState(new Set());
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-  const today = new Date();
-  const todayString = today.toISOString().split("T")[0];
+  const [disableJoinButton, setDisableJoinButton] = useState(false);
+  const todayString = new Date().toISOString().split("T")[0];
   const [dateFilter, setDateFilter] = useState(todayString);
   const eventsPerPage = 9;
+
+  const formatDateTime = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("nameid");
@@ -30,10 +35,9 @@ const Events = () => {
     const fetchEvents = async () => {
       try {
         const response = await axios.get("/events");
-        const sortedEvents = response.data.sort(
-          (a, b) => new Date(b.date) - new Date(a.date)
+        setEvents(
+          response.data.sort((a, b) => new Date(b.date) - new Date(a.date))
         );
-        setEvents(sortedEvents);
       } catch (error) {
         console.error("Error fetching events:", error);
         toast.error("Error fetching events");
@@ -46,8 +50,7 @@ const Events = () => {
   const fetchJoinedEvents = async (userId) => {
     try {
       const response = await axios.get(`/events/user/${userId}`);
-      const eventIds = response.data.map((event) => event.id);
-      setJoinedEventIds(new Set(eventIds));
+      setJoinedEventIds(new Set(response.data.map((event) => event.id)));
     } catch (error) {
       console.error("Error fetching joined events:", error);
       toast.error("Error fetching joined events");
@@ -66,11 +69,7 @@ const Events = () => {
   };
 
   const getUserRole = () => localStorage.getItem("role") || "";
-
-  const isLoggedIn = () => {
-    const userId = localStorage.getItem("nameid");
-    return userId !== null;
-  };
+  const isLoggedIn = () => !!localStorage.getItem("nameid");
 
   const handleJoinEvent = async () => {
     if (!selectedEvent) return;
@@ -89,24 +88,23 @@ const Events = () => {
     try {
       await axios.post("/events/adduser", {
         eventId: selectedEvent.id,
-        userId: userId,
+        userId,
       });
       toast.success("Tham gia sự kiện thành công!", {
         onClose: () => {
           setJoinedEventIds((prev) => new Set(prev).add(selectedEvent.id));
           setIsDialogOpen(false);
+          setDisableJoinButton(false);
         },
       });
     } catch (error) {
       console.error("Error joining event:", error);
       toast.error("Đã xảy ra lỗi khi tham gia sự kiện.");
+      setDisableJoinButton(true);
     }
   };
 
-  // Extract unique locations for filtering
   const uniqueLocations = [...new Set(events.map((event) => event.location))];
-
-  // Filter events based on search query, date filter, and location filter
   const filteredEvents = events.filter((event) => {
     const matchesSearchQuery = event.name
       .toLowerCase()
@@ -117,31 +115,19 @@ const Events = () => {
         new Date(dateFilter).toLocaleDateString();
     const matchesLocationFilter =
       selectedLocation === "" || event.location === selectedLocation;
-
     return matchesSearchQuery && matchesDateFilter && matchesLocationFilter;
   });
 
   const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
-  const indexOfLastEvent = currentPage * eventsPerPage;
-  const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
   const currentEvents = filteredEvents.slice(
-    indexOfFirstEvent,
-    indexOfLastEvent
+    (currentPage - 1) * eventsPerPage,
+    currentPage * eventsPerPage
   );
-
-  const handlePrevious = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-  const handleNext = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6 text-center">{t("events")}</h1>
 
-      {/* Search Bar, Date Filter, and Location Filter in a single row */}
       <div className="flex space-x-4 mb-4">
         <input
           type="text"
@@ -155,7 +141,7 @@ const Events = () => {
           value={dateFilter}
           onChange={(e) => setDateFilter(e.target.value)}
           className="p-2 border rounded w-40"
-          min={todayString} // Prevent selecting past dates
+          min={todayString}
         />
         <select
           value={selectedLocation}
@@ -190,10 +176,7 @@ const Events = () => {
                 <p
                   className="text-gray-500 mt-1"
                   dangerouslySetInnerHTML={{
-                    __html:
-                      event.description.length > 20
-                        ? event.description.substring(0, 20) + "..."
-                        : event.description,
+                    __html: event.description.slice(0, 20) + "...",
                   }}
                 />
               </div>
@@ -209,7 +192,7 @@ const Events = () => {
       {totalPages > 1 && (
         <div className="flex justify-between mt-4">
           <button
-            onClick={handlePrevious}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
             className="px-4 py-2 bg-gray-300 rounded"
           >
@@ -219,7 +202,9 @@ const Events = () => {
             {t("page")} {currentPage} {t("of")} {totalPages}
           </p>
           <button
-            onClick={handleNext}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
             disabled={currentPage === totalPages}
             className="px-4 py-2 bg-gray-300 rounded"
           >
@@ -235,38 +220,37 @@ const Events = () => {
               onClick={() => setIsDialogOpen(false)}
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
             >
-              &times; {/* Close icon */}
+              &times;
             </button>
-            <h2 className="text-2xl font-semibold">{selectedEvent.name}</h2>
-            <p>
-              {t("event.date")}: {formatDateTime(selectedEvent.date)}
-            </p>
-            <p>
+            <h2 className="text-2xl font-bold mb-4">{selectedEvent.name}</h2>
+            <p className="text-gray-700 mb-4">
               {t("event.location")}: {selectedEvent.location}
             </p>
+            <p className="text-gray-500 mb-4">
+              {t("event.date")}: {formatDateTime(selectedEvent.date)}
+            </p>
             <p
-              className="mt-2 leading-relaxed"
+              className="text-gray-500 mb-4"
               dangerouslySetInnerHTML={{ __html: selectedEvent.description }}
             />
-            {!joinedEventIds.has(selectedEvent.id) && (
-              <button
-                onClick={handleJoinEvent}
-                className="mt-4 px-4 py-2 bg-green-500 text-white rounded"
-              >
-                {t("join")}
-              </button>
-            )}
+            <button
+              onClick={handleJoinEvent}
+              disabled={
+                joinedEventIds.has(selectedEvent.id) || disableJoinButton
+              }
+              className={`${
+                joinedEventIds.has(selectedEvent.id) || disableJoinButton
+                  ? "bg-gray-500 text-white cursor-not-allowed"
+                  : "bg-green-500 text-white hover:bg-green-600"
+              } px-4 py-2 rounded mt-4`}
+            >
+              {joinedEventIds.has(selectedEvent.id) ? t("joined") : t("join")}
+            </button>
           </div>
         </div>
       )}
     </div>
   );
-};
-
-// Utility function to format date
-const formatDateTime = (dateString) => {
-  const date = new Date(dateString);
-  return date.toLocaleString(); // Simplified for readability
 };
 
 export default Events;

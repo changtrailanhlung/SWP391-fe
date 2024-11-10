@@ -15,7 +15,7 @@ const Donates = () => {
     const fetchShelters = async () => {
       try {
         const response = await axios.get("/shelter");
-        console.log("API Response:", response.data);
+        // console.log("API Response:", response.data);
         setShelters(response.data);
       } catch (error) {
         console.error("Error fetching shelter information:", error);

@@ -26,7 +26,7 @@ const DonationForm = () => {
     formData.append("donorId", donorId);
     formData.append("shelterId", shelterId);
 
-    console.log("FormData:", formData); // Log for debugging
+    // console.log("FormData:", formData); // Log for debugging
 
     try {
       const response = await axios.post("/donate/createdonate", formData, {
@@ -34,7 +34,7 @@ const DonationForm = () => {
           "Content-Type": "multipart/form-data", // Specify the correct content type
         },
       });
-      console.log("Donation Response:", response.data);
+      // console.log("Donation Response:", response.data);
 
       // Show success toast message
 
