@@ -40,7 +40,7 @@ const HistoryForm = () => {
             gender: petDetails ? petDetails.gender : "Unknown",
             age: petDetails ? petDetails.age : "Unknown",
             color: petDetails ? petDetails.color : "Unknown",
-            shelterName: item.shelter || "Unknown", // Sử dụng trường shelter từ item
+            shelterName: item.shelter || "Unknown",
             status: statusText,
           };
         })
@@ -80,14 +80,30 @@ const HistoryForm = () => {
       <DataTable value={data} paginator rows={10} className="p-mt-3">
         <Column
           body={(rowData, options) => options.rowIndex + 1}
-          header="No."
+          header={t("HistoryForm.header.no")}
         />
-        <Column field="petName" sortable header="Pet Name" />
-        <Column field="gender" sortable header="Gender" />
-        <Column field="age" sortable header="Age" />
-        <Column field="color" sortable header="Color" />
-        <Column field="shelterName" sortable header="Shelter Name" />
-        <Column field="status" sortable header="Status" />
+        <Column
+          field="petName"
+          sortable
+          header={t("HistoryForm.header.petName")}
+        />
+        <Column
+          field="gender"
+          sortable
+          header={t("HistoryForm.header.gender")}
+        />
+        <Column field="age" sortable header={t("HistoryForm.header.age")} />
+        <Column field="color" sortable header={t("HistoryForm.header.color")} />
+        <Column
+          field="shelterName"
+          sortable
+          header={t("HistoryForm.header.shelterName")}
+        />
+        <Column
+          field="status"
+          sortable
+          header={t("HistoryForm.header.status")}
+        />
       </DataTable>
     </div>
   );

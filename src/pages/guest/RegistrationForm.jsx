@@ -3,8 +3,10 @@ import { useLocation } from "react-router-dom";
 import axios from "../../services/axiosClient";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next"; // Import useTranslation
 
 const RegistrationForm = () => {
+  const { t } = useTranslation(); // Initialize translation
   const location = useLocation();
   const petID = location.state?.petID; // Safely extract petId
 
@@ -41,16 +43,16 @@ const RegistrationForm = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      toast.success("Registration successful!");
-      navigate("/success");
+      toast.success(t("registration_form.success"), {
+        onClose: () => navigate("/pets"), // Navigate after toast closes
+      });
     } catch (error) {
       console.error(
         "Error submitting the form:",
         error.response || error.message
       );
       toast.error(
-        error.response?.data?.message ||
-          "Registration failed, please try again."
+        error.response?.data?.message || t("registration_form.error") // Use translation for error message
       );
     }
   };
@@ -59,11 +61,13 @@ const RegistrationForm = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
         <h1 className="text-3xl font-bold text-center mb-6">
-          Registration Form
+          {t("registration_form.title")} {/* Use translation for title */}
         </h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Social Account</label>
+            <label className="block text-gray-700 mb-2">
+              {t("registration_form.social_account")}
+            </label>
             <input
               type="text"
               value={socialAccount}
@@ -73,7 +77,9 @@ const RegistrationForm = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Income Amount</label>
+            <label className="block text-gray-700 mb-2">
+              {t("registration_form.income_amount")}
+            </label>
             <input
               type="number"
               value={incomeAmount}
@@ -84,7 +90,7 @@ const RegistrationForm = () => {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">
-              Identification Image (Front)
+              {t("registration_form.identification_image_front")}
             </label>
             <input
               type="file"
@@ -96,7 +102,7 @@ const RegistrationForm = () => {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">
-              Identification Image (Back)
+              {t("registration_form.identification_image_back")}
             </label>
             <input
               type="file"
@@ -112,7 +118,8 @@ const RegistrationForm = () => {
             type="submit"
             className="w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200"
           >
-            Submit
+            {t("registration_form.submit")}{" "}
+            {/* Use translation for button text */}
           </button>
         </form>
       </div>

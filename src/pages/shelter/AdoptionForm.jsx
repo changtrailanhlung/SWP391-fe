@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../services/axiosClient";
+import { useTranslation } from "react-i18next";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -10,6 +11,7 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { InputTextarea } from "primereact/inputtextarea";
 
 const AdoptionForm = () => {
+  const { t } = useTranslation();
   const [forms, setForms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [petDetails, setPetDetails] = useState(null);
@@ -176,7 +178,8 @@ const AdoptionForm = () => {
       toast.current.show({
         severity: "warning",
         summary: "Warning",
-        detail: "This pet already has a confirmed adoption form. Please reject other forms first.",
+        detail:
+          "This pet already has a confirmed adoption form. Please reject other forms first.",
         life: 3000,
       });
       return;
@@ -192,7 +195,7 @@ const AdoptionForm = () => {
       <div className="flex justify-end gap-2 mt-4">
         <Button
           icon="pi pi-times"
-          label="Cancel"
+          label={t('buttons.cancel')}
           className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-full inline-flex items-center transition-colors duration-300"
           onClick={() => {
             setShowNotificationDialog(false);
@@ -201,7 +204,7 @@ const AdoptionForm = () => {
         />
         <Button
           icon="pi pi-check"
-          label="Send"
+          label={t('button.save')}
           className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-full inline-flex items-center transition-colors duration-300 mr-4"
           onClick={() => {
             if (tempFormData && tempStatus !== null) {
@@ -215,10 +218,12 @@ const AdoptionForm = () => {
     return (
       <Dialog
         visible={showNotificationDialog}
-        style={{ width: '50vw' }}
+        style={{ width: "50vw" }}
         header={
           <h3 className="text-2xl font-semibold text-gray-800">
-            {`Send Notification - ${tempStatus ? 'Confirm' : 'Reject'} Adoption`}
+            {`Send Notification - ${
+              tempStatus ? "Confirm" : "Reject"
+            } Adoption`}
           </h3>
         }
         modal
@@ -231,7 +236,10 @@ const AdoptionForm = () => {
       >
         <div className="p-6">
           <div className="mb-4">
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="message"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Notification Message
             </label>
             <InputTextarea
@@ -277,15 +285,15 @@ const AdoptionForm = () => {
 
   const confirmDelete = (id) => {
     confirmDialog({
-      message: "Are you sure you want to delete this form?",
-      header: "Delete Confirmation",
+      message: t("adoptionForms.confirmDelete"),
+      header: t("adoptionForms.deleteConfirmation"),
       icon: "pi pi-exclamation-triangle",
       acceptClassName:
         "bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-full inline-flex items-center transition-colors duration-300 mr-4",
       rejectClassName:
         "bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-full inline-flex items-center transition-colors duration-300",
-      acceptLabel: "Delete",
-      rejectLabel: "Cancel",
+      acceptLabel: t("common.delete"),
+      rejectLabel: t("common.cancel"),
       className: "custom-confirm-dialog",
       accept: () => deleteForm(id),
       style: { width: "400px" },
@@ -331,10 +339,10 @@ const AdoptionForm = () => {
         }`}
       >
         {rowData.status === null
-          ? "Pending"
+          ? t("status.pending")
           : rowData.status
-          ? "Confirmed"
-          : "Rejected"}
+          ? t("status.confirmed")
+          : t("status.rejected")}
       </span>
     );
   };
@@ -393,14 +401,14 @@ const AdoptionForm = () => {
                 icon="pi pi-check"
                 className="p-button-rounded p-button-success p-button-sm"
                 onClick={() => confirmStatusUpdate(rowData.id, true)}
-                tooltip="Confirm Form"
+                tooltip={t('tooltip.confirm')}
               />
             )}
             <Button
               icon="pi pi-times"
               className="p-button-rounded p-button-danger p-button-sm"
               onClick={() => confirmStatusUpdate(rowData.id, false)}
-              tooltip="Reject Form"
+              tooltip={t('tooltip.reject')}
             />
           </>
         )}
@@ -431,7 +439,9 @@ const AdoptionForm = () => {
     return (
       <Dialog
         header={
-          <h3 className="text-2xl font-semibold text-gray-800">User Details</h3>
+          <h3 className="text-2xl font-semibold text-gray-800">
+            {t("adoptionForms.userDetails")}
+          </h3>
         }
         visible={showUserDialog}
         onHide={() => setShowUserDialog(false)}
@@ -452,29 +462,29 @@ const AdoptionForm = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h4 className="text-xl font-semibold text-gray-800 mb-4">
-                Basic Information
+                {t('common.basicInformation')}
               </h4>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Username:</span>
+                  <span className="text-gray-600">{t("profile.username")}:</span>
                   <span className="font-medium text-gray-800">
                     {userDetails.username}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Email:</span>
+                  <span className="text-gray-600">{t("profile.email")}:</span>
                   <span className="font-medium text-gray-800">
                     {userDetails.email}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Phone:</span>
+                  <span className="text-gray-600">{t("profile.phone")}:</span>
                   <span className="font-medium text-gray-800">
                     {userDetails.phone}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Location:</span>
+                  <span className="text-gray-600">{t("profile.location")}:</span>
                   <span className="font-medium text-gray-800">
                     {userDetails.location}
                   </span>
@@ -484,18 +494,18 @@ const AdoptionForm = () => {
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h4 className="text-xl font-semibold text-gray-800 mb-4">
-                Additional Information
+              {t("tooltip.AdditionalInformation")}
               </h4>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Total Donation:</span>
+                  <span className="text-gray-600">{t("profile.donate")}:</span>
                   <span className="font-medium text-gray-800">
                     {userDetails.totalDonation.toLocaleString()} VND
                   </span>
                 </div>
 
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Roles:</span>
+                  <span className="text-gray-600">{t("table.roles")}:</span>
                   <span className="font-medium text-gray-800">
                     {userDetails.roles.join(", ")}
                   </span>
@@ -524,7 +534,9 @@ const AdoptionForm = () => {
     return (
       <Dialog
         header={
-          <h3 className="text-2xl font-semibold text-gray-800">Pet Details</h3>
+          <h3 className="text-2xl font-semibold text-gray-800">
+            {t('adoptionForms.petDetails')}
+          </h3>
         }
         visible={showPetDialog}
         onHide={() => setShowPetDialog(false)}
@@ -545,35 +557,35 @@ const AdoptionForm = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h4 className="text-xl font-semibold text-gray-800 mb-4">
-                Basic Information
+              {t('common.basicInformation')}
               </h4>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Name:</span>
+                  <span className="text-gray-600">{t('pet.name')}:</span>
                   <span className="font-medium text-gray-800">
                     {petDetails.name}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Type:</span>
+                  <span className="text-gray-600">{t('pet.type')}:</span>
                   <span className="font-medium text-gray-800">
                     {petDetails.type}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Breed:</span>
+                  <span className="text-gray-600">{t('pet.breed')}:</span>
                   <span className="font-medium text-gray-800">
                     {petDetails.breed || "Not specified"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Gender:</span>
+                  <span className="text-gray-600">{t('pet.gender')}:</span>
                   <span className="font-medium text-gray-800">
                     {petDetails.gender || "Not specified"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Age:</span>
+                  <span className="text-gray-600">{t('pet.age')}:</span>
                   <span className="font-medium text-gray-800">
                     {petDetails.age || "Not specified"}
                   </span>
@@ -583,23 +595,23 @@ const AdoptionForm = () => {
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h4 className="text-xl font-semibold text-gray-800 mb-4">
-                Additional Details
+              {t('tooltip.AdditionalInformation')}
               </h4>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Size:</span>
+                  <span className="text-gray-600">{t('pet.size')}:</span>
                   <span className="font-medium text-gray-800">
                     {petDetails.size || "Not specified"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Color:</span>
+                  <span className="text-gray-600">{t('pet.color')}:</span>
                   <span className="font-medium text-gray-800">
                     {petDetails.color || "Not specified"}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Status:</span>
+                  <span className="text-gray-600">{t('pet.status')}:</span>
                   <span className="font-medium text-gray-800">
                     {petDetails.adoptionStatus}
                   </span>
@@ -610,13 +622,13 @@ const AdoptionForm = () => {
 
           <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
             <h4 className="text-xl font-semibold text-gray-800 mb-4">
-              Medical History
+            {t('tooltip.MedicalHistory')}
             </h4>
             {petDetails.statuses && petDetails.statuses.length > 0 ? (
               <div className="space-y-3">
                 {combinedDiseases && (
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Disease:</span>
+                    <span className="text-gray-600">{t('tooltip.disease')}:</span>
                     <span className="font-medium text-gray-800">
                       {combinedDiseases}
                     </span>
@@ -624,7 +636,7 @@ const AdoptionForm = () => {
                 )}
                 {combinedVaccines && (
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Vaccine:</span>
+                    <span className="text-gray-600">{t('tooltip.vaccine')}:</span>
                     <span className="font-medium text-gray-800">
                       {combinedVaccines}
                     </span>
@@ -632,14 +644,14 @@ const AdoptionForm = () => {
                 )}
               </div>
             ) : (
-              <p className="text-gray-500">No medical history available</p>
+              <p className="text-gray-500">{t('tooltip.Nomedicalhistoryavailable')}</p>
             )}
           </div>
 
           {petDetails.description && (
             <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
               <h4 className="text-xl font-semibold text-gray-800 mb-4">
-                Description
+              {t("tooltip.Description")}
               </h4>
               <p className="text-gray-600 leading-relaxed">
                 {petDetails.description}
@@ -676,8 +688,10 @@ const AdoptionForm = () => {
       <ConfirmDialog />
       {renderPetDialog()}
       {renderUserDialog()}
-      {renderNotificationDialog()}  
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">Adoption Forms</h2>
+      {renderNotificationDialog()}
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">
+        {t("adoptionForms.title")}
+      </h2>
       <DataTable
         value={forms}
         loading={loading}
@@ -687,18 +701,18 @@ const AdoptionForm = () => {
       >
         <Column
           field="sequentialID"
-          header="No."
+          header={t('tooltip.no')}
           body={sequentialID}
           sortable
         />
-        <Column field="username" header="AdopteName" sortable />
-        <Column header="ID Front" body={imageBodyTemplate} />
-        <Column header="ID Back" body={imageBackBodyTemplate} />
-        <Column field="socialAccount" header="Social Account" sortable />
-        <Column field="incomeAmount" header="Income Amount" sortable />
+        <Column field="username" header={t('tooltip.AdopteName')} sortable />
+        <Column header={t('tooltip.IDFront')} body={imageBodyTemplate} />
+        <Column header={t('tooltip.IDBack')} body={imageBackBodyTemplate} />
+        <Column field="socialAccount" header={t('tooltip.socialAccount')} sortable />
+        <Column field="incomeAmount" header={t('tooltip.incomeAmount')} sortable />
         <Column
           field="status"
-          header="Status"
+          header={t('table.status')}
           body={statusBodyTemplate}
           sortable
         />

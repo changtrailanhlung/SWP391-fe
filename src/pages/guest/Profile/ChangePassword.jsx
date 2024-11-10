@@ -1,88 +1,111 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import axios from "../../../services/axiosClient";
-import { toast } from "react-toastify"; // Import toast
-import { useTranslation } from "react-i18next"; // Import useTranslation
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const ChangePassword = () => {
-  const { t } = useTranslation(); // Initialize translation
+  const { t } = useTranslation();
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const userId = localStorage.getItem("nameid"); // Get user ID from local storage
-  const navigate = useNavigate(); // Initialize useNavigate
+  const userId = localStorage.getItem("nameid");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-    setLoading(true); // Set loading state to true
+    e.preventDefault();
+    if (newPassword !== confirmPassword) {
+      toast.error(t("profile.passwordsDoNotMatch"));
+      return;
+    }
+
+    setLoading(true);
     try {
       const response = await axios.put("/users/updatepassword", {
-        userId: Number(userId), // Convert userId to a number
-        oldPassword: oldPassword,
-        newPassword: newPassword,
+        userId: Number(userId),
+        oldPassword,
+        newPassword,
       });
       console.log("Password Change Response:", response.data);
-      toast.success(t("profile.passwordChangeSuccess")); // Show success toast
+      toast.success(t("profile.passwordChangeSuccess"));
       setTimeout(() => {
-        navigate("/user-info"); // Redirect to /user-info after 3 seconds
+        navigate("/user-info");
       }, 3000);
     } catch (error) {
       console.error("Error changing password:", error);
-      toast.error(t("profile.passwordChangeError")); // Show error toast
+      toast.error(t("profile.passwordChangeError"));
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-bold text-center mb-4">
-        {t("profile.changePassword")}
-      </h2>
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded-lg p-6"
-      >
-        <div className="mb-4">
-          <label
-            className="block text-sm font-medium text-gray-700 mb-1"
-            htmlFor="oldPassword"
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 py-12">
+      <div className="w-full max-w-md p-4 bg-white shadow-lg rounded-lg">
+        <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
+          {t("profile.changePassword")}
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label
+              className="block text-sm font-medium text-gray-700 mb-1"
+              htmlFor="oldPassword"
+            >
+              {t("profile.oldPassword")}
+            </label>
+            <input
+              id="oldPassword"
+              type="password"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+              required
+              className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200"
+            />
+          </div>
+          <div>
+            <label
+              className="block text-sm font-medium text-gray-700 mb-1"
+              htmlFor="newPassword"
+            >
+              {t("profile.newPassword")}
+            </label>
+            <input
+              id="newPassword"
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+              className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200"
+            />
+          </div>
+          <div>
+            <label
+              className="block text-sm font-medium text-gray-700 mb-1"
+              htmlFor="confirmPassword"
+            >
+              {t("profile.confirmPassword")}
+            </label>
+            <input
+              id="confirmPassword"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200"
+            />
+          </div>
+          <button
+            type="submit"
+            className={`w-full bg-green-500 text-white py-3 rounded-lg shadow hover:bg-green-600 transition duration-200 ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={loading}
           >
-            {t("profile.oldPassword")}
-          </label>
-          <input
-            id="oldPassword"
-            type="password"
-            value={oldPassword}
-            onChange={(e) => setOldPassword(e.target.value)}
-            required
-            className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-sm font-medium text-gray-700 mb-1"
-            htmlFor="newPassword"
-          >
-            {t("profile.newPassword")}
-          </label>
-          <input
-            id="newPassword"
-            type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            required
-            className="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition duration-200"
-          disabled={loading} // Disable button while loading
-        >
-          {loading ? t("profile.loading") : t("profile.changePassword")}
-        </button>
-      </form>
+            {loading ? t("profile.loading") : t("profile.changePassword")}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

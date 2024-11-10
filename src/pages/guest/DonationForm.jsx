@@ -37,9 +37,10 @@ const DonationForm = () => {
       console.log("Donation Response:", response.data);
 
       // Show success toast message
-      toast.success(t("donation.successMessage"));
 
-      navigate("/donate");
+      toast.success(t("donation.successMessage"), {
+        onClose: () => navigate("/donate"), // Navigate after toast closes
+      });
     } catch (error) {
       console.error("Error creating donation:", error);
       if (error.response && error.response.data) {
@@ -55,7 +56,7 @@ const DonationForm = () => {
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
         {t("donation.formTitle")}
       </h1>
-      {error && <p className="text-red-500 text-center mb-4">{error}</p>}{" "}
+      {error && <p className="text-red-500 text-center mb-4">{error}</p>}
       {/* Display error message */}
       <form
         onSubmit={handleSubmit}
