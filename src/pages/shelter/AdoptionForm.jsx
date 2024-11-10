@@ -510,6 +510,12 @@ const AdoptionForm = () => {
                     {userDetails.roles.join(", ")}
                   </span>
                 </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">{t("Event.dialog.points")}:</span>
+                  <span className="font-medium text-gray-800">
+                    {userDetails.point}
+                  </span>
+                </div>
               </div>
             </div>
           </div>

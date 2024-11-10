@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   // baseURL: "https://localhost:7130/api",
-  baseURL: "https://swp391pawfund.azurewebsites.net/api",
+  baseURL: "https://swp391-pawfund-be.azurewebsites.net/api",
 });
 
 // Request Interceptor to include Authorization token

@@ -11,6 +11,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useTranslation } from "react-i18next";
 import QuillToolbar from "../../components/QuillToolbar";
+import { InputNumber } from 'primereact/inputnumber';
 
 const Event = () => {
   const { t, i18n } = useTranslation();
@@ -20,6 +21,7 @@ const Event = () => {
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [userEventStatuses, setUserEventStatuses] = useState({});
   const [newEvent, setNewEvent] = useState({
     shelterId: currentShelterId,
     name: "",
@@ -34,8 +36,189 @@ const Event = () => {
   const [selectedEventParticipants, setSelectedEventParticipants] = useState(
     []
   );
+  const [showPointsDialog, setShowPointsDialog] = useState(false);
+  const [selectedParticipant, setSelectedParticipant] = useState(null);
+  const [points, setPoints] = useState(0);
   const [selectedEventName, setSelectedEventName] = useState("");
+  const [selectedUserEventData, setSelectedUserEventData] = useState({
+    userId: null,
+    eventId: null,
+    status: null,
+    points: 0
+  });
+  const fetchUserEventStatus = async (userId, eventId) => {
+    try {
+      const response = await axios.get(`/eventusers/${userId}/${eventId}`);
+      const newStatus = {
+        [`${userId}-${eventId}`]: {
+          status: response.data.status,
+          points: response.data.points || 0
+        }
+      };
+      setUserEventStatuses(prev => ({
+        ...prev,
+        ...newStatus
+      }));
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching user-event status:", error);
+      return null;
+    }
+  };
+  // Function to handle attendance confirmation
+  const handleAttendanceConfirmation = async (userId, eventId, attended) => {
+    try {
+      if (attended) {
+        // If marking as attended, show points dialog
+        setSelectedUserEventData({
+          userId,
+          eventId,
+          status: true,
+          points: 0
+        });
+        setShowPointsDialog(true);
+      } else {
+        // If marking as absent, update with status false and 0 points
+        await updateUserEventStatus(userId, eventId, false, 0);
+      }
+    } catch (error) {
+      console.error("Error updating attendance:", error);
+      toast.error(t("Event.messages.errors.updateAttendance"));
+    }
+  };
+  const updateUserEventStatus = async (userId, eventId, status, points) => {
+    try {
+      const response = await axios.put(`/eventusers/${userId}/${eventId}`, {
+        status: status,
+        pointsToAdd: points
+      });
 
+      // Update local state immediately after successful API call
+      const newStatus = {
+        [`${userId}-${eventId}`]: {
+          status,
+          points
+        }
+      };
+      
+      setUserEventStatuses(prev => ({
+        ...prev,
+        ...newStatus
+      }));
+
+      // Refresh participants list
+      await handleViewParticipants({ id: eventId });
+      
+      toast.success(t("Event.messages.success.attendanceUpdated"));
+      return true; // Return true on success
+    } catch (error) {
+      console.error("Error updating user-event status:", error);
+      toast.error(t("Event.messages.errors.updateAttendance"));
+      return false; // Return false on error
+    }
+  };
+  const handlePointsSubmission = async () => {
+    const { userId, eventId, points } = selectedUserEventData;
+    
+    // Disable the dialog immediately to prevent double clicks
+    setShowPointsDialog(false);
+    
+    try {
+      const success = await updateUserEventStatus(userId, eventId, true, points);
+      if (success) {
+        // Reset the selected user event data only after successful update
+        setSelectedUserEventData({
+          userId: null,
+          eventId: null,
+          status: null,
+          points: 0
+        });
+      } else {
+        // If update failed, show dialog again
+        setShowPointsDialog(true);
+      }
+    } catch (error) {
+      console.error("Error submitting points:", error);
+      toast.error(t("Event.messages.errors.updatePoints"));
+      // Show dialog again if there's an error
+      setShowPointsDialog(true);
+    }
+  };
+  // Points Dialog Component
+  const PointsDialog = () => (
+    <Dialog
+      header={t("Event.dialog.points")}
+      visible={showPointsDialog}
+      onHide={() => {
+        setShowPointsDialog(false);
+        setSelectedUserEventData({
+          userId: null,
+          eventId: null,
+          status: null,
+          points: 0
+        });
+      }}
+      style={{ width: '400px' }}
+      modal
+      footer={
+        <div className="flex justify-end gap-2">
+          <Button
+            label={t("Event.buttons.cancel")}
+            icon="pi pi-times"
+            onClick={() => {
+              setShowPointsDialog(false);
+              setSelectedUserEventData({
+                userId: null,
+                eventId: null,
+                status: null,
+                points: 0
+              });
+            }}
+            className="p-button-text"
+          />
+          <Button
+            label={t("Event.buttons.submit")}
+            icon="pi pi-check"
+            onClick={handlePointsSubmission}
+            autoFocus
+          />
+        </div>
+      }
+    >
+      <div className="flex flex-column gap-4">
+        
+        <InputNumber
+          id="points"
+          value={selectedUserEventData.points}
+          onValueChange={(e) => setSelectedUserEventData(prev => ({
+            ...prev,
+            points: e.value || 0
+          }))}
+          min={0}
+          max={100}
+          showButtons={false}
+          inputClassName="w-full"
+        />
+      </div>
+    </Dialog>
+  );
+
+  
+  const fetchUserStatus = async (userId, eventId) => {
+    try {
+      const response = await axios.get(`/eventusers/${userId}/${eventId}`);
+      return response.data.status; // Trả về true/false/null
+    } catch (error) {
+      console.error("Error fetching user status:", error);
+      return null;
+    }
+  };
+  const getStatusText = (status) => {
+    if (status === true) return 'Attended';
+    if (status === false) return 'Absent';
+    return 'Not Confirmed';
+  };
+  
   // Function to validate date
   const validateEventDate = (date) => {
     const currentDate = new Date();
@@ -46,15 +229,31 @@ const Event = () => {
 
     return eventDate >= currentDate;
   };
-
+  
   // Function to handle viewing participants
   const handleViewParticipants = async (event) => {
     try {
       const response = await axios.get(`/events/events`);
       const eventData = response.data.find((e) => e.id === event.id);
+      
       if (eventData) {
-        setSelectedEventParticipants(eventData.users || []);
+        const participants = eventData.users || [];
+        
+        // Fetch status for each participant
+        const participantsWithStatus = await Promise.all(
+          participants.map(async (user) => {
+            const userEventStatus = await fetchUserEventStatus(user.id, event.id);
+            return {
+              ...user,
+              status: userEventStatus ? userEventStatus.status : null,
+              points: userEventStatus ? userEventStatus.points : 0
+            };
+          })
+        );
+
+        setSelectedEventParticipants(participantsWithStatus);
         setSelectedEventName(event.name);
+        setSelectedEventId(event.id);
         setShowParticipantsDialog(true);
       }
     } catch (error) {
@@ -62,6 +261,8 @@ const Event = () => {
       toast.error(t("Event.messages.errors.fetchParticipants"));
     }
   };
+
+
 
   const fetchEvents = async () => {
     setLoading(true);
@@ -295,13 +496,45 @@ const Event = () => {
               )}
               style={{ width: "10%" }}
             />
-            <Column field="username" header="Name" style={{ width: "20%" }} />
-            <Column field="email" header="Email" style={{ width: "25%" }} />
+            <Column field="username" header="Name" style={{ width: "15%" }} />
+            <Column field="email" header="Email" style={{ width: "15%" }} />
             <Column field="phone" header="Phone" style={{ width: "15%" }} />
-            <Column
-              field="location"
-              header="Location"
+            <Column 
+              header="Status & Points" 
               style={{ width: "25%" }}
+              body={(rowData) => {
+                const userEventKey = `${rowData.id}-${selectedEventId}`;
+                const statusData = userEventStatuses[userEventKey] || { status: null, points: 0 };
+                
+                return (
+                  <div className="flex flex-column gap-2">
+                    {statusData.status === null ? (
+                      <div className="flex gap-2">
+                        <Button
+                          icon="pi pi-check"
+                          className="p-button-success p-button-sm"
+                          onClick={() => handleAttendanceConfirmation(rowData.id, selectedEventId, true)}
+                          tooltip={t("Event.buttons.attended")}
+                        />
+                        <Button
+                          icon="pi pi-times"
+                          className="p-button-danger p-button-sm"
+                          onClick={() => handleAttendanceConfirmation(rowData.id, selectedEventId, false)}
+                          tooltip={t("Event.buttons.absent")}
+                        />
+                      </div>
+                    ) : (
+                      <div className="flex flex-column gap-1">
+                        <span className={`px-3 py-1 rounded-full text-sm text-center ${
+                          statusData.status ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        }`}>
+                          {statusData.status ? t("Event.status.attended") : t("Event.status.absent")}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                );
+              }}
             />
           </DataTable>
         )}
@@ -540,6 +773,7 @@ const Event = () => {
 
         {/* Participants Dialog */}
         <ParticipantsDialog />
+        <PointsDialog />
       </div>
     </div>
   );

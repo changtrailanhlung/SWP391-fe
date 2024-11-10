@@ -491,7 +491,10 @@
       "create": "Create New Event",
       "cancel": "Cancel",
       "update": "Update Event",
-      "createEvent": "Create Event"
+      "createEvent": "Create Event",
+      "submit":"Submit",
+      "attended":"Attended",
+      "absent":"Absent"
     },
     "table": {
       "no": "No.",
@@ -506,7 +509,8 @@
       "create": "Create New Event",
       "edit": "Edit Event",
       "participants": "Participants",
-      "noParticipants": "No participants found for this event"
+      "noParticipants": "No participants found for this event",
+      "points":"Points"
     },
     "form": {
       "eventName": {
@@ -550,6 +554,10 @@
         "eventUpdated": "Event updated successfully!",
         "eventDeleted": "Event deleted successfully!"
       }
+    },
+    "status":{
+      "attended":"Attended",
+      "absent":"Absent"
     }
   },
   "pet": {

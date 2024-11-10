@@ -504,7 +504,10 @@
       "create": "Tạo Sự Kiện Mới",
       "cancel": "Hủy",
       "update": "Cập Nhật Sự Kiện",
-      "createEvent": "Tạo Sự Kiện"
+      "createEvent": "Tạo Sự Kiện",
+      "submit":"Gửi",
+      "attended":"Có tham gia",
+      "absent":"không tham gia"
     },
     "table": {
       "no": "STT",
@@ -519,7 +522,8 @@
       "create": "Tạo Sự Kiện Mới",
       "edit": "Chỉnh Sửa Sự Kiện",
       "participants": "Người Tham Gia",
-      "noParticipants": "Không có người tham gia cho sự kiện này"
+      "noParticipants": "Không có người tham gia cho sự kiện này",
+      "points":"Điểm"
     },
     "form": {
       "eventName": {
@@ -563,6 +567,10 @@
         "eventUpdated": "Cập nhật sự kiện thành công!",
         "eventDeleted": "Xóa sự kiện thành công!"
       }
+    },
+    "status":{
+      "attended":"Có tham gia",
+      "absent":"không tham gia"
     }
   },
   "adoptionForms": {
