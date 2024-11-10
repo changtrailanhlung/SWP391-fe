@@ -30,14 +30,13 @@ function Login() {
   const location = useLocation();
 
   useEffect(() => {
-    // Kiểm tra signupSuccess trong localStorage
     const signupSuccess = localStorage.getItem("signupSuccess");
     if (signupSuccess === "true") {
       toast.success("Đăng ký thành công! Vui lòng đăng nhập.");
-      // Xóa signupSuccess sau khi đã hiển thị thông báo
       localStorage.removeItem("signupSuccess");
     }
   }, []);
+
   const handleRegisterClick = () => {
     navigate("/admin/signup");
   };
@@ -56,49 +55,63 @@ function Login() {
         const token = loginResponse.data.data.token;
         const decodedUser = jwtDecode(token);
 
+        // Lưu thông tin cơ bản vào localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("nameid", decodedUser.nameid);
         localStorage.setItem("username", decodedUser.unique_name);
-        localStorage.setItem("role", decodedUser.role);
+        localStorage.setItem("role", decodedUser.role || '');
 
-        // Fetch user roles
-        const roleResponse = await axios.get(`/userrole/role/${userId}/roles`);
-        let userRoles = [];
-        if (roleResponse.data && roleResponse.data.roles) {
-          userRoles = roleResponse.data.roles;
-        } else {
-          throw new Error("User roles not found");
-        }
-        localStorage.setItem("userRoles", JSON.stringify(userRoles));
-        let shelterID = null;
-        if (userRoles.includes("ShelterStaff")) {
-          const shelterResponse = await axios.get(`/shelter/user/${userId}`);
-          if (shelterResponse.data && shelterResponse.data.id) {
-            shelterID = shelterResponse.data.id;
-            localStorage.setItem("shelterID", shelterID);
-          } else {
-            throw new Error("Shelter ID not found");
-          }
-        }
-        const userData = {
+        // Khởi tạo userData với roles mặc định là mảng rỗng
+        let userData = {
           id: userId,
           username,
-          roles: userRoles,
+          roles: []
         };
-        setUser(userData);
 
-        if (userRoles.includes("Admin")) {
-          navigate("/admin/dashboard");
-        } else if (userRoles.includes("ShelterStaff")) {
-          navigate("/shelter/dashboard");
-        } else {
+        try {
+          // Thử lấy roles của user
+          const roleResponse = await axios.get(`/userrole/role/${userId}/roles`);
+          if (roleResponse.data && roleResponse.data.roles) {
+            userData.roles = roleResponse.data.roles;
+            localStorage.setItem("userRoles", JSON.stringify(roleResponse.data.roles));
+
+            // Kiểm tra và xử lý ShelterStaff
+            if (roleResponse.data.roles.includes("ShelterStaff")) {
+              try {
+                const shelterResponse = await axios.get(`/shelter/user/${userId}`);
+                if (shelterResponse.data && shelterResponse.data.id) {
+                  localStorage.setItem("shelterID", shelterResponse.data.id);
+                }
+              } catch (shelterError) {
+                console.warn("Could not fetch shelter ID:", shelterError);
+              }
+            }
+
+            // Điều hướng dựa trên role nếu có
+            if (roleResponse.data.roles.includes("Admin")) {
+              navigate("/admin/dashboard");
+            } else if (roleResponse.data.roles.includes("ShelterStaff")) {
+              navigate("/shelter/dashboard");
+            } else {
+              navigate("/");
+            }
+          } else {
+            // Nếu không có roles, điều hướng về home
+            localStorage.setItem("userRoles", JSON.stringify([]));
+            navigate("/");
+          }
+        } catch (roleError) {
+          // Nếu không lấy được roles (404 hoặc lỗi khác), vẫn cho phép đăng nhập và điều hướng về home
+          console.warn("Could not fetch user roles:", roleError);
+          localStorage.setItem("userRoles", JSON.stringify([]));
           navigate("/");
         }
+
+        // Set user data vào context
+        setUser(userData);
         toast.success("Đăng nhập thành công!");
       } else {
-        toast.error(
-          "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập."
-        );
+        toast.error("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập.");
       }
     } catch (error) {
       console.error("Lỗi đăng nhập:", error);
@@ -108,22 +121,13 @@ function Login() {
     }
   };
 
+  // Return component JSX remains the same
   return (
-    <MDBContainer
-      fluid
-      className="p-4 background-radial-gradient overflow-hidden"
-    >
+    <MDBContainer fluid className="p-4 background-radial-gradient overflow-hidden">
       <ToastContainer />
       <MDBRow>
-        {/* Left content */}
-        <MDBCol
-          md="6"
-          className="text-center text-md-start d-flex flex-column justify-content-center"
-        >
-          <h1
-            className="my-5 display-3 fw-bold ls-tight px-3"
-            style={{ color: "hsl(218, 81%, 95%)" }}
-          >
+        <MDBCol md="6" className="text-center text-md-start d-flex flex-column justify-content-center">
+          <h1 className="my-5 display-3 fw-bold ls-tight px-3" style={{ color: "hsl(218, 81%, 95%)" }}>
             {t("lg1")} <br />
             <span style={{ color: "hsl(218, 81%, 75%)" }}>{t("lg2")}</span>
           </h1>
@@ -131,26 +135,12 @@ function Login() {
             {t("lg3")}
           </p>
         </MDBCol>
-        {/* Login form */}
         <MDBCol md="6" className="position-relative">
-          <div
-            id="radius-shape-1"
-            className="position-absolute rounded-circle shadow-5-strong"
-          ></div>
-          <div
-            id="radius-shape-2"
-            className="position-absolute shadow-5-strong"
-          ></div>
+          <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong"></div>
+          <div id="radius-shape-2" className="position-absolute shadow-5-strong"></div>
           <MDBCard className="my-5 bg-glass">
             <MDBCardBody className="p-5">
-              <h2
-                className="text-center"
-                style={{
-                  fontSize: "2.5rem",
-                  fontWeight: "bold",
-                  margin: "0 0 20px 0",
-                }}
-              >
+              <h2 className="text-center" style={{ fontSize: "2.5rem", fontWeight: "bold", margin: "0 0 20px 0" }}>
                 {t("login")}
               </h2>
               <form onSubmit={handleLogin}>
@@ -172,27 +162,18 @@ function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                <MDBBtn
-                  type="submit"
-                  className="w-100 mb-4"
-                  size="md"
-                  disabled={loading}
-                >
+                <MDBBtn type="submit" className="w-100 mb-4" size="md" disabled={loading}>
                   {loading ? "Đang đăng nhập..." : t("login")}
                 </MDBBtn>
               </form>
               <div className="text-center">
                 <p>
                   Chưa có tài khoản?{" "}
-                  <span
-                    onClick={handleRegisterClick}
-                    style={{ color: "#007bff", cursor: "pointer" }}
-                  >
+                  <span onClick={handleRegisterClick} style={{ color: "#007bff", cursor: "pointer" }}>
                     Đăng ký
                   </span>
                 </p>
               </div>
-              
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
