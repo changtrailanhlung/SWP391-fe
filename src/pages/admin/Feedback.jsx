@@ -67,7 +67,7 @@ const Feedback = () => {
   return (
     <div className="container mx-auto p-4">
       <Toast ref={toast} />
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">{t('a.titles.feedback')}</h2>
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">{t('sidebar.feedback')}</h2>
       <DataTable
         value={sortedFeedbackList}
         loading={feedbackList.length === 0}
