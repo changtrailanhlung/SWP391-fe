@@ -516,7 +516,8 @@
   },
   "error": {
     "title": "Lỗi",
-    "fetchPets": "Không thể tải danh sách thú cưng"
+    "fetchPets": "Không thể tải danh sách thú cưng",
+    "donation": "Số dư ví không đủ để thực hiện khoản quyên góp này."
   },
   "titles": {
     "pets": "Thú cưng"

@@ -44,7 +44,7 @@ const DonationForm = () => {
     } catch (error) {
       console.error("Error creating donation:", error);
       if (error.response && error.response.data) {
-        setError(error.response.data.message || "An error occurred.");
+        setError(t("error.donation") || "An error occurred.");
       } else {
         setError("An error occurred while processing your donation.");
       }
