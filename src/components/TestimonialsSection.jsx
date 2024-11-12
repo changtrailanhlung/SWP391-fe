@@ -12,7 +12,7 @@ const TestimonialsSection = () => {
       message:
         "Adopting my dog was the best decision I ever made. They bring so much joy and unconditional love into my life.",
       image:
-        "https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-1/349074284_811718277197222_4013644739331041702_n.jpg?stp=dst-jpg_s200x200&_nc_cat=107&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeEO1W-fWu-7d3X-tBr5SZEcI5F9uPdh9icjkX2492H2J8UYNVzDbtRyvEy3z2sInVHfbR2Tg7_AhHHTHF2u2rDZ&_nc_ohc=u4vPv4YhXQ8Q7kNvgG7hzzU&_nc_zt=24&_nc_ht=scontent.fsgn2-3.fna&_nc_gid=AgLP7DC6SUoa4j8VF95bwla&oh=00_AYC_HFYzo5duLPrDuKtPam9awcaznqp_wPR_ytyXG1i0Sw&oe=6728307C", // Use colon instead of equals sign
+        "https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-1/349074284_811718277197222_4013644739331041702_n.jpg?stp=dst-jpg_s200x200&_nc_cat=107&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeEO1W-fWu-7d3X-tBr5SZEcI5F9uPdh9icjkX2492H2J8UYNVzDbtRyvEy3z2sInVHfbR2Tg7_AhHHTHF2u2rDZ&_nc_ohc=HEon8GbgCJUQ7kNvgH-lz8R&_nc_zt=24&_nc_ht=scontent.fsgn2-3.fna&_nc_gid=Akms7mtGrLlznfFQVxFaba7&oh=00_AYCBfbjQCeooBNquxn0bgol2y8WrxkxZLmTMw3m5zKvIVw&oe=67391BBC",
     },
     {
       name: "Hung Tran",
@@ -20,7 +20,7 @@ const TestimonialsSection = () => {
       message:
         "Adopting a cat was the perfect addition to my home. They are such wonderful companions.",
       image:
-        "https://cdn.discordapp.com/attachments/759776758374989838/1301199911240339496/255010705_571449934159817_6782480859281194870_n.png?ex=67239c59&is=67224ad9&hm=8a7632aa3ebb73b2e06e23abe26e42e5b249b58280bf4f4e112477ceab8fbcee&", // Add an image for this testimonial
+        "https://cdn.discordapp.com/attachments/759776758374989838/1301199911240339496/255010705_571449934159817_6782480859281194870_n.png?ex=67341719&is=6732c599&hm=47c86978c52a533aa4def9bf5d3c6fcc937cbf493575627d4268fac139db93d8&",
     },
     {
       name: "Tai Pham",
@@ -28,7 +28,7 @@ const TestimonialsSection = () => {
       message:
         "I'm so grateful I chose to adopt. My new pet has made a huge positive impact and I couldn't imagine life without them.",
       image:
-        "https://cdn.discordapp.com/attachments/759776758374989838/1301199911605239898/image.png?ex=67239c5a&is=67224ada&hm=383b5e2683c93dba1f0cc8415e3438f44ff329471f1bfa70f5cdc94333ba8a5f&", // Add an image for this testimonial
+        "https://cdn.discordapp.com/attachments/759776758374989838/1301199911605239898/image.png?ex=6734171a&is=6732c59a&hm=4e1d6401e40fba45e15fb4678656b8ec4932e2598836a35f31819991b5a14d53&",
     },
   ];
 
