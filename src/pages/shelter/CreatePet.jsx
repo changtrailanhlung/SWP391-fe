@@ -33,8 +33,15 @@ const CreatePet = () => {
   const toast = useRef(null);
   const [isAgeFocused, setIsAgeFocused] = useState(false);
 
-  const petTypes = [t('petType.dog'), t('petType.cat')];
-  const genderOptions = [t('gender.male'), t('gender.female')];
+  const petTypes = [
+    { label: t('petType.dog'), value: 'Chó' },
+    { label: t('petType.cat'), value: 'Mèo' },
+  ];
+
+  const genderOptions = [
+    { label: t('gender.male'), value: 'Đực' },
+    { label: t('gender.female'), value: 'Cái' },
+  ];
   
 
   useEffect(() => {
