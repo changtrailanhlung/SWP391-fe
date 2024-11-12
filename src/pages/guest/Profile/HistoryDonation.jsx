@@ -1,6 +1,6 @@
 // HistoryDonation.jsx
 import React, { useEffect, useState } from "react";
-import axios from "../../../services/axiosClient"; // Import your axios instance
+import axios from "../../../services/axiosClient";
 import { useTranslation } from "react-i18next";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -8,25 +8,28 @@ import { Column } from "primereact/column";
 const HistoryDonation = () => {
   const { t } = useTranslation();
   const [donations, setDonations] = useState([]);
-  const [shelters, setShelters] = useState([]); // State to hold shelter data
+  const [shelters, setShelters] = useState([]);
   const [loading, setLoading] = useState(true);
-  const donorId = localStorage.getItem("nameid"); // Assuming the donor ID is stored in localStorage
+  const donorId = localStorage.getItem("nameid");
 
   useEffect(() => {
     const fetchDonationHistory = async () => {
       try {
         const donationResponse = await axios.get(`/donate`);
-        const shelterResponse = await axios.get(`/shelter`); // Fetch all shelters
-        // console.log(donationResponse.data); // Log the donation response data
-        // console.log(shelterResponse.data); // Log the shelter response data
+        const shelterResponse = await axios.get(`/shelter`);
+
+        // Filter donations by donorId
+        const donorDonations = donationResponse.data.filter(
+          (donation) => donation.donorId === donorId
+        );
 
         // Sort donations by date in descending order
-        const sortedDonations = donationResponse.data.sort(
+        const sortedDonations = donorDonations.sort(
           (a, b) => new Date(b.date) - new Date(a.date)
         );
 
-        setDonations(sortedDonations); // Set the sorted donations
-        setShelters(shelterResponse.data); // Set the shelter data
+        setDonations(sortedDonations);
+        setShelters(shelterResponse.data);
       } catch (error) {
         console.error("Error fetching donation history or shelters:", error);
       } finally {
@@ -38,17 +41,16 @@ const HistoryDonation = () => {
   }, [donorId]);
 
   if (loading) {
-    return <div className="text-center mt-5">Loading...</div>; // Add a loading spinner or message if desired
+    return <div className="text-center mt-5">Loading...</div>;
   }
 
   const formatDate = (date) => {
-    return new Date(date).toLocaleString(); // Format date as needed
+    return new Date(date).toLocaleString();
   };
 
-  // Function to get the shelter name by ID
   const getShelterNameById = (id) => {
     const shelter = shelters.find((shelter) => shelter.id === id);
-    return shelter ? shelter.name : t("donationHistory.noData"); // Return shelter name or no data message
+    return shelter ? shelter.name : t("donationHistory.noData");
   };
 
   return (
@@ -86,9 +88,9 @@ const HistoryDonation = () => {
               sortable
             />
             <Column
-              field="shelterId" // Add a new column for shelterId
+              field="shelterId"
               header={t("donationHistory.shelterId")}
-              body={(rowData) => getShelterNameById(rowData.shelterId)} // Display shelter name
+              body={(rowData) => getShelterNameById(rowData.shelterId)}
               sortable
             />
           </DataTable>
