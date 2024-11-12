@@ -714,5 +714,14 @@
       }
     }
   },
-  "joined": "Đã tham gia"
+  "joined": "Đã tham gia",
+  "wallet": {
+    "title": "Nộp tiền vào ví",
+    "amountLabel": "Số tiền:",
+    "amountPlaceholder": "Nhập số tiền (VND)",
+    "donateButton": "Ủng hộ",
+    "invalidAmount": "Vui lòng nhập số tiền hợp lệ.",
+    "missingUserInfo": "Thông tin người dùng không có trong bộ nhớ.",
+    "donationError": "Lỗi trong quá trình ủng hộ."
+  }
 }

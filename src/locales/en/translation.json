@@ -714,5 +714,14 @@
     "page": "Page",
     "previous": "Previous"
   },
-  "joined": "Joined"
+  "joined": "Joined",
+  "wallet": {
+    "title": "Deposit money into wallet",
+    "amountLabel": "Amount:",
+    "amountPlaceholder": "Enter amount (VND)",
+    "donateButton": "Donate",
+    "invalidAmount": "Please enter a valid amount.",
+    "missingUserInfo": "User information is missing from storage.",
+    "donationError": "Error during donation."
+  }
 }
