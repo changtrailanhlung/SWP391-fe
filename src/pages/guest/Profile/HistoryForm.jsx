@@ -24,8 +24,12 @@ const HistoryForm = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get("/form");
+      const filteredData = response.data.filter(
+        (item) => String(item.adopterId) === donorId
+      );
+
       const fetchedData = await Promise.all(
-        response.data.map(async (item) => {
+        filteredData.map(async (item) => {
           const petDetails = await fetchPetDetails(item.petId);
           const statusText =
             item.status === true
@@ -53,7 +57,7 @@ const HistoryForm = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [donorId]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -65,8 +69,7 @@ const HistoryForm = () => {
 
     try {
       const response = await axios.post("/form", payload);
-      // console.log("Response:", response.data);
-      fetchData();
+      fetchData(); // Refresh data after submission
     } catch (error) {
       console.error("Error submitting form:", error);
     }
