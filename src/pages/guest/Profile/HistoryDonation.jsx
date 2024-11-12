@@ -18,12 +18,15 @@ const HistoryDonation = () => {
         const donationResponse = await axios.get(`/donate`);
         const shelterResponse = await axios.get(`/shelter`);
 
+        // console.log("Donor ID from localStorage:", donorId);
+        // console.log("Donation data:", donationResponse.data);
+
         // Filter donations by donorId
         const donorDonations = donationResponse.data.filter(
-          (donation) => donation.donorId === donorId
+          (donation) => String(donation.donorId) === donorId
         );
+        // console.log("Filtered donations for donor:", donorDonations);
 
-        // Sort donations by date in descending order
         const sortedDonations = donorDonations.sort(
           (a, b) => new Date(b.date) - new Date(a.date)
         );
