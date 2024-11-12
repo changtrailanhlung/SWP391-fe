@@ -348,7 +348,12 @@ const AdoptionForm = () => {
   };
   const sendNotification = async (userId, status) => {
     try {
-      const currentDate = new Date().toISOString();
+       // Tạo đối tượng Date cho thời gian hiện tại
+    const currentDate = new Date();
+    // Cộng thêm 7 tiếng
+    currentDate.setHours(currentDate.getHours() + 7);
+    // Chuyển đổi sang ISO string
+    const adjustedDate = currentDate.toISOString();
       const title = status
         ? "Adoption Form Approved Successfully"
         : "Adoption Form Rejected";
@@ -356,7 +361,7 @@ const AdoptionForm = () => {
       const notificationData = {
         title: title,
         message: notificationMessage,
-        date: currentDate,
+        date: adjustedDate,
         userId: userId,
       };
 
