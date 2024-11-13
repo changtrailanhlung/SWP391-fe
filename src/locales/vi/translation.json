@@ -188,7 +188,7 @@
   "tabprofile": {
     "tab1": "Thông tin người dùng",
     "tab2": "Lịch sử quyên góp",
-    "tab3": "Form đăng kí nhận nuôi pet",
+    "tab3": "Lịch sử đăng kí nhận nuôi pet",
     "tab4": "Lịch sử đăng kí tham gia Event",
     "tab5": "Lịch sử ý kiến",
     "tab6": "Lịch sử nạp tiền"
@@ -201,7 +201,7 @@
     "shelterId": "Quyên góp cho Shelter"
   },
   "HistoryForm": {
-    "title": "Lịch sử các biểu mẫu",
+    "title": "Lịch sử đăng kí nhận nuôi pet",
     "header": {
       "no": "STT",
       "petName": "Tên thú cưng",

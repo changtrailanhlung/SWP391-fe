@@ -113,7 +113,7 @@
     "shelterId": "Donate for Shelter"
   },
   "HistoryForm": {
-    "title": "History of Forms",
+    "title": " Pet adoption registration history",
     "header": {
       "no": "No.",
       "petName": "Pet Name",
