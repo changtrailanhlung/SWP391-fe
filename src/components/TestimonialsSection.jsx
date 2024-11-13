@@ -20,7 +20,7 @@ const TestimonialsSection = () => {
       message:
         "Adopting a cat was the perfect addition to my home. They are such wonderful companions.",
       image:
-        "https://cdn.discordapp.com/attachments/759776758374989838/1301199911240339496/255010705_571449934159817_6782480859281194870_n.png?ex=67341719&is=6732c599&hm=47c86978c52a533aa4def9bf5d3c6fcc937cbf493575627d4268fac139db93d8&",
+        "https://storage.googleapis.com/pawfund-e7fdd.appspot.com/edd858cc-933b-425b-b08a-ffe1244faf61.png",
     },
     {
       name: "Tai Pham",
