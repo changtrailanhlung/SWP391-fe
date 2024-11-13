@@ -28,7 +28,7 @@ const TestimonialsSection = () => {
       message:
         "I'm so grateful I chose to adopt. My new pet has made a huge positive impact and I couldn't imagine life without them.",
       image:
-        "https://cdn.discordapp.com/attachments/759776758374989838/1301199911605239898/image.png?ex=6734171a&is=6732c59a&hm=4e1d6401e40fba45e15fb4678656b8ec4932e2598836a35f31819991b5a14d53&",
+        "https://storage.googleapis.com/pawfund-e7fdd.appspot.com/0591b3f0-fe60-4050-a84e-5dffb9a83009.png",
     },
   ];
 
