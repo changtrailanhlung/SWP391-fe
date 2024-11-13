@@ -453,13 +453,15 @@
   },
   "registration_form": {
     "title": "Registration Form",
-    "social_account": "Social Account",
+    "social_account": " Social network account",
     "income_amount": "Income Amount",
     "identification_image_front": "Identification Image (Front)",
     "identification_image_back": "Identification Image (Back)",
     "submit": "Submit",
     "success": "Registration successful!",
-    "error": "Registration failed, please try again."
+    "error": "Registration failed, please try again.",
+    "invalid_url": "Please enter a valid URL",
+    "invalid_income": "Income amount must be greater than zero"
   },
   "adoptionStatus": {
     "available": "Available",
