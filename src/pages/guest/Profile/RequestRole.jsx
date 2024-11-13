@@ -27,10 +27,10 @@ const RequestRole = () => {
       const response = await axios.get(`/userrole/role/${userId}/roles`);
       setCurrentRoles(response.data.roles || []); // Set current roles
 
-      // Fetch pending requests
-      const pendingResponse = await axios.get(
-        `/userrole/pendingrequests?userId=${userId}`
-      );
+      // Fetch pending requests using only the userId parameter
+      const pendingResponse = await axios.get(`/userrole/pendingrequests`, {
+        params: { userId }, // Pass userId as query parameter
+      });
       setPendingRequests(pendingResponse.data || []); // Set pending requests
     } catch (error) {
       console.error("Error fetching roles or pending requests:", error);
